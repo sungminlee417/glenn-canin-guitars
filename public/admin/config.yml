@@ -1,5 +1,6 @@
 backend:
   name: github
+  repo: sungminlee417/glenn-canin-guitars
   branch: main
 
 media_folder: public/images
