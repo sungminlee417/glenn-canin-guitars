@@ -92,3 +92,4 @@ Replace placeholder gradients with actual images by:
 ## License
 
 Copyright © 2024 Glenn Canin Guitars. All rights reserved.# glenn-canin-guitars
+# glenn-canin-guitars
