@@ -1,0 +1,228 @@
+backend:
+  name: github
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: "guitars"
+    label: "Guitars"
+    folder: "content/guitars"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Model", name: "model", widget: "string" }
+      - {
+          label: "Type",
+          name: "type",
+          widget: "select",
+          options: ["Double Top", "Traditional", "Custom"],
+        }
+      - { label: "Year", name: "year", widget: "number", min: 1900, max: 2100 }
+      - { label: "Price", name: "price", widget: "string", required: false }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+      - {
+          label: "Available",
+          name: "available",
+          widget: "boolean",
+          default: true,
+        }
+      - { label: "Main Image", name: "mainImage", widget: "image" }
+      - {
+          label: "Gallery Images",
+          name: "galleryImages",
+          widget: "list",
+          field: { label: "Image", name: "image", widget: "image" },
+        }
+      - { label: "Description", name: "description", widget: "markdown" }
+      - label: "Specifications"
+        name: "specifications"
+        widget: "object"
+        fields:
+          - {
+              label: "Top Wood",
+              name: "topWood",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Back & Sides",
+              name: "backSides",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Neck Wood",
+              name: "neckWood",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Fingerboard",
+              name: "fingerboard",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Scale Length",
+              name: "scaleLength",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Nut Width",
+              name: "nutWidth",
+              widget: "string",
+              required: false,
+            }
+          - {
+              label: "Finish",
+              name: "finish",
+              widget: "string",
+              required: false,
+            }
+
+  - name: "players"
+    label: "Players"
+    folder: "content/players"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Name", name: "name", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image" }
+      - { label: "Bio", name: "bio", widget: "markdown" }
+      - { label: "Website", name: "website", widget: "string", required: false }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+      - label: "Guitars"
+        name: "guitars"
+        widget: "list"
+        fields:
+          - { label: "Model", name: "model", widget: "string" }
+          - { label: "Year", name: "year", widget: "number", required: false }
+          - {
+              label: "Description",
+              name: "description",
+              widget: "text",
+              required: false,
+            }
+
+  - name: "gallery"
+    label: "Gallery"
+    folder: "content/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Category",
+          name: "category",
+          widget: "select",
+          options: ["Guitar", "Workshop", "Process", "Detail", "Event"],
+        }
+      - { label: "Image", name: "image", widget: "image" }
+      - {
+          label: "Description",
+          name: "description",
+          widget: "text",
+          required: false,
+        }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+
+  - name: "videos"
+    label: "Videos"
+    folder: "content/videos"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "YouTube URL", name: "youtubeUrl", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Player", name: "player", widget: "string", required: false }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - {
+          label: "Featured",
+          name: "featured",
+          widget: "boolean",
+          default: false,
+        }
+
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "About Page"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image" }
+          - { label: "Content", name: "body", widget: "markdown" }
+          - label: "Sections"
+            name: "sections"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Content", name: "content", widget: "markdown" }
+              - {
+                  label: "Image",
+                  name: "image",
+                  widget: "image",
+                  required: false,
+                }
+
+      - label: "Contact Page"
+        name: "contact"
+        file: "content/pages/contact.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Address", name: "address", widget: "text" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Hours", name: "hours", widget: "text" }
+          - { label: "Content", name: "body", widget: "markdown" }
+
+      - label: "Ordering Information"
+        name: "ordering"
+        file: "content/pages/ordering.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Content", name: "body", widget: "markdown" }
+          - label: "Process Steps"
+            name: "processSteps"
+            widget: "list"
+            fields:
+              - { label: "Step Number", name: "stepNumber", widget: "number" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - label: "Home Page"
+        name: "home"
+        file: "content/pages/home.md"
+        fields:
+          - { label: "Hero Title", name: "heroTitle", widget: "string" }
+          - { label: "Hero Subtitle", name: "heroSubtitle", widget: "string" }
+          - { label: "Hero Image", name: "heroImage", widget: "image" }
+          - { label: "About Preview", name: "aboutPreview", widget: "markdown" }
+          - {
+              label: "Featured Guitars Title",
+              name: "featuredGuitarsTitle",
+              widget: "string",
+              default: "Featured Guitars",
+            }
