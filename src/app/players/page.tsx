@@ -1,8 +1,6 @@
-import { getPlayers } from '@/lib/markdown';
+import Image from 'next/image';
 
 export default function PlayersPage() {
-  const players = getPlayers();
-
   // Sample data for demonstration
   const samplePlayers = [
     {
@@ -47,8 +45,6 @@ export default function PlayersPage() {
     }
   ];
 
-  const displayPlayers = players.length > 0 ? players : samplePlayers;
-
   return (
     <div className="min-h-screen bg-stone-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
@@ -63,42 +59,39 @@ export default function PlayersPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          {displayPlayers.filter(p => p.featured || p.data?.featured).map((player, index) => (
+          {samplePlayers.filter(p => p.featured).map((player, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
               <div className="md:flex">
                 <div className="md:w-1/3">
-                  <div className="aspect-[3/4] bg-stone-200">
-                    {(player.photo || player.data?.photo) && (
-                      <img 
-                        src={player.photo || player.data?.photo} 
-                        alt={player.name || player.data?.name}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
+                  <div className="aspect-[3/4] bg-stone-200 relative">
+                    <Image 
+                      src={player.photo} 
+                      alt={player.name}
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                 </div>
                 <div className="md:w-2/3 p-8">
-                  <h2 className="text-2xl font-cinzel font-bold mb-4">{player.name || player.data?.name}</h2>
-                  <p className="text-stone-600 mb-6">{player.bio || player.data?.bio}</p>
+                  <h2 className="text-2xl font-cinzel font-bold mb-4">{player.name}</h2>
+                  <p className="text-stone-600 mb-6">{player.bio}</p>
                   
-                  {(player.guitars || player.data?.guitars) && (
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-2 text-stone-900">Glenn Canin Guitars:</h3>
-                      <ul className="space-y-2">
-                        {(player.guitars || player.data?.guitars).map((guitar, gIndex) => (
-                          <li key={gIndex} className="text-sm text-stone-600">
-                            <span className="font-medium">{guitar.model}</span>
-                            {guitar.year && ` (${guitar.year})`}
-                            {guitar.description && ` - ${guitar.description}`}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+                  <div className="mb-6">
+                    <h3 className="font-semibold mb-2 text-stone-900">Glenn Canin Guitars:</h3>
+                    <ul className="space-y-2">
+                      {player.guitars.map((guitar, gIndex) => (
+                        <li key={gIndex} className="text-sm text-stone-600">
+                          <span className="font-medium">{guitar.model}</span>
+                          {guitar.year && ` (${guitar.year})`}
+                          {guitar.description && ` - ${guitar.description}`}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   
-                  {(player.website || player.data?.website) && (
+                  {player.website && (
                     <a 
-                      href={player.website || player.data?.website} 
+                      href={player.website} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="inline-flex items-center text-amber-700 hover:text-amber-800 font-medium"
@@ -115,22 +108,21 @@ export default function PlayersPage() {
         <div className="bg-white rounded-lg shadow-sm p-8">
           <h2 className="text-3xl font-cinzel mb-8 text-center">More Artists</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {displayPlayers.filter(p => !p.featured && !p.data?.featured).map((player, index) => (
+            {samplePlayers.filter(p => !p.featured).map((player, index) => (
               <div key={index} className="text-center">
-                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-stone-200">
-                  {(player.photo || player.data?.photo) && (
-                    <img 
-                      src={player.photo || player.data?.photo} 
-                      alt={player.name || player.data?.name}
-                      className="w-full h-full object-cover"
-                    />
-                  )}
+                <div className="w-32 h-32 mx-auto mb-4 rounded-full overflow-hidden bg-stone-200 relative">
+                  <Image 
+                    src={player.photo} 
+                    alt={player.name}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
-                <h3 className="font-cinzel font-semibold text-lg mb-2">{player.name || player.data?.name}</h3>
-                <p className="text-sm text-stone-600 mb-3 line-clamp-3">{player.bio || player.data?.bio}</p>
-                {(player.website || player.data?.website) && (
+                <h3 className="font-cinzel font-semibold text-lg mb-2">{player.name}</h3>
+                <p className="text-sm text-stone-600 mb-3 line-clamp-3">{player.bio}</p>
+                {player.website && (
                   <a 
-                    href={player.website || player.data?.website} 
+                    href={player.website} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-sm text-amber-700 hover:text-amber-800"
@@ -146,8 +138,8 @@ export default function PlayersPage() {
         <div className="mt-16 bg-amber-50 rounded-lg p-8 text-center">
           <h2 className="text-2xl font-cinzel mb-4">Join Our Artist Family</h2>
           <p className="text-stone-600 mb-6 max-w-2xl mx-auto">
-            If you're a professional guitarist interested in playing a Glenn Canin guitar, 
-            we'd love to hear from you. Contact us to discuss artist programs and custom instruments.
+            If you&apos;re a professional guitarist interested in playing a Glenn Canin guitar, 
+            we&apos;d love to hear from you. Contact us to discuss artist programs and custom instruments.
           </p>
           <a 
             href="/contact" 

@@ -1,8 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { getVideos } from '@/lib/markdown';
+// import { getVideos } from '@/lib/markdown';
 import { Play } from 'lucide-react';
+import Image from 'next/image';
 
 export default function VideosPage() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
@@ -81,10 +82,11 @@ export default function VideosPage() {
                 onClick={() => setSelectedVideo(video.youtubeUrl)}
               >
                 <div className="aspect-video bg-stone-100 relative group">
-                  <img 
+                  <Image 
                     src={thumbnailUrl} 
                     alt={video.title}
-                    className="w-full h-full object-cover"
+                    fill
+                    className="object-cover"
                     onError={(e) => {
                       e.currentTarget.src = '/images/video-placeholder.jpg';
                     }}

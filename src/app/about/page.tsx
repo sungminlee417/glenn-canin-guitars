@@ -36,7 +36,7 @@ export default function AboutPage() {
           <div className="mb-12">
             <h2 className="font-cinzel text-2xl font-semibold mb-4">Philosophy</h2>
             <p className="text-gray-600 mb-4">
-              I believe that a great guitar is more than just wood and strings – it's a partner 
+              I believe that a great guitar is more than just wood and strings – it&apos;s a partner 
               in musical expression. Every instrument I build is designed to inspire, to respond 
               to the subtlest touch, and to project with clarity and power.
             </p>

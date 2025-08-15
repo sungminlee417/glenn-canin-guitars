@@ -1,15 +1,16 @@
-# Glenn Canin Guitars - Modern Next.js Website
+# Glenn Canin Guitars
 
-A modernized website for Glenn Canin Concert Doubletop Classical Guitars, built with Next.js 15, TypeScript, and Tailwind CSS.
+A professional website for Glenn Canin, master luthier specializing in classical guitars with double-top construction.
 
 ## Features
 
+- **Content Management**: Full CMS integration with Decap CMS for easy content editing
+- **Responsive Design**: Modern, mobile-first design optimized for all devices
+- **Guitar Showcase**: Detailed displays of available guitars with specifications
+- **Artist Gallery**: Featured players and testimonials
+- **Video Gallery**: Performance videos and construction demos
+- **Custom Ordering**: Complete ordering process information
 - **Modern Tech Stack**: Next.js 15, React 19, TypeScript
-- **Responsive Design**: Fully responsive layout optimized for all devices
-- **Fast Performance**: Server-side rendering and optimized images
-- **Interactive Gallery**: Browse through the guitar collection with detailed specifications
-- **Contact Form**: Easy-to-use contact form for inquiries
-- **Clean Architecture**: Well-organized component structure
 
 ## Getting Started
 
@@ -66,30 +67,34 @@ glenn-canin-guitars/
 - **Contact**: Contact form and information
 - **Additional Pages**: Doubletops, Videos, Players, Ordering, For Sale
 
+## Content Management
+
+- **CMS Access**: Navigate to `/admin` to access the content management system
+- **Authentication**: Requires Netlify Identity setup for production use
+- **Content Types**:
+  - Guitars (specifications, pricing, images)
+  - Players (artist profiles and testimonials)
+  - Videos (YouTube embeds and descriptions)
+  - Gallery (workshop and guitar photos)
+  - Pages (home, about, contact, ordering)
+
 ## Technologies Used
 
 - **Next.js 15**: React framework with App Router
 - **TypeScript**: Type-safe development
 - **Tailwind CSS**: Utility-first CSS framework
-- **Lucide Icons**: Modern icon library
-- **Google Fonts**: Raleway and Cinzel fonts
+- **Decap CMS**: Git-based content management
+- **Netlify Identity**: Authentication for CMS
+- **Gray Matter**: Frontmatter parsing for markdown content
 
-## Customization
+## Deployment
 
-### Adding Images
+The site is optimized for deployment on Netlify or Vercel:
 
-Replace placeholder gradients with actual images by:
-1. Add images to `/public/images/`
-2. Update component imports to use `next/image`
-3. Reference the image paths in components
-
-### Styling
-
-- Global styles: `/src/app/globals.css`
-- Tailwind config: `/tailwind.config.ts`
-- Component-specific styles use Tailwind utility classes
+```bash
+npm run build
+```
 
 ## License
 
-Copyright © 2024 Glenn Canin Guitars. All rights reserved.# glenn-canin-guitars
-# glenn-canin-guitars
+Private project for Glenn Canin Guitars.

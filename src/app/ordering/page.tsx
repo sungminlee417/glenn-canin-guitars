@@ -56,7 +56,7 @@ export default function OrderingPage() {
         <div className="mb-16">
           <h2 className="text-3xl font-cinzel text-center mb-12">The Ordering Process</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {processSteps.map((step, index) => {
+            {processSteps.map((step: {stepNumber: number; title: string; description: string}, index: number) => {
               const Icon = icons[index] || CheckCircle;
               return (
                 <div key={index} className="bg-white rounded-lg shadow-md p-6 relative">

@@ -31,8 +31,8 @@ export default function ContactSection() {
             Get In Touch
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Whether you're interested in commissioning a custom guitar or have questions about my instruments, 
-            I'd love to hear from you.
+            Whether you&apos;re interested in commissioning a custom guitar or have questions about my instruments, 
+            I&apos;d love to hear from you.
           </p>
         </div>
 
