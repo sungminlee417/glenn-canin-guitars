@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-// import { getVideos } from '@/lib/markdown';
-import { Play } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Play, X } from 'lucide-react';
 import Image from 'next/image';
+import FadeIn from '@/components/animations/FadeIn';
+import StaggerChildren, { StaggerItem } from '@/components/animations/StaggerChildren';
 
 export default function VideosPage() {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   
-  // This would normally be fetched server-side, but for demo purposes we'll use sample data
   const sampleVideos = [
     {
       title: "Bach Suite No. 3 - Performed on Glenn Canin Double Top",
@@ -33,6 +34,30 @@ export default function VideosPage() {
       player: "Glenn Canin",
       date: "2024-03-10",
       featured: true
+    },
+    {
+      title: "Tarrega Recuerdos de la Alhambra",
+      youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", 
+      description: "Masterful tremolo technique displayed on a Glenn Canin classical guitar.",
+      player: "David Russell",
+      date: "2024-04-05",
+      featured: false
+    },
+    {
+      title: "Wood Selection and Preparation",
+      youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      description: "An inside look at how Glenn selects and prepares tonewoods for his guitars.",
+      player: "Glenn Canin",
+      date: "2024-05-12",
+      featured: false
+    },
+    {
+      title: "Rodrigo Concierto de Aranjuez - First Movement",
+      youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      description: "Stunning performance showcasing the projection and clarity of Glenn Canin guitars.",
+      player: "Marcin Dylla",
+      date: "2024-06-18",
+      featured: true
     }
   ];
 
@@ -41,94 +66,247 @@ export default function VideosPage() {
     return match ? match[1] : '';
   };
 
+  const closeModal = () => {
+    setSelectedVideo(null);
+  };
+
   return (
-    <div className="min-h-screen bg-stone-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-cinzel font-bold text-stone-900 mb-6">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[url('/images/video-pattern.svg')] opacity-5" />
+      
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <FadeIn className="text-center mb-16">
+          <motion.h1
+            className="text-5xl font-cinzel font-bold text-stone-900 mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
             Video Gallery
-          </h1>
-          <p className="text-xl text-stone-600 max-w-3xl mx-auto">
+          </motion.h1>
+          <motion.p
+            className="text-xl text-stone-600 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
             Watch performances by world-class guitarists playing Glenn Canin instruments, 
             and get an inside look at the guitar-making process.
-          </p>
-        </div>
+          </motion.p>
+        </FadeIn>
 
-        {selectedVideo && (
-          <div className="mb-12">
-            <div className="bg-black rounded-lg overflow-hidden shadow-2xl">
-              <div className="aspect-video">
-                <iframe
-                  src={selectedVideo}
-                  title="Video player"
-                  className="w-full h-full"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {sampleVideos.map((video, index) => {
-            const videoId = extractVideoId(video.youtubeUrl);
-            const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-            
-            return (
-              <div 
-                key={index} 
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
-                onClick={() => setSelectedVideo(video.youtubeUrl)}
-              >
-                <div className="aspect-video bg-stone-100 relative group">
-                  <Image 
-                    src={thumbnailUrl} 
-                    alt={video.title}
-                    fill
-                    className="object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = '/images/video-placeholder.jpg';
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="bg-white rounded-full p-4">
-                      <Play className="w-8 h-8 text-stone-900" fill="currentColor" />
+        {/* Featured Videos Section */}
+        <FadeIn className="mb-12">
+          <motion.h2 
+            className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.6 }}
+          >
+            Featured Videos
+          </motion.h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            {sampleVideos.filter(video => video.featured).map((video, index) => {
+              const videoId = extractVideoId(video.youtubeUrl);
+              const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+              
+              return (
+                <motion.div 
+                  key={index}
+                  className="group cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden"
+                  whileHover={{ y: -8, scale: 1.02 }}
+                  transition={{ duration: 0.3 }}
+                  onClick={() => setSelectedVideo(video.youtubeUrl)}
+                >
+                  <div className="aspect-video bg-stone-100 relative overflow-hidden">
+                    <Image 
+                      src={thumbnailUrl} 
+                      alt={video.title}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-110"
+                      onError={(e) => {
+                        e.currentTarget.src = '/images/video-placeholder.jpg';
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <motion.div
+                        className="bg-white rounded-full p-4"
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        <Play className="w-8 h-8 text-stone-900" fill="currentColor" />
+                      </motion.div>
                     </div>
-                  </div>
-                  {video.featured && (
-                    <div className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm">
+                    <motion.div 
+                      className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: index * 0.1 + 0.3 }}
+                    >
                       Featured
-                    </div>
-                  )}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-cinzel font-semibold mb-2">{video.title}</h3>
-                  <p className="text-stone-600 text-sm mb-2">{video.player}</p>
-                  <p className="text-stone-500 text-sm">{video.description}</p>
-                  <p className="text-stone-400 text-xs mt-3">
-                    {new Date(video.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+                    </motion.div>
+                  </div>
+                  <motion.div 
+                    className="p-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: index * 0.1 + 0.4 }}
+                  >
+                    <h3 className="text-xl font-cinzel font-semibold mb-2 group-hover:text-amber-600 transition-colors">{video.title}</h3>
+                    <p className="text-amber-600 font-medium text-sm mb-2">{video.player}</p>
+                    <p className="text-stone-600 text-sm mb-3 leading-relaxed">{video.description}</p>
+                    <p className="text-stone-400 text-xs">
+                      {new Date(video.date).toLocaleDateString('en-US', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </FadeIn>
 
-        <div className="mt-16 bg-white rounded-lg shadow-sm p-8 text-center">
-          <h2 className="text-2xl font-cinzel mb-4">Subscribe for Updates</h2>
-          <p className="text-stone-600 mb-6">
-            Get notified when new videos featuring Glenn Canin guitars are available.
-          </p>
-          <button className="bg-stone-900 text-white px-8 py-3 rounded-lg hover:bg-stone-800 transition-colors">
-            Subscribe to Channel
-          </button>
-        </div>
+        {/* All Videos Section */}
+        <FadeIn>
+          <motion.h2 
+            className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.6 }}
+          >
+            More Videos
+          </motion.h2>
+          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {sampleVideos.filter(video => !video.featured).map((video, index) => {
+              const videoId = extractVideoId(video.youtubeUrl);
+              const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+              
+              return (
+                <StaggerItem key={index}>
+                  <motion.div 
+                    className="group bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ duration: 0.3 }}
+                    onClick={() => setSelectedVideo(video.youtubeUrl)}
+                  >
+                    <div className="aspect-video bg-stone-100 relative overflow-hidden">
+                      <Image 
+                        src={thumbnailUrl} 
+                        alt={video.title}
+                        fill
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.src = '/images/video-placeholder.jpg';
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <motion.div
+                          className="bg-white rounded-full p-3"
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <Play className="w-6 h-6 text-stone-900" fill="currentColor" />
+                        </motion.div>
+                      </div>
+                    </div>
+                    <div className="p-4">
+                      <h3 className="text-lg font-cinzel font-semibold mb-1 group-hover:text-amber-600 transition-colors line-clamp-2">{video.title}</h3>
+                      <p className="text-amber-600 text-sm font-medium mb-2">{video.player}</p>
+                      <p className="text-stone-500 text-xs">
+                        {new Date(video.date).toLocaleDateString('en-US', { 
+                          year: 'numeric', 
+                          month: 'long', 
+                          day: 'numeric' 
+                        })}
+                      </p>
+                    </div>
+                  </motion.div>
+                </StaggerItem>
+              );
+            })}
+          </StaggerChildren>
+        </FadeIn>
+
+        <FadeIn className="mt-16">
+          <motion.div 
+            className="bg-white rounded-lg shadow-sm p-8 text-center"
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.h2 
+              className="text-2xl font-cinzel mb-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.6 }}
+            >
+              Subscribe for Updates
+            </motion.h2>
+            <motion.p 
+              className="text-stone-600 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px" }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+            >
+              Get notified when new videos featuring Glenn Canin guitars are available.
+            </motion.p>
+            <motion.button 
+              className="bg-stone-900 text-white px-8 py-3 rounded-lg hover:bg-stone-800 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Subscribe to Channel
+            </motion.button>
+          </motion.div>
+        </FadeIn>
       </div>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center p-4 z-50"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={closeModal}
+          >
+            <motion.div
+              className="relative w-full max-w-4xl aspect-video bg-black rounded-lg overflow-hidden"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.button
+                className="absolute top-4 right-4 z-10 bg-black bg-opacity-50 text-white rounded-full p-2 hover:bg-opacity-75 transition-colors"
+                onClick={closeModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <X className="w-6 h-6" />
+              </motion.button>
+              <iframe
+                src={selectedVideo}
+                title="Video player"
+                className="w-full h-full"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

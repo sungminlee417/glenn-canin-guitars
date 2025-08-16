@@ -1,6 +1,22 @@
 ---
 title: "About Glenn Canin"
 heroImage: "/images/workshop.jpg"
+journeyTitle: "My Journey"
+journeyContent: |
+  I began my journey as a luthier in 1985, driven by a passion for creating instruments that could truly sing. Over nearly four decades, I have refined my craft, studying under master builders and developing my own innovations in classical guitar construction.
+  
+  My workshop has produced over 150 instruments, each one carefully crafted to meet the unique needs and preferences of professional musicians worldwide. From concert halls in Europe to recording studios in America, my guitars have found homes with artists who demand the very best.
+philosophyTitle: "Philosophy"
+philosophyContent: |
+  I believe that a great guitar is more than just wood and strings – it's a partner in musical expression. Every instrument I build is designed to inspire, to respond to the subtlest touch, and to project with clarity and power.
+  
+  My approach combines traditional Spanish guitar-making techniques with modern innovations like the doubletop construction, which provides exceptional volume and sustain while maintaining the warmth and complexity of tone that classical guitarists cherish.
+achievementsTitle: "Awards & Recognition"
+achievements:
+  - "Featured in Classical Guitar Magazine"
+  - "Instruments played by international competition winners"
+  - "Selected for major guitar exhibitions worldwide"
+  - "Endorsed by leading classical guitarists"
 sections:
   - title: "The Luthier"
     content: |

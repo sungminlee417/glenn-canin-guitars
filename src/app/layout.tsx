@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { cinzel, raleway } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Glenn Canin Concert Doubletop Classical Guitars",
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${cinzel.variable} ${raleway.variable}`}>
       <body className="font-raleway antialiased">
         <Header />
         <main className="min-h-screen">
