@@ -14,13 +14,30 @@
         window.netlifyIdentity.on('init', user => {
           if (!user) {
             window.netlifyIdentity.on('open', () => {
-              // Hide email/password fields if they exist
-              const style = document.createElement('style');
-              style.innerHTML = `
-                [data-react-class="SignupForm"] { display: none !important; }
-                .providerButtonList { margin-top: 0 !important; }
-              `;
-              document.head.appendChild(style);
+              // Hide email/password fields completely
+              setTimeout(() => {
+                const style = document.createElement('style');
+                style.innerHTML = `
+                  /* Hide email/password form */
+                  .modalContainer form:not(.providerButtonList) { display: none !important; }
+                  .modalContainer input[type="email"] { display: none !important; }
+                  .modalContainer input[type="password"] { display: none !important; }
+                  .modalContainer button[type="submit"]:not(.provider) { display: none !important; }
+                  
+                  /* Hide tabs if they exist */
+                  .modalContainer .tabList { display: none !important; }
+                  
+                  /* Only show Google login */
+                  .modalContainer .providerButtonList { 
+                    margin-top: 0 !important;
+                    padding-top: 0 !important;
+                  }
+                  
+                  /* Hide "or" divider */
+                  .modalContainer .or { display: none !important; }
+                `;
+                document.head.appendChild(style);
+              }, 100);
             });
           }
         });
