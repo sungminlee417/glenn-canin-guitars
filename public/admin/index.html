@@ -9,11 +9,18 @@
   <body>
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
+      // Force external providers only (hide email/password)
       if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
+        window.netlifyIdentity.on('init', user => {
           if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              document.location.href = "/admin/";
+            window.netlifyIdentity.on('open', () => {
+              // Hide email/password fields if they exist
+              const style = document.createElement('style');
+              style.innerHTML = `
+                [data-react-class="SignupForm"] { display: none !important; }
+                .providerButtonList { margin-top: 0 !important; }
+              `;
+              document.head.appendChild(style);
             });
           }
         });
