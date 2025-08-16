@@ -8,7 +8,7 @@ import FadeIn from "@/components/animations/FadeIn";
 interface HomeContent {
   data: {
     aboutPreview?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   content: string;
 }

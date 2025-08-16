@@ -22,7 +22,7 @@ interface AboutData {
       content: string;
       image?: string;
     }>;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   content: string;
 }

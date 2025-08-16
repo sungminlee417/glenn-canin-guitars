@@ -16,7 +16,7 @@ interface Guitar {
     mainImage?: string;
     description?: string;
     featured?: boolean;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   content: string;
 }

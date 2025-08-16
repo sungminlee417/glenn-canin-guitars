@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Clock, CreditCard, Package, Palette, FileText, Users, Award, Shield } from 'lucide-react';
+import { CheckCircle, Clock, CreditCard, Package, Palette, FileText } from 'lucide-react';
 import FadeIn from "@/components/animations/FadeIn";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 

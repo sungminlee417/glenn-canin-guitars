@@ -9,7 +9,7 @@ interface HomeContent {
     heroTitle?: string;
     heroSubtitle?: string;
     heroImage?: string;
-    [key: string]: any;
+    [key: string]: unknown;
   };
   content: string;
 }
