@@ -81,6 +81,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
             className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
             {title}
@@ -96,6 +97,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
                 <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700">
@@ -107,6 +109,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                     className="text-stone-600 mb-4 leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
                   >
                     {paragraph}
@@ -136,6 +139,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                       "linear-gradient(135deg, #fde68a, #f59e0b, #d97706)",
                     ],
                   }}
+                  viewport={{ once: true }}
                   transition={{ duration: 8, repeat: Infinity }}
                 />
               )}
@@ -147,6 +151,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                       className="text-amber-700"
                       initial={{ scale: 0.8, opacity: 0 }}
                       whileInView={{ scale: 1, opacity: 1 }}
+                      viewport={{ once: true }}
                       transition={{ duration: 0.8, delay: 0.3 }}
                       whileHover={{ scale: 1.1, rotate: 5 }}
                     >
@@ -163,6 +168,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                           d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
                           initial={{ pathLength: 0 }}
                           whileInView={{ pathLength: 1 }}
+                          viewport={{ once: true }}
                           transition={{ duration: 2, delay: 0.5 }}
                         />
                       </svg>
@@ -173,11 +179,13 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                   <motion.div
                     className="absolute top-4 right-4 w-3 h-3 bg-amber-400 rounded-full"
                     whileInView={{ y: [0, -10, 0] }}
+                    viewport={{ once: true }}
                     transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
                   />
                   <motion.div
                     className="absolute bottom-8 left-6 w-2 h-2 bg-amber-500 rounded-full"
                     whileInView={{ y: [0, -8, 0] }}
+                    viewport={{ once: true }}
                     transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
                   />
                 </>
@@ -212,6 +220,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
             className="bg-gradient-to-br from-stone-100 to-amber-50 p-8 rounded-lg border border-amber-200 relative overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             whileHover={{ scale: 1.02 }}
           >
@@ -238,6 +247,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                       <motion.div
                         className="w-2 h-2 bg-amber-500 rounded-full"
                         whileInView={{ scale: [1, 1.2, 1] }}
+                        viewport={{ once: true }}
                         transition={{
                           duration: 2,
                           repeat: Infinity,

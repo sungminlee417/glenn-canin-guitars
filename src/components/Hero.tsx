@@ -94,7 +94,7 @@ export default function Hero({ homeContent }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <Link 
-            href="/gallery"
+            href="/for-sale"
             className="group relative px-8 py-4 bg-amber-600 text-white font-semibold rounded-lg overflow-hidden transition-all hover:shadow-2xl hover:shadow-amber-600/50"
           >
             <motion.span 
@@ -103,7 +103,7 @@ export default function Hero({ homeContent }: HeroProps) {
               whileHover={{ x: 0 }}
               transition={{ duration: 0.3 }}
             />
-            <span className="relative z-10">View Gallery</span>
+            <span className="relative z-10">View Guitars</span>
           </Link>
           
           <Link 

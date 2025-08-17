@@ -2,10 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 import FadeIn from "@/components/animations/FadeIn";
-import { SkeletonCard } from "@/components/ui/LoadingSpinner";
 
 interface Guitar {
   slug: string;
@@ -123,16 +122,6 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
 }
 
 export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuitarsProps) {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <section className="py-16 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
@@ -159,23 +148,11 @@ export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuit
           </motion.p>
         </FadeIn>
         
-        {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        ) : featuredGuitars.length > 0 ? (
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredGuitars.map((guitar, index) => (
-              <GuitarCard key={guitar.slug} guitar={guitar} index={index} />
-            ))}
-          </StaggerChildren>
-        ) : (
-          <div className="text-center py-12">
-            <p className="text-stone-600 text-lg">No featured guitars available at the moment.</p>
-          </div>
-        )}
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredGuitars.map((guitar, index) => (
+            <GuitarCard key={guitar.slug} guitar={guitar} index={index} />
+          ))}
+        </StaggerChildren>
         
         <FadeIn className="text-center mt-12">
           <motion.div
@@ -183,10 +160,10 @@ export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuit
             whileTap={{ scale: 0.95 }}
           >
             <Link
-              href="/gallery"
+              href="/for-sale"
               className="inline-block bg-gradient-to-r from-amber-600 to-amber-700 text-white px-8 py-3 rounded-md font-medium hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              View Full Gallery
+              View All Available Guitars
             </Link>
           </motion.div>
         </FadeIn>

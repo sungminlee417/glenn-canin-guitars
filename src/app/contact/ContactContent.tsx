@@ -138,18 +138,6 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
               </motion.div>
             </div>
 
-            {contactContent?.content && (
-              <motion.div 
-                className="mt-8 p-6 bg-amber-50 rounded-lg border border-amber-200"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.3 }}
-              >
-                <div 
-                  className="prose prose-stone prose-sm max-w-none"
-                  dangerouslySetInnerHTML={{ __html: contactContent.content }}
-                />
-              </motion.div>
-            )}
           </motion.div>
 
           <motion.div

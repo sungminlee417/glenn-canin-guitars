@@ -120,37 +120,9 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
   const featuredItems = galleryItems.filter(item => item.data.featured);
   const regularItems = galleryItems.filter(item => !item.data.featured);
 
-  // Sample data if no CMS gallery items available
-  const sampleItems: GalleryItem[] = [
-    {
-      slug: "sample-1",
-      data: {
-        title: "Cedar Doubletop #127",
-        category: "Finished Guitars",
-        image: "/images/guitar-1.jpg",
-        description: "Exceptional projection and warmth with cedar top and Indian rosewood back and sides.",
-        date: "2024-01-15",
-        featured: true,
-      },
-      content: "This instrument represents the pinnacle of classical guitar craftsmanship, combining traditional techniques with modern innovations for exceptional sound quality and playability."
-    },
-    {
-      slug: "sample-2",
-      data: {
-        title: "Hand Carving the Neck",
-        category: "Workshop",
-        image: "/images/workshop-carving.jpg",
-        description: "Glenn carefully shapes a guitar neck using traditional hand tools in his workshop.",
-        date: "2024-02-10",
-        featured: false,
-      },
-      content: "Each neck is carefully carved by hand to ensure perfect ergonomics and optimal playability for the musician."
-    }
-  ];
-
-  const displayItems = galleryItems.length > 0 ? galleryItems : sampleItems;
-  const displayFeatured = featuredItems.length > 0 ? featuredItems : sampleItems.filter(item => item.data.featured);
-  const displayRegular = regularItems.length > 0 ? regularItems : sampleItems.filter(item => !item.data.featured);
+  const displayItems = galleryItems;
+  const displayFeatured = featuredItems;
+  const displayRegular = regularItems;
 
   // Get unique categories for filtering
   const categories = Array.from(new Set(displayItems.map(item => item.data.category).filter(Boolean)));
@@ -231,21 +203,6 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
           ))}
         </StaggerChildren>
 
-        {/* No items available message */}
-        {galleryItems.length === 0 && (
-          <div className="text-center py-16">
-            <h2 className="text-2xl font-cinzel font-bold text-stone-900 mb-4">Gallery Coming Soon</h2>
-            <p className="text-stone-600 mb-8">We&apos;re currently curating our gallery collection. Check back soon for beautiful images of instruments and workshop moments.</p>
-            <motion.a
-              href="/contact"
-              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact Us
-            </motion.a>
-          </div>
-        )}
 
         {/* Modal */}
         <AnimatePresence>
@@ -347,19 +304,6 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                           </motion.div>
                         )}
                         
-                        {selectedItem.content && (
-                          <motion.div
-                            className="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-200"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 }}
-                          >
-                            <div 
-                              className="text-sm text-stone-600 leading-relaxed prose prose-stone max-w-none"
-                              dangerouslySetInnerHTML={{ __html: selectedItem.content }}
-                            />
-                          </motion.div>
-                        )}
                       </div>
                     </motion.div>
                   </div>

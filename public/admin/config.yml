@@ -236,3 +236,26 @@ collections:
               widget: "string",
               default: "Featured Guitars",
             }
+
+      - label: "Footer"
+        name: "footer"
+        file: "content/pages/footer.md"
+        fields:
+          - { label: "Company Name", name: "companyName", widget: "string", default: "Glenn Canin Guitars" }
+          - { label: "Description", name: "description", widget: "text", default: "Handcrafted concert classical guitars for professional musicians worldwide." }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Location", name: "location", widget: "string", default: "Santa Fe, New Mexico" }
+          - { label: "Location Note", name: "locationNote", widget: "string", default: "Visits by appointment only" }
+          - { label: "Established Year", name: "establishedYear", widget: "string", default: "1985" }
+          - { label: "Tagline", name: "tagline", widget: "string", default: "Handcrafted with passion" }
+          - { label: "Country", name: "country", widget: "string", default: "Made in USA" }
+          - label: "Social Media"
+            name: "socialMedia"
+            widget: "object"
+            collapsed: true
+            fields:
+              - { label: "Instagram", name: "instagram", widget: "string", required: false, hint: "Instagram username (without @)" }
+              - { label: "Facebook", name: "facebook", widget: "string", required: false, hint: "Facebook page URL or username" }
+              - { label: "YouTube", name: "youtube", widget: "string", required: false, hint: "YouTube channel URL" }
+              - { label: "Twitter/X", name: "twitter", widget: "string", required: false, hint: "Twitter/X username (without @)" }

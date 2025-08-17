@@ -69,44 +69,16 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
                   }}
                 />
               ) : (
-                <>
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px" }}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                  >
-                    For nearly four decades, I have dedicated myself to the art of
-                    crafting exceptional classical guitars. Each instrument
-                    represents a perfect balance between traditional Spanish
-                    guitar-making techniques and innovative modern approaches.
-                  </motion.p>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px" }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                  >
-                    My doubletop guitars are renowned for their powerful projection,
-                    rich tonal palette, and exceptional playability. Using carefully
-                    selected tonewoods and meticulous attention to detail, every
-                    guitar is built to inspire musicians and enhance their artistic
-                    expression.
-                  </motion.p>
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px" }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                  >
-                    From my workshop in the heart of the countryside, I work closely
-                    with professional musicians worldwide to create instruments that
-                    meet their exacting standards and help them achieve their
-                    musical goals.
-                  </motion.p>
-                </>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "0px" }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                >
+                  For nearly four decades, I have dedicated myself to crafting exceptional classical guitars. 
+                  Each instrument represents a perfect balance between traditional Spanish guitar-making 
+                  techniques and innovative modern approaches like doubletop construction.
+                </motion.p>
               )}
             </motion.div>
 

@@ -31,36 +31,9 @@ export default function VideosContent({ videos }: VideosContentProps) {
   const featuredVideos = videos.filter(video => video.data.featured);
   const regularVideos = videos.filter(video => !video.data.featured);
 
-  // Sample data if no CMS videos available
-  const sampleVideos = [
-    {
-      slug: "sample-1",
-      data: {
-        title: "Bach Suite No. 3 - Performed on Glenn Canin Double Top",
-        youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        description: "Professional guitarist demonstrates the tonal qualities of a 2023 Glenn Canin double top guitar.",
-        player: "John Williams",
-        date: "2024-01-15",
-        featured: true
-      },
-      content: ""
-    },
-    {
-      slug: "sample-2",
-      data: {
-        title: "Guitar Construction Process - Behind the Scenes",
-        youtubeUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        description: "Glenn Canin demonstrates the construction process of his double top guitars.",
-        player: "Glenn Canin",
-        date: "2024-03-10",
-        featured: true
-      },
-      content: ""
-    }
-  ];
 
-  const displayFeatured = featuredVideos.length > 0 ? featuredVideos : sampleVideos.filter(v => v.data.featured);
-  const displayRegular = regularVideos.length > 0 ? regularVideos : sampleVideos.filter(v => !v.data.featured);
+  const displayFeatured = featuredVideos;
+  const displayRegular = regularVideos;
 
   const extractVideoId = (url: string) => {
     const match = url?.match(/(?:youtube\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
@@ -239,21 +212,6 @@ export default function VideosContent({ videos }: VideosContentProps) {
           </FadeIn>
         )}
 
-        {/* No videos available message */}
-        {videos.length === 0 && (
-          <div className="text-center py-16">
-            <h2 className="text-2xl font-cinzel font-bold text-stone-900 mb-4">Video Gallery Coming Soon</h2>
-            <p className="text-stone-600 mb-8">We&apos;re currently building our video collection. Check back soon for performances and behind-the-scenes content.</p>
-            <motion.a
-              href="/contact"
-              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact Us
-            </motion.a>
-          </div>
-        )}
 
         <FadeIn className="mt-16">
           <motion.div 

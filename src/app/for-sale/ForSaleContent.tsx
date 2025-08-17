@@ -1,11 +1,11 @@
 'use client';
 
-import { ShoppingCart, Info } from 'lucide-react';
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import FadeIn from '@/components/animations/FadeIn';
-import StaggerChildren, { StaggerItem } from '@/components/animations/StaggerChildren';
-import OptimizedImage from '@/components/ui/OptimizedImage';
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Info, X } from "lucide-react";
+import FadeIn from "@/components/animations/FadeIn";
+import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
+import OptimizedImage from "@/components/ui/OptimizedImage";
 
 interface Guitar {
   slug: string;
@@ -16,8 +16,8 @@ interface Guitar {
     price?: string;
     mainImage?: string;
     description?: string;
-    available?: boolean;
     featured?: boolean;
+    available?: boolean;
     specifications?: {
       topWood?: string;
       backSides?: string;
@@ -39,200 +39,11 @@ interface ForSaleContentProps {
 export default function ForSaleContent({ guitars }: ForSaleContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
   
-
-  // Sample data if no CMS guitars available
-  const sampleGuitars = [
-    {
-      slug: "cedar-doubletop-127",
-      data: {
-        title: "Cedar Double Top #127",
-        model: "DT-2024-01",
-        year: 2024,
-        price: "$12,500",
-        mainImage: "/images/guitar-1.jpg",
-        description: "Exceptional projection and warmth with cedar top and Indian rosewood back and sides. This double top construction provides remarkable volume while maintaining the sweet, lyrical tone cedar is known for.",
-        featured: true,
-        available: true,
-        specifications: {
-          topWood: "Western Red Cedar",
-          backSides: "East Indian Rosewood",
-          neckWood: "Honduras Mahogany",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "French Polish"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "spruce-concert-126",
-      data: {
-        title: "European Spruce Concert #126",
-        model: "CC-2024-02",
-        year: 2024,
-        price: "$11,800",
-        mainImage: "/images/guitar-2.jpg",
-        description: "Traditional construction featuring European spruce top with Brazilian rosewood back and sides. Exceptional clarity and projection make this ideal for concert performance.",
-        featured: true,
-        available: true,
-        specifications: {
-          topWood: "European Spruce",
-          backSides: "Brazilian Rosewood",
-          neckWood: "Spanish Cedar",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "Shellac"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "redwood-doubletop-125",
-      data: {
-        title: "Redwood Double Top #125",
-        model: "DT-2023-03",
-        year: 2023,
-        price: "$13,200",
-        mainImage: "/images/guitar-3.jpg",
-        description: "Stunning redwood double top paired with Madagascar rosewood creates a guitar with incredible dynamic range and tonal complexity.",
-        featured: false,
-        available: true,
-        specifications: {
-          topWood: "California Redwood",
-          backSides: "Madagascar Rosewood",
-          neckWood: "Honduras Mahogany",
-          fingerboard: "Ebony",
-          scaleLength: "640mm",
-          nutWidth: "51mm",
-          finish: "French Polish"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "german-spruce-124",
-      data: {
-        title: "German Spruce Traditional #124",
-        model: "TR-2023-04",
-        year: 2023,
-        price: "$10,500",
-        mainImage: "/images/guitar-4.jpg",
-        description: "Classic traditional construction with German spruce top and Cocobolo back and sides. Perfect balance of power and sweetness.",
-        featured: false,
-        available: true,
-        specifications: {
-          topWood: "German Spruce",
-          backSides: "Cocobolo",
-          neckWood: "Spanish Cedar",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "Shellac"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "engelmann-blackwood-123",
-      data: {
-        title: "Engelmann Special Edition #123",
-        model: "SE-2023-05",
-        year: 2023,
-        price: "$14,500",
-        mainImage: "/images/guitar-5.jpg",
-        description: "Limited edition featuring Engelmann spruce top with African Blackwood back and sides. Exceptional clarity and sophisticated tone.",
-        featured: false,
-        available: true,
-        specifications: {
-          topWood: "Engelmann Spruce",
-          backSides: "African Blackwood",
-          neckWood: "Honduras Mahogany",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "French Polish"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "anniversary-ziricote-122",
-      data: {
-        title: "Anniversary Cedar #122",
-        model: "AN-2023-06",
-        year: 2023,
-        price: "$11,200",
-        mainImage: "/images/guitar-6.jpg",
-        description: "Anniversary model celebrating 20 years of craftsmanship. Cedar top with stunning Ziricote back and sides creates a guitar with unique visual appeal and rich tone.",
-        featured: false,
-        available: true,
-        specifications: {
-          topWood: "Western Red Cedar",
-          backSides: "Ziricote",
-          neckWood: "Spanish Cedar",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "French Polish"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "lutz-spruce-121",
-      data: {
-        title: "Lutz Spruce Double Top #121",
-        model: "DT-2023-07",
-        year: 2023,
-        price: "$13,800",
-        mainImage: "/images/guitar-7.jpg",
-        description: "Rare Lutz spruce double top construction with Indian rosewood back and sides. The Lutz spruce provides exceptional stiffness and projection while maintaining warmth.",
-        featured: false,
-        available: true,
-        specifications: {
-          topWood: "Lutz Spruce",
-          backSides: "East Indian Rosewood",
-          neckWood: "Honduras Mahogany",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "French Polish"
-        }
-      },
-      content: ""
-    },
-    {
-      slug: "master-grade-120",
-      data: {
-        title: "Master Grade Hauser #120",
-        model: "MG-2022-08",
-        year: 2022,
-        price: "$16,500",
-        mainImage: "/images/guitar-8.jpg",
-        description: "Master grade instrument inspired by Hermann Hauser Sr. European spruce top with flamed maple back and sides. Museum-quality craftsmanship.",
-        featured: true,
-        available: true,
-        specifications: {
-          topWood: "European Spruce (Master Grade)",
-          backSides: "Flamed European Maple",
-          neckWood: "Honduras Mahogany",
-          fingerboard: "Ebony",
-          scaleLength: "650mm",
-          nutWidth: "52mm",
-          finish: "Shellac"
-        }
-      },
-      content: ""
-    }
-  ];
-
   const featuredGuitars = guitars.filter(guitar => guitar.data.featured);
   const regularGuitars = guitars.filter(guitar => !guitar.data.featured);
   
-  const displayFeatured = featuredGuitars.length > 0 ? featuredGuitars : sampleGuitars.filter(g => g.data.featured);
-  const displayRegular = regularGuitars.length > 0 ? regularGuitars : sampleGuitars.filter(g => !g.data.featured);
+  const displayFeatured = featuredGuitars;
+  const displayRegular = regularGuitars;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
@@ -265,86 +76,13 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
         {displayFeatured.length > 0 && (
           <>
             <h2 className="text-3xl font-cinzel font-bold text-stone-900 mb-8 text-center">Featured Instruments</h2>
-            <StaggerChildren className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16" staggerDelay={0.15}>
-              {displayFeatured.map((guitar, index) => (
-                <StaggerItem key={guitar.slug}>
-                  <motion.div 
-                    className="bg-white rounded-lg shadow-lg overflow-hidden"
-                    whileHover={{ y: -2, scale: 1.01 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="md:flex">
-                      <div className="md:w-2/5">
-                        <div className="aspect-[3/4] bg-stone-200 relative overflow-hidden">
-                          <OptimizedImage 
-                            src={guitar.data.mainImage || "/images/guitar-placeholder.jpg"} 
-                            alt={guitar.data.title || "Guitar"}
-                            className="w-full h-full object-cover"
-                            priority={index === 0}
-                          />
-                        </div>
-                      </div>
-                      <div className="md:w-3/5 p-6">
-                        <div className="mb-4">
-                          <h2 className="text-2xl font-cinzel font-bold mb-1">{guitar.data.title}</h2>
-                          <p className="text-sm text-stone-500">Model: {guitar.data.model}</p>
-                        </div>
-                        
-                        <div className="text-3xl font-bold text-stone-900 mb-4">
-                          {guitar.data.price}
-                        </div>
-
-                        <p className="text-stone-600 mb-5 text-sm leading-relaxed">{guitar.data.description}</p>
-                        
-                        {guitar.data.specifications && (
-                          <div className="space-y-2 text-xs mb-5 bg-stone-50 p-4 rounded-lg">
-                            <div className="flex justify-between items-center">
-                              <span className="font-medium text-stone-700">Top:</span>
-                              <span className="text-stone-600 text-right">{guitar.data.specifications.topWood}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="font-medium text-stone-700">Back & Sides:</span>
-                              <span className="text-stone-600 text-right">{guitar.data.specifications.backSides}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="font-medium text-stone-700">Scale Length:</span>
-                              <span className="text-stone-600 text-right">{guitar.data.specifications.scaleLength}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="font-medium text-stone-700">Nut Width:</span>
-                              <span className="text-stone-600 text-right">{guitar.data.specifications.nutWidth}</span>
-                            </div>
-                          </div>
-                        )}
-                        
-                        <div className="flex gap-3">
-                          <motion.button 
-                            className="flex-1 bg-stone-900 text-white px-4 py-2.5 rounded-lg hover:bg-stone-800 transition-colors flex items-center justify-center text-sm font-medium"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            transition={{ duration: 0.1 }}
-                            onClick={() => {
-                              const email = `mailto:info@glenncanin.com?subject=Inquiry about ${guitar.data.title}&body=I'm interested in learning more about the ${guitar.data.title} (Model: ${guitar.data.model}) priced at ${guitar.data.price}.`;
-                              window.location.href = email;
-                            }}
-                          >
-                            <ShoppingCart className="w-4 h-4 mr-1.5" />
-                            Inquire
-                          </motion.button>
-                          <motion.button 
-                            className="px-4 py-2.5 border border-stone-300 rounded-lg hover:bg-stone-50 transition-colors text-sm font-medium"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                            transition={{ duration: 0.1 }}
-                            onClick={() => setSelectedGuitar(guitar)}
-                          >
-                            Details
-                          </motion.button>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </StaggerItem>
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {displayFeatured.map((guitar) => (
+                <GuitarCard
+                  key={guitar.slug}
+                  guitar={guitar}
+                  onClick={() => setSelectedGuitar(guitar)}
+                />
               ))}
             </StaggerChildren>
           </>
@@ -353,215 +91,190 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
         {/* Regular Guitars */}
         {displayRegular.length > 0 && (
           <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 mb-8 text-center">Available Guitars</h2>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerDelay={0.1}>
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 mb-8 text-center">Available Instruments</h2>
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {displayRegular.map((guitar) => (
-                <StaggerItem key={guitar.slug}>
-                  <motion.div 
-                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-                    whileHover={{ y: -4, scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <div className="aspect-[3/4] bg-stone-200 relative overflow-hidden">
-                      <OptimizedImage 
-                        src={guitar.data.mainImage || "/images/guitar-placeholder.jpg"} 
-                        alt={guitar.data.title || "Guitar"}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h3 className="text-lg font-cinzel font-semibold text-stone-900 mb-1">{guitar.data.title}</h3>
-                      <p className="text-sm text-amber-600 mb-2">{guitar.data.year}</p>
-                      <p className="text-xl font-bold text-stone-900 mb-2">{guitar.data.price}</p>
-                      <p className="text-stone-600 text-sm mb-4 line-clamp-2">{guitar.data.description}</p>
-                      
-                      <motion.button 
-                        className="w-full bg-stone-900 text-white px-4 py-2.5 rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium"
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ duration: 0.1 }}
-                        onClick={() => setSelectedGuitar(guitar)}
-                      >
-                        View Details
-                      </motion.button>
-                    </div>
-                  </motion.div>
-                </StaggerItem>
+                <GuitarCard
+                  key={guitar.slug}
+                  guitar={guitar}
+                  onClick={() => setSelectedGuitar(guitar)}
+                />
               ))}
             </StaggerChildren>
           </>
         )}
 
-        {/* No guitars available message */}
-        {guitars.length === 0 && (
-          <div className="text-center py-16">
-            <h2 className="text-2xl font-cinzel font-bold text-stone-900 mb-4">No Guitars Currently Available</h2>
-            <p className="text-stone-600 mb-8">Please check back soon or contact us about custom orders.</p>
-            <motion.a
-              href="/contact"
-              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+        {/* Modal */}
+        <AnimatePresence>
+          {selectedGuitar && (
+            <motion.div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" 
+              onClick={() => setSelectedGuitar(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
             >
-              Contact Us
-            </motion.a>
-          </div>
-        )}
-
-        {/* Purchase Information */}
-        <FadeIn delay={0.4} className="mt-16 bg-white rounded-lg shadow-sm p-8">
-          <h2 className="text-2xl font-cinzel mb-6 text-center">Purchase Information</h2>
-          <StaggerChildren className="grid md:grid-cols-3 gap-8" staggerDelay={0.2}>
-            <StaggerItem>
-              <div className="text-center">
-                <motion.div 
-                  className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ scale: 1.1, backgroundColor: "#f59e0b" }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.span 
-                    className="text-2xl font-bold text-amber-700"
-                    whileHover={{ color: "#ffffff" }}
-                  >
-                    1
-                  </motion.span>
-                </motion.div>
-                <h3 className="font-semibold mb-2">Trial Period</h3>
-                <p className="text-sm text-stone-600">All guitars come with a 7-day approval period in your home</p>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="text-center">
-                <motion.div 
-                  className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ scale: 1.1, backgroundColor: "#f59e0b" }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.span 
-                    className="text-2xl font-bold text-amber-700"
-                    whileHover={{ color: "#ffffff" }}
-                  >
-                    2
-                  </motion.span>
-                </motion.div>
-                <h3 className="font-semibold mb-2">Worldwide Shipping</h3>
-                <p className="text-sm text-stone-600">Secure, insured shipping available to any location</p>
-              </div>
-            </StaggerItem>
-            <StaggerItem>
-              <div className="text-center">
-                <motion.div 
-                  className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4"
-                  whileHover={{ scale: 1.1, backgroundColor: "#f59e0b" }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <motion.span 
-                    className="text-2xl font-bold text-amber-700"
-                    whileHover={{ color: "#ffffff" }}
-                  >
-                    3
-                  </motion.span>
-                </motion.div>
-                <h3 className="font-semibold mb-2">Lifetime Support</h3>
-                <p className="text-sm text-stone-600">Comprehensive warranty and ongoing support for all instruments</p>
-              </div>
-            </StaggerItem>
-          </StaggerChildren>
-        </FadeIn>
-      </div>
-
-      {/* Guitar Detail Modal */}
-      {selectedGuitar && (
-        <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setSelectedGuitar(null)}
-        >
-          <motion.div
-            className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.8, opacity: 0 }}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h2 className="font-cinzel text-2xl font-bold text-stone-900">{selectedGuitar.data.title}</h2>
-                  <p className="text-amber-600 font-medium">{selectedGuitar.data.model}</p>
-                </div>
-                <button
-                  onClick={() => setSelectedGuitar(null)}
-                  className="text-stone-500 hover:text-stone-700 text-2xl p-2 hover:bg-stone-100 rounded-full transition-colors"
-                >
-                  ✕
-                </button>
-              </div>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="relative h-96 rounded-lg overflow-hidden">
-                  <OptimizedImage
-                    src={selectedGuitar.data.mainImage || "/images/guitar-placeholder.jpg"}
-                    alt={selectedGuitar.data.title || "Guitar"}
-                    className="w-full h-full object-cover"
-                    priority
-                  />
-                </div>
-                
-                <div>
-                  <div className="space-y-4">
+              <motion.div 
+                className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" 
+                onClick={(e) => e.stopPropagation()}
+                initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="font-semibold text-lg mb-2 text-amber-700">Price</h3>
-                      <p className="text-2xl font-bold text-stone-900">{selectedGuitar.data.price}</p>
+                      <h2 className="font-cinzel text-2xl font-bold text-stone-900">
+                        {selectedGuitar.data.title}
+                      </h2>
+                      {selectedGuitar.data.model && (
+                        <p className="text-amber-600 font-medium mt-1">
+                          Model: {selectedGuitar.data.model}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => setSelectedGuitar(null)}
+                      className="text-stone-500 hover:text-stone-700 text-2xl p-2 hover:bg-stone-100 rounded-full transition-colors"
+                    >
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative h-96 rounded-lg overflow-hidden">
+                      <OptimizedImage
+                        src={selectedGuitar.data.mainImage || "/images/guitar-placeholder.jpg"}
+                        alt={selectedGuitar.data.title || "Guitar"}
+                        className="w-full h-full object-cover"
+                        priority
+                      />
                     </div>
                     
-                    {selectedGuitar.data.description && (
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2 text-amber-700">Description</h3>
-                        <p className="text-stone-600 leading-relaxed">{selectedGuitar.data.description}</p>
-                      </div>
-                    )}
-                    
-                    {selectedGuitar.data.specifications && (
-                      <div>
-                        <h3 className="font-semibold text-lg mb-2 text-amber-700">Specifications</h3>
-                        <div className="space-y-2 text-sm">
-                          {selectedGuitar.data.specifications.topWood && (
-                            <div className="flex justify-between">
-                              <span className="font-medium text-stone-700">Top:</span>
-                              <span className="text-stone-600">{selectedGuitar.data.specifications.topWood}</span>
-                            </div>
-                          )}
-                          {selectedGuitar.data.specifications.backSides && (
-                            <div className="flex justify-between">
-                              <span className="font-medium text-stone-700">Back & Sides:</span>
-                              <span className="text-stone-600">{selectedGuitar.data.specifications.backSides}</span>
-                            </div>
-                          )}
-                          {selectedGuitar.data.specifications.scaleLength && (
-                            <div className="flex justify-between">
-                              <span className="font-medium text-stone-700">Scale Length:</span>
-                              <span className="text-stone-600">{selectedGuitar.data.specifications.scaleLength}</span>
-                            </div>
-                          )}
-                          {selectedGuitar.data.specifications.nutWidth && (
-                            <div className="flex justify-between">
-                              <span className="font-medium text-stone-700">Nut Width:</span>
-                              <span className="text-stone-600">{selectedGuitar.data.specifications.nutWidth}</span>
-                            </div>
-                          )}
+                    <div className="space-y-4">
+                      {selectedGuitar.data.price && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Price</h3>
+                          <p className="text-2xl font-bold text-stone-900">{selectedGuitar.data.price}</p>
                         </div>
-                      </div>
-                    )}
+                      )}
+                      
+                      {selectedGuitar.data.year && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Year</h3>
+                          <p className="text-stone-600">{selectedGuitar.data.year}</p>
+                        </div>
+                      )}
+                      
+                      {selectedGuitar.data.description && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Description</h3>
+                          <p className="text-stone-600 leading-relaxed">{selectedGuitar.data.description}</p>
+                        </div>
+                      )}
+                      
+                      {selectedGuitar.data.specifications && (
+                        <div>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Specifications</h3>
+                          <div className="grid grid-cols-2 gap-3 text-sm">
+                            {Object.entries(selectedGuitar.data.specifications).map(([key, value]) => (
+                              value && (
+                                <div key={key}>
+                                  <span className="font-medium text-stone-700 capitalize">
+                                    {key.replace(/([A-Z])/g, ' $1').trim()}:
+                                  </span>
+                                  <br />
+                                  <span className="text-stone-600">{value}</span>
+                                </div>
+                              )
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 pt-6 border-t border-stone-200 text-center">
+                    <a
+                      href="/contact"
+                      className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+                    >
+                      Inquire About This Guitar
+                    </a>
                   </div>
                 </div>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </div>
+  );
+}
+
+interface GuitarCardProps {
+  guitar: Guitar;
+  onClick: () => void;
+}
+
+function GuitarCard({ guitar, onClick }: GuitarCardProps) {
+  return (
+    <StaggerItem>
+      <motion.div
+        className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer"
+        onClick={onClick}
+        whileHover={{ y: -8, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="relative h-64 overflow-hidden">
+          <OptimizedImage
+            src={guitar.data.mainImage || "/images/guitar-placeholder.jpg"}
+            alt={guitar.data.title || "Guitar"}
+            className="w-full h-full object-cover"
+          />
+          
+          {/* Featured badge */}
+          {guitar.data.featured && (
+            <div className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+              Featured
+            </div>
+          )}
+          
+          {/* Price badge */}
+          {guitar.data.price && (
+            <div className="absolute top-4 left-4 bg-stone-900 text-white px-3 py-2 rounded-lg font-bold">
+              {guitar.data.price}
+            </div>
+          )}
+          
+          {/* Overlay effect */}
+          <div className="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute bottom-4 left-4 text-white">
+              <span className="text-sm font-medium">Click to view details</span>
+            </div>
+          </div>
+        </div>
+        
+        <div className="p-6">
+          <h3 className="font-cinzel text-xl font-semibold text-stone-900 mb-2 group-hover:text-amber-600 transition-colors">
+            {guitar.data.title}
+          </h3>
+          {guitar.data.model && (
+            <p className="text-sm text-amber-600 mb-2 font-medium">
+              Model: {guitar.data.model}
+            </p>
+          )}
+          {guitar.data.year && (
+            <p className="text-sm text-stone-500 mb-3">
+              {guitar.data.year}
+            </p>
+          )}
+          <p className="text-sm text-stone-600 line-clamp-2">{guitar.data.description}</p>
+        </div>
+      </motion.div>
+    </StaggerItem>
   );
 }

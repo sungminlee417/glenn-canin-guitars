@@ -9,11 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "^14.2.15",
     "decap-cms-app": "^3.8.3",
     "framer-motion": "^12.23.12",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.539.0",
+    "marked": "^16.1.2",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

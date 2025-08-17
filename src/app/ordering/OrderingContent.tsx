@@ -135,23 +135,6 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
           </motion.div>
         </FadeIn>
 
-        {/* Display CMS content if available */}
-        {orderingContent?.content && (
-          <FadeIn className="mb-16">
-            <motion.div
-              className="bg-white rounded-lg shadow-sm p-8 border border-stone-200"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6 }}
-            >
-              <div 
-                className="prose prose-stone prose-lg max-w-none"
-                dangerouslySetInnerHTML={{ __html: orderingContent.content }}
-              />
-            </motion.div>
-          </FadeIn>
-        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <FadeIn>

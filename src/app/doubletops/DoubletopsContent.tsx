@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
-import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
+import StaggerChildren, {
+  StaggerItem,
+} from "@/components/animations/StaggerChildren";
 import OptimizedImage from "@/components/ui/OptimizedImage";
 import { useState } from "react";
 import { ShoppingCart } from "lucide-react";
@@ -41,10 +43,11 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
 
   // Filter for double top guitars
-  const doubletopGuitars = guitars.filter(guitar => 
-    guitar.data.isDoubletop || 
-    guitar.data.title?.toLowerCase().includes('doubletop') ||
-    guitar.data.title?.toLowerCase().includes('double top')
+  const doubletopGuitars = guitars.filter(
+    (guitar) =>
+      guitar.data.isDoubletop ||
+      guitar.data.title?.toLowerCase().includes("doubletop") ||
+      guitar.data.title?.toLowerCase().includes("double top")
   );
 
   const benefits = [
@@ -180,14 +183,17 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {doubletopGuitars.map((guitar) => (
                 <StaggerItem key={guitar.slug}>
-                  <motion.div 
+                  <motion.div
                     className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
                     whileHover={{ y: -4, scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
                     <div className="aspect-[3/4] bg-stone-200 relative overflow-hidden">
-                      <OptimizedImage 
-                        src={guitar.data.mainImage || "/images/guitar-placeholder.jpg"} 
+                      <OptimizedImage
+                        src={
+                          guitar.data.mainImage ||
+                          "/images/guitar-placeholder.jpg"
+                        }
                         alt={guitar.data.title || "Guitar"}
                         className="w-full h-full object-cover"
                       />
@@ -196,13 +202,21 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                       </div>
                     </div>
                     <div className="p-4">
-                      <h3 className="text-lg font-cinzel font-semibold text-stone-900 mb-1">{guitar.data.title}</h3>
-                      <p className="text-sm text-amber-600 mb-2">{guitar.data.year}</p>
-                      <p className="text-xl font-bold text-stone-900 mb-2">{guitar.data.price}</p>
-                      <p className="text-stone-600 text-sm mb-4 line-clamp-2">{guitar.data.description}</p>
-                      
+                      <h3 className="text-lg font-cinzel font-semibold text-stone-900 mb-1">
+                        {guitar.data.title}
+                      </h3>
+                      <p className="text-sm text-amber-600 mb-2">
+                        {guitar.data.year}
+                      </p>
+                      <p className="text-xl font-bold text-stone-900 mb-2">
+                        {guitar.data.price}
+                      </p>
+                      <p className="text-stone-600 text-sm mb-4 line-clamp-2">
+                        {guitar.data.description}
+                      </p>
+
                       <div className="flex gap-2">
-                        <motion.button 
+                        <motion.button
                           className="flex-1 bg-stone-900 text-white px-4 py-2.5 rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium flex items-center justify-center"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
@@ -215,7 +229,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                           <ShoppingCart className="w-4 h-4 mr-1.5" />
                           Inquire
                         </motion.button>
-                        <motion.button 
+                        <motion.button
                           className="px-4 py-2.5 border border-stone-300 rounded-lg hover:bg-stone-50 transition-colors text-sm font-medium"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
@@ -231,67 +245,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               ))}
             </StaggerChildren>
           </FadeIn>
-        ) : (
-          <FadeIn>
-            <motion.div
-              className="text-center py-12 bg-amber-50 rounded-lg border border-amber-200"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.div
-                className="flex justify-center mb-6"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                <svg
-                  className="w-16 h-16 text-amber-600"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM21 16c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM7 9l12-3"
-                  />
-                </svg>
-              </motion.div>
-              <motion.h3
-                className="text-2xl font-cinzel font-bold text-stone-900 mb-4"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                No Double Top Guitars Currently Available
-              </motion.h3>
-              <motion.p
-                className="text-stone-600 text-lg mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                Please check back soon or contact us about commissioning a custom double top guitar.
-              </motion.p>
-              <motion.a
-                href="/ordering"
-                className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors mr-4"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Commission a Guitar
-              </motion.a>
-              <motion.a
-                href="/gallery"
-                className="inline-block bg-stone-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-stone-800 transition-colors"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                View Gallery
-              </motion.a>
-            </motion.div>
-          </FadeIn>
-        )}
+        ) : null}
 
         {/* Guitar Detail Modal */}
         {selectedGuitar && (
@@ -312,8 +266,12 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h2 className="font-cinzel text-2xl font-bold text-stone-900">{selectedGuitar.data.title}</h2>
-                    <p className="text-amber-600 font-medium">Double Top Construction</p>
+                    <h2 className="font-cinzel text-2xl font-bold text-stone-900">
+                      {selectedGuitar.data.title}
+                    </h2>
+                    <p className="text-amber-600 font-medium">
+                      Double Top Construction
+                    </p>
                   </div>
                   <button
                     onClick={() => setSelectedGuitar(null)}
@@ -322,57 +280,89 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                     ✕
                   </button>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="relative h-96 rounded-lg overflow-hidden">
                     <OptimizedImage
-                      src={selectedGuitar.data.mainImage || "/images/guitar-placeholder.jpg"}
+                      src={
+                        selectedGuitar.data.mainImage ||
+                        "/images/guitar-placeholder.jpg"
+                      }
                       alt={selectedGuitar.data.title || "Guitar"}
                       className="w-full h-full object-cover"
                       priority
                     />
                   </div>
-                  
+
                   <div>
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-lg mb-2 text-amber-700">Price</h3>
-                        <p className="text-2xl font-bold text-stone-900">{selectedGuitar.data.price}</p>
+                        <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                          Price
+                        </h3>
+                        <p className="text-2xl font-bold text-stone-900">
+                          {selectedGuitar.data.price}
+                        </p>
                       </div>
-                      
+
                       {selectedGuitar.data.description && (
                         <div>
-                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Description</h3>
-                          <p className="text-stone-600 leading-relaxed">{selectedGuitar.data.description}</p>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                            Description
+                          </h3>
+                          <p className="text-stone-600 leading-relaxed">
+                            {selectedGuitar.data.description}
+                          </p>
                         </div>
                       )}
-                      
+
                       {selectedGuitar.data.specifications && (
                         <div>
-                          <h3 className="font-semibold text-lg mb-2 text-amber-700">Specifications</h3>
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                            Specifications
+                          </h3>
                           <div className="space-y-2 text-sm">
                             {selectedGuitar.data.specifications.topWood && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">Top:</span>
-                                <span className="text-stone-600">{selectedGuitar.data.specifications.topWood}</span>
+                                <span className="font-medium text-stone-700">
+                                  Top:
+                                </span>
+                                <span className="text-stone-600">
+                                  {selectedGuitar.data.specifications.topWood}
+                                </span>
                               </div>
                             )}
                             {selectedGuitar.data.specifications.backSides && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">Back & Sides:</span>
-                                <span className="text-stone-600">{selectedGuitar.data.specifications.backSides}</span>
+                                <span className="font-medium text-stone-700">
+                                  Back & Sides:
+                                </span>
+                                <span className="text-stone-600">
+                                  {selectedGuitar.data.specifications.backSides}
+                                </span>
                               </div>
                             )}
                             {selectedGuitar.data.specifications.scaleLength && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">Scale Length:</span>
-                                <span className="text-stone-600">{selectedGuitar.data.specifications.scaleLength}</span>
+                                <span className="font-medium text-stone-700">
+                                  Scale Length:
+                                </span>
+                                <span className="text-stone-600">
+                                  {
+                                    selectedGuitar.data.specifications
+                                      .scaleLength
+                                  }
+                                </span>
                               </div>
                             )}
                             {selectedGuitar.data.specifications.nutWidth && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">Nut Width:</span>
-                                <span className="text-stone-600">{selectedGuitar.data.specifications.nutWidth}</span>
+                                <span className="font-medium text-stone-700">
+                                  Nut Width:
+                                </span>
+                                <span className="text-stone-600">
+                                  {selectedGuitar.data.specifications.nutWidth}
+                                </span>
                               </div>
                             )}
                           </div>

@@ -16,16 +16,41 @@ hours: |
 
 # Get in Touch
 
-Whether you're interested in commissioning a custom guitar, scheduling a workshop visit, or have questions about our instruments, we'd love to hear from you.
+Whether you're interested in commissioning a custom guitar or have questions about our instruments, **we'd love to hear from you**.
+
+---
 
 ## Workshop Visits
 
-We welcome visitors to our workshop by appointment. This is a wonderful opportunity to see guitars in various stages of construction, discuss custom options, and try completed instruments.
+Experience the craftsmanship firsthand with a **personal workshop tour**:
 
-## Commissioning a Guitar
+- See guitars in construction at every stage
+- Try completed instruments 
+- Discuss custom options for your playing style
+- **Duration**: 60-90 minutes, by appointment only
 
-The process of commissioning a custom guitar begins with a conversation about your needs and preferences. We'll discuss wood choices, specifications, and timeline to create an instrument perfectly suited to you.
+---
 
-## Repairs and Restoration
+## Custom Guitar Consultation
 
-In addition to building new instruments, we offer repair and restoration services for classical guitars. Please contact us to discuss your instrument's needs.
+Starting a custom guitar project begins with a **complimentary consultation** where we'll discuss:
+
+- Your musical style and sound preferences
+- Wood selections and specifications
+- Timeline and investment details
+
+---
+
+## Repair & Restoration
+
+We offer expert restoration services for classical guitars:
+
+- **Structural repairs** (cracks, neck resets, bridge work)
+- **Cosmetic restoration** (refinishing, binding replacement)
+- **Professional setups** and maintenance
+
+Contact us with photos for an initial assessment.
+
+---
+
+**Ready to connect?** Use the contact form, email, or call during workshop hours.
