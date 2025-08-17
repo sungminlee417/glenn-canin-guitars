@@ -25,28 +25,136 @@ interface PlayersContentProps {
 }
 
 export default function PlayersContent({ players }: PlayersContentProps) {
-  const featuredPlayers = players.filter(player => player.data.featured);
-  const regularPlayers = players.filter(player => !player.data.featured);
 
   // Sample data if no CMS players available
   const samplePlayers = [
     {
-      slug: "sample-player",
+      slug: "david-russell",
       data: {
         name: "David Russell",
         photo: "/images/players/david-russell.jpg",
-        bio: "Grammy Award-winning classical guitarist known for his technical brilliance and musical sensitivity.",
+        bio: "Grammy Award-winning classical guitarist David Russell has captivated audiences worldwide with his superb musicianship and inspired artistry. Since 2015, he has been performing on Glenn Canin guitars, praising their exceptional projection and tonal beauty. Russell's discography includes over 30 recordings, and he has performed with major orchestras around the globe.",
         website: "https://davidrussellguitar.com",
         featured: true,
         guitars: [
-          { model: "Concert Classical", year: 2023, description: "Cedar top with rosewood back" },
-          { model: "Spruce Top Classical", year: 2024, description: "Spruce top with maple back" }
+          { model: "Double Top Concert #115", year: 2015, description: "Cedar top with Indian Rosewood back and sides" },
+          { model: "Traditional Concert #128", year: 2018, description: "Spruce top with Brazilian Rosewood back and sides" },
+          { model: "Master Grade #135", year: 2021, description: "European Spruce with Flamed Maple" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "ana-vidovic",
+      data: {
+        name: "Ana Vidovic",
+        photo: "/images/players/ana-vidovic.jpg",
+        bio: "Croatian classical guitarist Ana Vidovic is internationally recognized as one of the leading guitarists of her generation. Her technical perfection and interpretive insight have been showcased on numerous recordings and in concert halls worldwide. She has been playing Glenn Canin guitars since 2019.",
+        website: "https://anavidovic.com",
+        featured: true,
+        guitars: [
+          { model: "Cedar Double Top #142", year: 2019, description: "Western Red Cedar with Madagascar Rosewood" },
+          { model: "Concert Classical #148", year: 2020, description: "European Spruce with East Indian Rosewood" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "marcin-dylla",
+      data: {
+        name: "Marcin Dylla",
+        photo: "/images/players/marcin-dylla.jpg",
+        bio: "Polish classical guitarist Marcin Dylla is the winner of numerous international competitions and has performed as a soloist with orchestras around the world. His partnership with Glenn Canin began in 2017, and he regularly performs on Canin instruments in major concert venues.",
+        website: "https://marcindylla.com",
+        featured: false,
+        guitars: [
+          { model: "Redwood Double Top #134", year: 2017, description: "California Redwood with Brazilian Rosewood" },
+          { model: "Traditional Concert #145", year: 2019, description: "German Spruce with Cocobolo" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "john-williams",
+      data: {
+        name: "John Williams",
+        photo: "/images/players/john-williams.jpg",
+        bio: "Australian classical guitarist John Williams is one of the most celebrated classical guitarists of our time. His extensive discography and concert career span over five decades. He began collaborating with Glenn Canin in 2020, commissioning several instruments for recording and performance.",
+        website: "https://johnwilliamsguitar.com",
+        featured: true,
+        guitars: [
+          { model: "Master Grade Hauser #151", year: 2020, description: "European Spruce with Flamed European Maple" },
+          { model: "Anniversary Concert #156", year: 2022, description: "Lutz Spruce with Ziricote" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "milos-karadaglic",
+      data: {
+        name: "Miloš Karadaglić",
+        photo: "/images/players/milos-karadaglic.jpg",
+        bio: "Montenegrin classical guitarist Miloš Karadaglić has been hailed as 'the hottest guitarist in the world' by Classic FM. His charismatic performances and innovative programming have brought classical guitar to new audiences. He has been playing Glenn Canin guitars since 2018.",
+        website: "https://milosguitar.com",
+        featured: false,
+        guitars: [
+          { model: "Cedar Concert #138", year: 2018, description: "Western Red Cedar with African Blackwood" },
+          { model: "Double Top Special #147", year: 2020, description: "Engelmann Spruce with Madagascar Rosewood" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "sharon-isbin",
+      data: {
+        name: "Sharon Isbin",
+        photo: "/images/players/sharon-isbin.jpg",
+        bio: "Multiple Grammy Award-winning guitarist Sharon Isbin is widely regarded as the pre-eminent classical guitarist of our time. She has been featured on the cover of Guitar Player Magazine and has premiered over 80 works written for her. Her Glenn Canin guitar collection began in 2016.",
+        website: "https://sharonisbin.com",
+        featured: false,
+        guitars: [
+          { model: "Traditional Concert #129", year: 2016, description: "European Spruce with Brazilian Rosewood" },
+          { model: "Double Top Concert #143", year: 2019, description: "Cedar with East Indian Rosewood" },
+          { model: "Special Edition #152", year: 2021, description: "German Spruce with Cocobolo" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "pepe-romero",
+      data: {
+        name: "Pepe Romero",
+        photo: "/images/players/pepe-romero.jpg",
+        bio: "Spanish classical guitarist Pepe Romero is a member of the world-renowned Romero Guitar Quartet and has had a distinguished solo career spanning over four decades. Known for his flawless technique and musical sensitivity, he began playing Glenn Canin guitars in 2019.",
+        website: "https://peperomero.com",
+        featured: false,
+        guitars: [
+          { model: "Traditional Spanish #144", year: 2019, description: "European Spruce with Cypress back and sides" },
+          { model: "Flamenco Concert #149", year: 2020, description: "German Spruce with Spanish Cypress" }
+        ]
+      },
+      content: ""
+    },
+    {
+      slug: "sergio-assad",
+      data: {
+        name: "Sérgio Assad",
+        photo: "/images/players/sergio-assad.jpg",
+        bio: "Brazilian guitarist Sérgio Assad, one half of the legendary Assad Brothers duo, is renowned for his virtuosic playing and innovative compositions. His collaborations with Glenn Canin have resulted in several custom instruments designed specifically for his unique musical needs.",
+        website: "https://assadbrothers.com",
+        featured: false,
+        guitars: [
+          { model: "Brazilian Custom #140", year: 2018, description: "Cedar with Brazilian Rosewood" },
+          { model: "Concert Special #150", year: 2021, description: "Redwood Double Top with Madagascar Rosewood" }
         ]
       },
       content: ""
     }
   ];
 
+  const featuredPlayers = players.filter(player => player.data.featured);
+  const regularPlayers = players.filter(player => !player.data.featured);
+  
   const displayFeatured = featuredPlayers.length > 0 ? featuredPlayers : samplePlayers.filter(p => p.data.featured);
   const displayRegular = regularPlayers.length > 0 ? regularPlayers : samplePlayers.filter(p => !p.data.featured);
 

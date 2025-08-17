@@ -39,26 +39,24 @@ interface ForSaleContentProps {
 export default function ForSaleContent({ guitars }: ForSaleContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
   
-  const featuredGuitars = guitars.filter(guitar => guitar.data.featured);
-  const regularGuitars = guitars.filter(guitar => !guitar.data.featured);
 
   // Sample data if no CMS guitars available
   const sampleGuitars = [
     {
-      slug: "sample-1",
+      slug: "cedar-doubletop-127",
       data: {
         title: "Cedar Double Top #127",
         model: "DT-2024-01",
         year: 2024,
         price: "$12,500",
         mainImage: "/images/guitar-1.jpg",
-        description: "Exceptional projection and warmth with cedar top and Indian rosewood back and sides.",
+        description: "Exceptional projection and warmth with cedar top and Indian rosewood back and sides. This double top construction provides remarkable volume while maintaining the sweet, lyrical tone cedar is known for.",
         featured: true,
         available: true,
         specifications: {
-          topWood: "Cedar",
-          backSides: "Indian Rosewood",
-          neckWood: "Mahogany",
+          topWood: "Western Red Cedar",
+          backSides: "East Indian Rosewood",
+          neckWood: "Honduras Mahogany",
           fingerboard: "Ebony",
           scaleLength: "650mm",
           nutWidth: "52mm",
@@ -66,9 +64,173 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
         }
       },
       content: ""
+    },
+    {
+      slug: "spruce-concert-126",
+      data: {
+        title: "European Spruce Concert #126",
+        model: "CC-2024-02",
+        year: 2024,
+        price: "$11,800",
+        mainImage: "/images/guitar-2.jpg",
+        description: "Traditional construction featuring European spruce top with Brazilian rosewood back and sides. Exceptional clarity and projection make this ideal for concert performance.",
+        featured: true,
+        available: true,
+        specifications: {
+          topWood: "European Spruce",
+          backSides: "Brazilian Rosewood",
+          neckWood: "Spanish Cedar",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "Shellac"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "redwood-doubletop-125",
+      data: {
+        title: "Redwood Double Top #125",
+        model: "DT-2023-03",
+        year: 2023,
+        price: "$13,200",
+        mainImage: "/images/guitar-3.jpg",
+        description: "Stunning redwood double top paired with Madagascar rosewood creates a guitar with incredible dynamic range and tonal complexity.",
+        featured: false,
+        available: true,
+        specifications: {
+          topWood: "California Redwood",
+          backSides: "Madagascar Rosewood",
+          neckWood: "Honduras Mahogany",
+          fingerboard: "Ebony",
+          scaleLength: "640mm",
+          nutWidth: "51mm",
+          finish: "French Polish"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "german-spruce-124",
+      data: {
+        title: "German Spruce Traditional #124",
+        model: "TR-2023-04",
+        year: 2023,
+        price: "$10,500",
+        mainImage: "/images/guitar-4.jpg",
+        description: "Classic traditional construction with German spruce top and Cocobolo back and sides. Perfect balance of power and sweetness.",
+        featured: false,
+        available: true,
+        specifications: {
+          topWood: "German Spruce",
+          backSides: "Cocobolo",
+          neckWood: "Spanish Cedar",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "Shellac"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "engelmann-blackwood-123",
+      data: {
+        title: "Engelmann Special Edition #123",
+        model: "SE-2023-05",
+        year: 2023,
+        price: "$14,500",
+        mainImage: "/images/guitar-5.jpg",
+        description: "Limited edition featuring Engelmann spruce top with African Blackwood back and sides. Exceptional clarity and sophisticated tone.",
+        featured: false,
+        available: true,
+        specifications: {
+          topWood: "Engelmann Spruce",
+          backSides: "African Blackwood",
+          neckWood: "Honduras Mahogany",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "French Polish"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "anniversary-ziricote-122",
+      data: {
+        title: "Anniversary Cedar #122",
+        model: "AN-2023-06",
+        year: 2023,
+        price: "$11,200",
+        mainImage: "/images/guitar-6.jpg",
+        description: "Anniversary model celebrating 20 years of craftsmanship. Cedar top with stunning Ziricote back and sides creates a guitar with unique visual appeal and rich tone.",
+        featured: false,
+        available: true,
+        specifications: {
+          topWood: "Western Red Cedar",
+          backSides: "Ziricote",
+          neckWood: "Spanish Cedar",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "French Polish"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "lutz-spruce-121",
+      data: {
+        title: "Lutz Spruce Double Top #121",
+        model: "DT-2023-07",
+        year: 2023,
+        price: "$13,800",
+        mainImage: "/images/guitar-7.jpg",
+        description: "Rare Lutz spruce double top construction with Indian rosewood back and sides. The Lutz spruce provides exceptional stiffness and projection while maintaining warmth.",
+        featured: false,
+        available: true,
+        specifications: {
+          topWood: "Lutz Spruce",
+          backSides: "East Indian Rosewood",
+          neckWood: "Honduras Mahogany",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "French Polish"
+        }
+      },
+      content: ""
+    },
+    {
+      slug: "master-grade-120",
+      data: {
+        title: "Master Grade Hauser #120",
+        model: "MG-2022-08",
+        year: 2022,
+        price: "$16,500",
+        mainImage: "/images/guitar-8.jpg",
+        description: "Master grade instrument inspired by Hermann Hauser Sr. European spruce top with flamed maple back and sides. Museum-quality craftsmanship.",
+        featured: true,
+        available: true,
+        specifications: {
+          topWood: "European Spruce (Master Grade)",
+          backSides: "Flamed European Maple",
+          neckWood: "Honduras Mahogany",
+          fingerboard: "Ebony",
+          scaleLength: "650mm",
+          nutWidth: "52mm",
+          finish: "Shellac"
+        }
+      },
+      content: ""
     }
   ];
 
+  const featuredGuitars = guitars.filter(guitar => guitar.data.featured);
+  const regularGuitars = guitars.filter(guitar => !guitar.data.featured);
+  
   const displayFeatured = featuredGuitars.length > 0 ? featuredGuitars : sampleGuitars.filter(g => g.data.featured);
   const displayRegular = regularGuitars.length > 0 ? regularGuitars : sampleGuitars.filter(g => !g.data.featured);
 
