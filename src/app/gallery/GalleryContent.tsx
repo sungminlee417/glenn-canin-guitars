@@ -1,0 +1,374 @@
+'use client';
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import FadeIn from "@/components/animations/FadeIn";
+import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
+import OptimizedImage from "@/components/ui/OptimizedImage";
+
+interface GalleryItem {
+  slug: string;
+  data: {
+    title?: string;
+    category?: string;
+    image?: string;
+    description?: string;
+    date?: string;
+    featured?: boolean;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
+interface GalleryContentProps {
+  galleryItems: GalleryItem[];
+}
+
+interface GalleryCardProps {
+  item: GalleryItem;
+  onClick: () => void;
+}
+
+function GalleryCard({ item, onClick }: GalleryCardProps) {
+  return (
+    <StaggerItem>
+      <motion.div
+        className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer"
+        onClick={onClick}
+        whileHover={{ y: -8, scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ duration: 0.3 }}
+      >
+        <div className="relative h-64 overflow-hidden">
+          <OptimizedImage
+            src={item.data.image || "/images/gallery-placeholder.jpg"}
+            alt={item.data.title || "Gallery item"}
+            className="w-full h-full object-cover"
+          />
+          
+          {/* Category badge */}
+          {item.data.category && (
+            <motion.div
+              className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+            >
+              {item.data.category}
+            </motion.div>
+          )}
+
+          {/* Featured badge */}
+          {item.data.featured && (
+            <motion.div
+              className="absolute top-4 right-4 bg-stone-900 text-white px-3 py-1 rounded-full text-sm font-medium"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.3 }}
+            >
+              Featured
+            </motion.div>
+          )}
+          
+          {/* Overlay effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            initial={{ opacity: 0 }}
+            whileHover={{ opacity: 1 }}
+          >
+            <div className="absolute bottom-4 left-4 text-white">
+              <motion.span
+                className="text-sm font-medium"
+                initial={{ y: 20, opacity: 0 }}
+                whileHover={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+              >
+                Click to view details
+              </motion.span>
+            </div>
+          </motion.div>
+        </div>
+        
+        <motion.div 
+          className="p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <h3 className="font-cinzel text-xl font-semibold text-stone-900 mb-2 group-hover:text-amber-600 transition-colors">
+            {item.data.title}
+          </h3>
+          {item.data.date && (
+            <p className="text-sm text-amber-600 mb-3 font-medium">
+              {new Date(item.data.date).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}
+            </p>
+          )}
+          <p className="text-sm text-stone-600 line-clamp-2">{item.data.description}</p>
+        </motion.div>
+      </motion.div>
+    </StaggerItem>
+  );
+}
+
+export default function GalleryContent({ galleryItems }: GalleryContentProps) {
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+
+  const featuredItems = galleryItems.filter(item => item.data.featured);
+  const regularItems = galleryItems.filter(item => !item.data.featured);
+
+  // Sample data if no CMS gallery items available
+  const sampleItems: GalleryItem[] = [
+    {
+      slug: "sample-1",
+      data: {
+        title: "Cedar Doubletop #127",
+        category: "Finished Guitars",
+        image: "/images/guitar-1.jpg",
+        description: "Exceptional projection and warmth with cedar top and Indian rosewood back and sides.",
+        date: "2024-01-15",
+        featured: true,
+      },
+      content: "This instrument represents the pinnacle of classical guitar craftsmanship, combining traditional techniques with modern innovations for exceptional sound quality and playability."
+    },
+    {
+      slug: "sample-2",
+      data: {
+        title: "Hand Carving the Neck",
+        category: "Workshop",
+        image: "/images/workshop-carving.jpg",
+        description: "Glenn carefully shapes a guitar neck using traditional hand tools in his workshop.",
+        date: "2024-02-10",
+        featured: false,
+      },
+      content: "Each neck is carefully carved by hand to ensure perfect ergonomics and optimal playability for the musician."
+    }
+  ];
+
+  const displayItems = galleryItems.length > 0 ? galleryItems : sampleItems;
+  const displayFeatured = featuredItems.length > 0 ? featuredItems : sampleItems.filter(item => item.data.featured);
+  const displayRegular = regularItems.length > 0 ? regularItems : sampleItems.filter(item => !item.data.featured);
+
+  // Get unique categories for filtering
+  const categories = Array.from(new Set(displayItems.map(item => item.data.category).filter(Boolean)));
+
+  return (
+    <div className="py-16 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
+      
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <FadeIn className="text-center mb-12">
+          <motion.h1 
+            className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 mb-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            Gallery
+          </motion.h1>
+          
+          <motion.p 
+            className="text-lg text-stone-600 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            Explore the artistry behind Glenn Canin guitars - from finished instruments to 
+            workshop moments that capture the craftsmanship process.
+          </motion.p>
+        </FadeIn>
+
+        {/* Featured Items */}
+        {displayFeatured.length > 0 && (
+          <>
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 mb-8 text-center">Featured</h2>
+            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+              {displayFeatured.map((item) => (
+                <GalleryCard
+                  key={item.slug}
+                  item={item}
+                  onClick={() => setSelectedItem(item)}
+                />
+              ))}
+            </StaggerChildren>
+          </>
+        )}
+
+        {/* Categories */}
+        {categories.length > 0 && (
+          <motion.div 
+            className="mb-8 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((category) => (
+                <span 
+                  key={category}
+                  className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        )}
+
+        {/* All Items */}
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {displayRegular.map((item) => (
+            <GalleryCard
+              key={item.slug}
+              item={item}
+              onClick={() => setSelectedItem(item)}
+            />
+          ))}
+        </StaggerChildren>
+
+        {/* No items available message */}
+        {galleryItems.length === 0 && (
+          <div className="text-center py-16">
+            <h2 className="text-2xl font-cinzel font-bold text-stone-900 mb-4">Gallery Coming Soon</h2>
+            <p className="text-stone-600 mb-8">We&apos;re currently curating our gallery collection. Check back soon for beautiful images of instruments and workshop moments.</p>
+            <motion.a
+              href="/contact"
+              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Contact Us
+            </motion.a>
+          </div>
+        )}
+
+        {/* Modal */}
+        <AnimatePresence>
+          {selectedItem && (
+            <motion.div 
+              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" 
+              onClick={() => setSelectedItem(null)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <motion.div 
+                className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" 
+                onClick={(e) => e.stopPropagation()}
+                initial={{ scale: 0.8, opacity: 0, y: 50 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.8, opacity: 0, y: 50 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+              >
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <div>
+                      <motion.h2 
+                        className="font-cinzel text-2xl font-bold text-stone-900"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
+                        {selectedItem.data.title}
+                      </motion.h2>
+                      {selectedItem.data.category && (
+                        <motion.p
+                          className="text-amber-600 font-medium mt-1"
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.15 }}
+                        >
+                          {selectedItem.data.category}
+                        </motion.p>
+                      )}
+                    </div>
+                    <motion.button
+                      onClick={() => setSelectedItem(null)}
+                      className="text-stone-500 hover:text-stone-700 text-2xl p-2 hover:bg-stone-100 rounded-full transition-colors"
+                      whileHover={{ scale: 1.1, rotate: 90 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      ✕
+                    </motion.button>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <motion.div 
+                      className="relative h-96 rounded-lg overflow-hidden"
+                      initial={{ opacity: 0, x: -30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      <OptimizedImage
+                        src={selectedItem.data.image || "/images/gallery-placeholder.jpg"}
+                        alt={selectedItem.data.title || "Gallery item"}
+                        className="w-full h-full object-cover"
+                        priority
+                      />
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <div className="space-y-4">
+                        {selectedItem.data.date && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                          >
+                            <h3 className="font-semibold text-lg mb-2 text-amber-700">Date</h3>
+                            <p className="text-stone-600">
+                              {new Date(selectedItem.data.date).toLocaleDateString('en-US', { 
+                                year: 'numeric', 
+                                month: 'long', 
+                                day: 'numeric' 
+                              })}
+                            </p>
+                          </motion.div>
+                        )}
+                        
+                        {selectedItem.data.description && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.5 }}
+                          >
+                            <h3 className="font-semibold text-lg mb-2 text-amber-700">Description</h3>
+                            <p className="text-stone-600 leading-relaxed">{selectedItem.data.description}</p>
+                          </motion.div>
+                        )}
+                        
+                        {selectedItem.content && (
+                          <motion.div
+                            className="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-200"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                          >
+                            <div 
+                              className="text-sm text-stone-600 leading-relaxed prose prose-stone max-w-none"
+                              dangerouslySetInnerHTML={{ __html: selectedItem.content }}
+                            />
+                          </motion.div>
+                        )}
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+}
