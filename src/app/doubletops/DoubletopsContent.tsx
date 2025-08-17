@@ -222,7 +222,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                           whileTap={{ scale: 0.98 }}
                           transition={{ duration: 0.1 }}
                           onClick={() => {
-                            const email = `mailto:info@glenncanin.com?subject=Inquiry about ${guitar.data.title}&body=I'm interested in learning more about the ${guitar.data.title} double top guitar.`;
+                            const email = `mailto:glenncanin@hotmail.com?subject=Inquiry about ${guitar.data.title}&body=I'm interested in learning more about the ${guitar.data.title} double top guitar.`;
                             window.location.href = email;
                           }}
                         >

@@ -45,9 +45,9 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
   // Use CMS data with fallbacks
   const companyName = footerContent?.data?.companyName || "Glenn Canin Guitars";
   const description = footerContent?.data?.description || "Handcrafted concert classical guitars for professional musicians worldwide. Each instrument is meticulously crafted to inspire musical excellence.";
-  const phone = footerContent?.data?.phone || "(505) 555-0123";
-  const email = footerContent?.data?.email || "info@glenncaininguitars.com";
-  const location = footerContent?.data?.location || "Santa Fe, New Mexico";
+  const phone = footerContent?.data?.phone || "415-407-1191";
+  const email = footerContent?.data?.email || "glenncanin@hotmail.com";
+  const location = footerContent?.data?.location || "Mill Valley, California";
   const locationNote = footerContent?.data?.locationNote || "Visits by appointment only";
   const establishedYear = footerContent?.data?.establishedYear || "1985";
   const tagline = footerContent?.data?.tagline || "Handcrafted with passion";

@@ -3,9 +3,9 @@ title: "About Glenn Canin"
 heroImage: "/images/workshop.jpg"
 journeyTitle: "My Journey"
 journeyContent: |
-  I began my journey as a luthier in 1985, driven by a passion for creating instruments that could truly sing. Over nearly four decades, I have refined my craft, studying under master builders and developing my own innovations in classical guitar construction.
+  I've always enjoyed working with my hands, building everything from go-carts to custom skateboards. While studying classical guitar at San Diego State University under Pepe, Celin, and Celedonio Romero, I supported myself by shaping custom surfboards.
   
-  My workshop has produced over 150 instruments, each one carefully crafted to meet the unique needs and preferences of professional musicians worldwide. From concert halls in Europe to recording studios in America, my guitars have found homes with artists who demand the very best.
+  My journey into guitar making began when a friend returned from Spain with mediocre instruments. I decided I could build something better, starting with a flamenco guitar that impressed guitarist Jason McGuire. Though I began with flamenco guitars, I soon transitioned to classical guitars, my true passion in life. After teaching the Alexander Technique for several years, I've devoted myself fully to crafting exceptional classical guitars.
 philosophyTitle: "Philosophy"
 philosophyContent: |
   I believe that a great guitar is more than just wood and strings – it's a partner in musical expression. Every instrument I build is designed to inspire, to respond to the subtlest touch, and to project with clarity and power.

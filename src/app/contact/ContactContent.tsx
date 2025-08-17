@@ -58,10 +58,10 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
 
   // Extract CMS content with fallbacks
   const title = contactContent?.data?.title || "Contact";
-  const phone = contactContent?.data?.phone || "(555) 123-4567";
-  const email = contactContent?.data?.email || "glenn@glenncaninguitars.com";
-  const address = contactContent?.data?.address || "Northern California, USA";
-  const hours = contactContent?.data?.hours || "By appointment only";
+  const phone = contactContent?.data?.phone || "415-407-1191";
+  const email = contactContent?.data?.email || "glenncanin@hotmail.com";
+  const address = contactContent?.data?.address || "314 Ross Drive\nMill Valley, CA 94941\nUSA";
+  const hours = contactContent?.data?.hours || "Workshop visits by appointment only\nMonday - Friday: 9:00 AM - 5:00 PM";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">

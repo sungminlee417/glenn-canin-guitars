@@ -2,11 +2,11 @@
 title: "Contact"
 address: |
   Glenn Canin Guitars
-  123 Luthier Lane
-  Santa Fe, NM 87501
+  314 Ross Drive
+  Mill Valley, CA 94941
   USA
-phone: "+1 (505) 555-0123"
-email: "info@glenncaininguitars.com"
+phone: "415-407-1191"
+email: "glenncanin@hotmail.com"
 hours: |
   Workshop visits by appointment only
   Monday - Friday: 9:00 AM - 5:00 PM

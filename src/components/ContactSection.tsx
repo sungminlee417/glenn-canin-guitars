@@ -45,7 +45,7 @@ export default function ContactSection() {
                 <Phone className="h-6 w-6 text-blue-600 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900">Phone</p>
-                  <p className="text-gray-600">(555) 123-4567</p>
+                  <p className="text-gray-600">415-407-1191</p>
                 </div>
               </div>
               
@@ -53,7 +53,7 @@ export default function ContactSection() {
                 <Mail className="h-6 w-6 text-blue-600 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900">Email</p>
-                  <p className="text-gray-600">info@glenncaninguitars.com</p>
+                  <p className="text-gray-600">glenncanin@hotmail.com</p>
                 </div>
               </div>
               
@@ -61,8 +61,8 @@ export default function ContactSection() {
                 <MapPin className="h-6 w-6 text-blue-600 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900">Workshop</p>
+                  <p className="text-gray-600">Mill Valley, California</p>
                   <p className="text-gray-600">By appointment only</p>
-                  <p className="text-gray-600">United States</p>
                 </div>
               </div>
             </div>
