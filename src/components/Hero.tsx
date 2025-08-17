@@ -117,7 +117,8 @@ export default function Hero({ homeContent }: HeroProps) {
 
       {/* Scroll indicator */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
+        className="absolute bottom-8 left-1/2 z-20"
+        style={{ x: "-50%" }}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1.2 }}
@@ -125,9 +126,9 @@ export default function Hero({ homeContent }: HeroProps) {
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-amber-300"
+          className="text-amber-300 flex justify-center"
         >
-          <svg width="30" height="50" viewBox="0 0 30 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="30" height="50" viewBox="0 0 30 50" fill="none" xmlns="http://www.w3.org/2000/svg" className="block">
             <rect x="1" y="1" width="28" height="48" rx="14" stroke="currentColor" strokeWidth="2"/>
             <motion.circle
               cx="15"
