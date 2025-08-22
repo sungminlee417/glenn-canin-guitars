@@ -28,7 +28,7 @@ export default defineType({
       validation: (Rule) => 
         Rule.required().custom((url) => {
           if (!url) return true
-          const isYoutube = url.includes('youtube.com') || url.includes('youtu.be')
+          const isYoutube = url.includes('youtube.com') || url.includes('youtu.be') || url.includes('www.youtube.com')
           return isYoutube || 'Please provide a valid YouTube URL'
         }),
     }),
