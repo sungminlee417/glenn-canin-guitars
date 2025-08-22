@@ -52,22 +52,23 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
   const title = aboutContent?.data?.title || "About Glenn Canin";
   const journeyTitle = aboutContent?.data?.journeyTitle || "My Journey";
   const philosophyTitle = aboutContent?.data?.philosophyTitle || "Philosophy";
-  const achievementsTitle = aboutContent?.data?.achievementsTitle || "Awards & Recognition";
+  const achievementsTitle =
+    aboutContent?.data?.achievementsTitle || "Awards & Recognition";
 
   // Parse journey content into paragraphs
-  const journeyParagraphs = aboutContent?.data?.journeyContent 
-    ? aboutContent.data.journeyContent.split('\n\n').filter(p => p.trim())
+  const journeyParagraphs = aboutContent?.data?.journeyContent
+    ? aboutContent.data.journeyContent.split("\n\n").filter((p) => p.trim())
     : [
         "I began my journey as a luthier in 1985, driven by a passion for creating instruments that could truly sing. Over nearly four decades, I have refined my craft, studying under master builders and developing my own innovations in classical guitar construction.",
-        "My workshop has produced over 150 instruments, each one carefully crafted to meet the unique needs and preferences of professional musicians worldwide. From concert halls in Europe to recording studios in America, my guitars have found homes with artists who demand the very best."
+        "My workshop has produced over 150 instruments, each one carefully crafted to meet the unique needs and preferences of professional musicians worldwide. From concert halls in Europe to recording studios in America, my guitars have found homes with artists who demand the very best.",
       ];
 
   // Parse philosophy content into paragraphs
   const philosophyParagraphs = aboutContent?.data?.philosophyContent
-    ? aboutContent.data.philosophyContent.split('\n\n').filter(p => p.trim())
+    ? aboutContent.data.philosophyContent.split("\n\n").filter((p) => p.trim())
     : [
         "I believe that a great guitar is more than just wood and strings – it's a partner in musical expression. Every instrument I build is designed to inspire, to respond to the subtlest touch, and to project with clarity and power.",
-        "My approach combines traditional Spanish guitar-making techniques with modern innovations like the doubletop construction, which provides exceptional volume and sustain while maintaining the warmth and complexity of tone that classical guitarists cherish."
+        "My approach combines traditional Spanish guitar-making techniques with modern innovations like the doubletop construction, which provides exceptional volume and sustain while maintaining the warmth and complexity of tone that classical guitarists cherish.",
       ];
 
   return (
@@ -125,9 +126,11 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
               transition={{ duration: 0.3 }}
             >
               {aboutContent?.data?.heroImage ? (
-                <div 
+                <div
                   className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${aboutContent.data.heroImage})` }}
+                  style={{
+                    backgroundImage: `url(${aboutContent.data.heroImage})`,
+                  }}
                 />
               ) : (
                 <motion.div
@@ -197,6 +200,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
               <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700 dark:text-amber-400">
@@ -208,6 +212,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                   className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
                 >
                   {paragraph}
@@ -232,6 +237,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                 className="font-cinzel text-2xl font-semibold mb-6 text-amber-700 dark:text-amber-400"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
               >
                 {achievementsTitle}

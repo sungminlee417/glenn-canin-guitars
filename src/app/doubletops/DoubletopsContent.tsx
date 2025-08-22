@@ -49,7 +49,10 @@ interface DoubletopsContentProps {
   guitars: Guitar[];
 }
 
-export default function DoubletopsContent({ doubletopsContent, guitars }: DoubletopsContentProps) {
+export default function DoubletopsContent({
+  doubletopsContent,
+  guitars,
+}: DoubletopsContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
 
   // Filter for double top guitars
@@ -100,6 +103,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
             className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 border border-amber-100 dark:border-amber-600"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.6 }}
             whileHover={{ scale: 1.01 }}
           >
@@ -107,6 +111,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-3xl font-cinzel mb-6 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               The Double Top Innovation
@@ -115,6 +120,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               The double top construction technique represents a significant
@@ -128,6 +134,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-2xl font-cinzel mt-8 mb-4 text-amber-600 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               Benefits of Double Top Construction
@@ -159,6 +166,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-2xl font-cinzel mt-8 mb-4 text-amber-600 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               Construction Process
@@ -167,6 +175,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-stone-600 dark:text-stone-300 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.5 }}
             >
               Each double top guitar begins with carefully selected tonewoods.
@@ -186,6 +195,7 @@ export default function DoubletopsContent({ doubletopsContent, guitars }: Double
               className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
               Available Double Top Guitars
