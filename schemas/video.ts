@@ -45,12 +45,6 @@ export default defineType({
       description: 'Name of the guitarist or performer',
     }),
     defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-    }),
-    defineField({
       name: 'featured',
       title: 'Featured',
       type: 'boolean',

@@ -22,24 +22,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'model',
-      title: 'Model',
-      type: 'string',
-    }),
-    defineField({
-      name: 'type',
-      title: 'Type',
-      type: 'string',
-      options: {
-        list: [
-          { title: 'Double Top', value: 'doubletop' },
-          { title: 'Traditional', value: 'traditional' },
-          { title: 'Custom', value: 'custom' },
-        ],
-        layout: 'radio',
-      },
-    }),
-    defineField({
       name: 'year',
       title: 'Year',
       type: 'number',
@@ -64,12 +46,6 @@ export default defineType({
       initialValue: true,
     }),
     defineField({
-      name: 'isDoubletop',
-      title: 'Is Double Top',
-      type: 'boolean',
-      initialValue: false,
-    }),
-    defineField({
       name: 'mainImage',
       title: 'Main Image',
       type: 'image',
@@ -82,26 +58,6 @@ export default defineType({
           type: 'string',
           title: 'Alternative Text',
           description: 'Important for SEO and accessibility.',
-        },
-      ],
-    }),
-    defineField({
-      name: 'galleryImages',
-      title: 'Gallery Images',
-      type: 'array',
-      of: [
-        {
-          type: 'image',
-          options: {
-            hotspot: true,
-          },
-          fields: [
-            {
-              name: 'alt',
-              type: 'string',
-              title: 'Alternative Text',
-            },
-          ],
         },
       ],
     }),

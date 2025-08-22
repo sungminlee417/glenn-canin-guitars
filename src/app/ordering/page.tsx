@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function OrderingPage() {
   // Fetch CMS content
   const orderingContent = await getPageContent('ordering');

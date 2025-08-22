@@ -54,33 +54,6 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
-    defineField({
-      name: 'guitars',
-      title: 'Guitars',
-      type: 'array',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'model',
-              title: 'Model',
-              type: 'string',
-            },
-            {
-              name: 'year',
-              title: 'Year',
-              type: 'number',
-            },
-            {
-              name: 'description',
-              title: 'Description',
-              type: 'text',
-            },
-          ],
-        },
-      ],
-    }),
   ],
   preview: {
     select: {

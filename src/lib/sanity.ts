@@ -27,14 +27,10 @@ export async function getPageContent(pageName: string) {
       content,
       heroImage,
       aboutHeroImage,
-      metaDescription,
       "data": {
         title,
-        description: metaDescription,
         heroImage,
-        aboutHeroImage,
-        featuredGuitarsTitle,
-        featuredGuitarsDescription
+        aboutHeroImage
       }
     }`;
     
@@ -56,22 +52,16 @@ export async function getGuitars() {
       price,
       specifications,
       mainImage,
-      images,
       featured,
       available,
-      doubletop,
-      category,
       "data": {
         title,
         description,
         price,
         specifications,
         mainImage,
-        images,
         featured,
-        available,
-        doubletop,
-        category
+        available
       }
     }`;
     
@@ -93,22 +83,16 @@ export async function getFeaturedGuitars() {
       price,
       specifications,
       mainImage,
-      images,
       featured,
       available,
-      doubletop,
-      category,
       "data": {
         title,
         description,
         price,
         specifications,
         mainImage,
-        images,
         featured,
-        available,
-        doubletop,
-        category
+        available
       }
     }`;
     
@@ -130,22 +114,16 @@ export async function getAvailableGuitars() {
       price,
       specifications,
       mainImage,
-      images,
       featured,
       available,
-      doubletop,
-      category,
       "data": {
         title,
         description,
         price,
         specifications,
         mainImage,
-        images,
         featured,
-        available,
-        doubletop,
-        category
+        available
       }
     }`;
     
@@ -166,14 +144,12 @@ export async function getPlayers() {
       bio,
       photo,
       website,
-      instruments,
       featured,
       "data": {
         name,
         bio,
         photo,
         website,
-        instruments,
         featured
       }
     }`;
@@ -187,7 +163,7 @@ export async function getPlayers() {
 
 export async function getGalleryItems() {
   try {
-    const query = `*[_type == "gallery"] | order(_createdAt desc) {
+    const query = `*[_type == "galleryItem"] | order(_createdAt desc) {
       _id,
       _createdAt,
       title,
@@ -220,16 +196,14 @@ export async function getVideos() {
       title,
       slug,
       description,
-      youtubeId,
-      thumbnail,
-      category,
+      youtubeUrl,
+      player,
       featured,
       "data": {
         title,
         description,
-        youtubeId,
-        thumbnail,
-        category,
+        youtubeUrl,
+        player,
         featured
       }
     }`;

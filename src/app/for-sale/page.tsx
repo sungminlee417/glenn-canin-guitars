@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function ForSalePage() {
   // Fetch available guitars from CMS
   const availableGuitars = await getAvailableGuitars();

@@ -11,6 +11,9 @@ export const metadata: Metadata = {
   },
 };
 
+// Revalidate every 60 seconds
+export const revalidate = 60;
+
 export default async function GalleryPage() {
   // Fetch gallery items from CMS
   const allGalleryItems = await getGalleryItems();
