@@ -23,7 +23,7 @@ export default function Header() {
 
   return (
     <motion.header 
-      className="bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-stone-200 dark:border-stone-700"
+      className="bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm shadow-sm sticky top-0 z-[9999] border-b border-stone-200 dark:border-stone-700"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
