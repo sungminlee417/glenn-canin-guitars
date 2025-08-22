@@ -98,7 +98,8 @@ function VideoCard({ video, videoId, onClick, featured = false }: VideoCardProps
   );
 }
 
-export default function VideosContent({ videosContent, videos }: VideosContentProps) {
+export default function VideosContent({ videos }: VideosContentProps) {
+  // Note: videosContent parameter temporarily unused until CMS integration is complete
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   
   const { featuredVideos, regularVideos } = useMemo(() => {

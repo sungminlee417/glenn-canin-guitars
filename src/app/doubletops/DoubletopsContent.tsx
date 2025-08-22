@@ -39,6 +39,11 @@ interface DoubletopsContent {
   data: {
     pageTitle?: string;
     pageDescription?: string;
+    innovationSectionTitle?: string;
+    innovationSectionContent?: string;
+    benefitsSectionTitle?: string;
+    benefits?: string[];
+    availableGuitarsTitle?: string;
     [key: string]: unknown;
   };
   content: string;
@@ -63,7 +68,8 @@ export default function DoubletopsContent({
       guitar.data.title?.toLowerCase().includes("double top")
   );
 
-  const benefits = [
+  // Use CMS benefits or fallback to default
+  const benefits = doubletopsContent?.data?.benefits || [
     "Enhanced volume and projection without sacrificing tone quality",
     "Improved sustain and note clarity across all registers",
     "Greater dynamic range for expressive playing",
@@ -84,7 +90,7 @@ export default function DoubletopsContent({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Double Top Guitars
+            {doubletopsContent?.data?.pageTitle || "Double Top Guitars"}
           </motion.h1>
           <motion.p
             className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
@@ -92,9 +98,8 @@ export default function DoubletopsContent({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Glenn Canin&apos;s signature double top construction combines
-            traditional craftsmanship with innovative design, resulting in
-            guitars with exceptional projection and tonal clarity.
+            {doubletopsContent?.data?.pageDescription ||
+              "Glenn Canin's signature double top construction combines traditional craftsmanship with innovative design, resulting in guitars with exceptional projection and tonal clarity."}
           </motion.p>
         </FadeIn>
 
@@ -114,7 +119,8 @@ export default function DoubletopsContent({
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              The Double Top Innovation
+              {doubletopsContent?.data?.innovationSectionTitle ||
+                "The Double Top Innovation"}
             </motion.h2>
             <motion.p
               className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
@@ -123,11 +129,8 @@ export default function DoubletopsContent({
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              The double top construction technique represents a significant
-              advancement in classical guitar building. By using a composite
-              soundboard consisting of two thin plates with a Nomex honeycomb
-              core, these guitars achieve remarkable volume and projection while
-              maintaining the tonal qualities of traditional instruments.
+              {doubletopsContent?.data?.innovationSectionContent ||
+                "The double top construction technique represents a significant advancement in classical guitar building. By using a composite soundboard consisting of two thin plates with a Nomex honeycomb core, these guitars achieve remarkable volume and projection while maintaining the tonal qualities of traditional instruments."}
             </motion.p>
 
             <motion.h3
@@ -137,7 +140,8 @@ export default function DoubletopsContent({
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              Benefits of Double Top Construction
+              {doubletopsContent?.data?.benefitsSectionTitle ||
+                "Benefits of Double Top Construction"}
             </motion.h3>
 
             <StaggerChildren className="space-y-3 mb-8">
@@ -198,7 +202,8 @@ export default function DoubletopsContent({
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              Available Double Top Guitars
+              {doubletopsContent?.data?.availableGuitarsTitle ||
+                "Available Double Top Guitars"}
             </motion.h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {doubletopGuitars.map((guitar) => (

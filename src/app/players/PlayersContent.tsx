@@ -33,7 +33,8 @@ interface PlayersContentProps {
   players: Player[];
 }
 
-export default function PlayersContent({ playersContent, players }: PlayersContentProps) {
+export default function PlayersContent({ players }: PlayersContentProps) {
+  // Note: playersContent parameter temporarily unused until CMS integration is complete
   const featuredPlayers = players.filter(player => player.data.featured);
   const regularPlayers = players.filter(player => !player.data.featured);
   

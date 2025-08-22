@@ -124,7 +124,8 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
   );
 }
 
-export default function GalleryContent({ galleryContent, galleryItems }: GalleryContentProps) {
+export default function GalleryContent({ galleryItems }: GalleryContentProps) {
+  // Note: galleryContent parameter temporarily unused until CMS integration is complete
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
 
   const featuredItems = galleryItems.filter(item => item.data.featured);

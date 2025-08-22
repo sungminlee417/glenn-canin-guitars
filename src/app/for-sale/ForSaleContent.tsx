@@ -46,7 +46,8 @@ interface ForSaleContentProps {
   guitars: Guitar[];
 }
 
-export default function ForSaleContent({ forSaleContent, guitars }: ForSaleContentProps) {
+export default function ForSaleContent({ guitars }: ForSaleContentProps) {
+  // Note: forSaleContent parameter temporarily unused until CMS integration is complete
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
   
   const featuredGuitars = guitars.filter(guitar => guitar.data.featured);
