@@ -74,14 +74,14 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
   const title = orderingContent?.data?.title || "Ordering Information";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/ordering-pattern.svg')] opacity-5" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 mb-6"
+            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -89,7 +89,7 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
             {title}
           </motion.h1>
           <motion.p
-            className="text-xl text-stone-600 max-w-3xl mx-auto"
+            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -100,34 +100,34 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
 
         <FadeIn className="mb-16">
           <motion.div
-            className="bg-white rounded-lg shadow-sm p-8 border border-stone-200"
+            className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 border border-stone-200 dark:border-stone-600"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-cinzel font-bold text-amber-700 mb-6 text-center">The Process</h2>
+            <h2 className="text-3xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6 text-center">The Process</h2>
             
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {processSteps.map((step) => (
                 <StaggerItem key={step.stepNumber}>
                   <motion.div
-                    className="p-6 rounded-lg border border-stone-200 hover:shadow-lg transition-all bg-stone-50"
+                    className="p-6 rounded-lg border border-stone-200 dark:border-stone-600 hover:shadow-lg transition-all bg-stone-50 dark:bg-stone-700"
                     whileHover={{ y: -5, scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                   >
                     <div className="flex items-center mb-4">
                       <motion.div
-                        className="w-10 h-10 bg-amber-600 text-white rounded-full flex items-center justify-center mr-4 font-bold"
+                        className="w-10 h-10 bg-amber-600 dark:bg-amber-500 text-white rounded-full flex items-center justify-center mr-4 font-bold"
                         whileHover={{ scale: 1.1, rotate: 5 }}
                         transition={{ duration: 0.2 }}
                       >
                         {step.stepNumber}
                       </motion.div>
-                      <step.icon className="w-6 h-6 text-amber-600" />
+                      <step.icon className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                     </div>
-                    <h3 className="text-lg font-semibold text-stone-900 mb-2">{step.title}</h3>
-                    <p className="text-stone-600 text-sm leading-relaxed">{step.description}</p>
+                    <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">{step.title}</h3>
+                    <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">{step.description}</p>
                   </motion.div>
                 </StaggerItem>
               ))}
@@ -139,46 +139,46 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <FadeIn>
             <motion.div
-              className="bg-amber-50 p-8 rounded-lg border border-amber-200"
+              className="bg-amber-50 dark:bg-amber-900/20 p-8 rounded-lg border border-amber-200 dark:border-amber-600"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <h3 className="text-2xl font-cinzel font-bold text-amber-700 mb-6">Pricing & Timeline</h3>
+              <h3 className="text-2xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6">Pricing & Timeline</h3>
               
               <div className="space-y-4">
                 <motion.div
-                  className="flex justify-between items-center p-3 bg-white rounded-lg"
+                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="font-medium text-stone-700">Starting Price:</span>
-                  <span className="text-xl font-bold text-amber-600">$8,000</span>
+                  <span className="font-medium text-stone-700 dark:text-stone-300">Starting Price:</span>
+                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">$8,000</span>
                 </motion.div>
                 
                 <motion.div
-                  className="flex justify-between items-center p-3 bg-white rounded-lg"
+                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="font-medium text-stone-700">Build Time:</span>
-                  <span className="text-xl font-bold text-amber-600">3-4 months</span>
+                  <span className="font-medium text-stone-700 dark:text-stone-300">Build Time:</span>
+                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">3-4 months</span>
                 </motion.div>
                 
                 <motion.div
-                  className="flex justify-between items-center p-3 bg-white rounded-lg"
+                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <span className="font-medium text-stone-700">Deposit:</span>
-                  <span className="text-xl font-bold text-amber-600">50%</span>
+                  <span className="font-medium text-stone-700 dark:text-stone-300">Deposit:</span>
+                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">50%</span>
                 </motion.div>
               </div>
               
               <motion.p
-                className="text-stone-600 text-sm mt-6 leading-relaxed"
+                className="text-stone-600 dark:text-stone-300 text-sm mt-6 leading-relaxed"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "0px" }}
@@ -192,7 +192,7 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
 
           <FadeIn>
             <motion.div
-              className="bg-stone-900 text-white p-8 rounded-lg"
+              className="bg-stone-900 dark:bg-stone-800 text-white p-8 rounded-lg"
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -212,14 +212,14 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
                 ].map((item, index) => (
                   <motion.li
                     key={index}
-                    className="flex items-center text-stone-200"
+                    className="flex items-center text-stone-200 dark:text-stone-300"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: "0px" }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                     whileHover={{ x: 5 }}
                   >
-                    <CheckCircle className="w-5 h-5 text-amber-400 mr-3 flex-shrink-0" />
+                    <CheckCircle className="w-5 h-5 text-amber-400 dark:text-amber-300 mr-3 flex-shrink-0" />
                     {item}
                   </motion.li>
                 ))}
@@ -230,14 +230,14 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
 
         <FadeIn className="mt-16">
           <motion.div
-            className="text-center bg-gradient-to-r from-amber-50 to-stone-50 p-8 rounded-lg border border-amber-200"
+            className="text-center bg-gradient-to-r from-amber-50 to-stone-50 dark:from-amber-900/20 dark:to-stone-700 p-8 rounded-lg border border-amber-200 dark:border-amber-600"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px" }}
             transition={{ duration: 0.6 }}
           >
             <motion.h3
-              className="text-2xl font-cinzel font-bold text-stone-900 mb-4"
+              className="text-2xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -246,7 +246,7 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
               Ready to Start Your Custom Guitar?
             </motion.h3>
             <motion.p
-              className="text-stone-600 mb-6 max-w-2xl mx-auto"
+              className="text-stone-600 dark:text-stone-300 mb-6 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -256,7 +256,7 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
             </motion.p>
             <motion.a
               href="/contact"
-              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+              className="inline-block bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

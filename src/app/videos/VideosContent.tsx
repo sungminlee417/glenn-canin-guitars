@@ -45,14 +45,14 @@ export default function VideosContent({ videos }: VideosContentProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/video-pattern.svg')] opacity-5" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 mb-6"
+            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -60,7 +60,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
             Video Gallery
           </motion.h1>
           <motion.p
-            className="text-xl text-stone-600 max-w-3xl mx-auto"
+            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -74,7 +74,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
         {displayFeatured.length > 0 && (
           <FadeIn className="mb-12">
             <motion.h2 
-              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700"
+              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -90,7 +90,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
                 return (
                   <motion.div 
                     key={video.slug}
-                    className="group cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden"
+                    className="group cursor-pointer bg-white dark:bg-stone-800 rounded-lg shadow-lg overflow-hidden"
                     whileHover={{ y: -8, scale: 1.02 }}
                     transition={{ duration: 0.3 }}
                     onClick={() => setSelectedVideo(video.data.youtubeUrl || '')}
@@ -129,10 +129,10 @@ export default function VideosContent({ videos }: VideosContentProps) {
                       animate={{ opacity: 1 }}
                       transition={{ delay: index * 0.1 + 0.4 }}
                     >
-                      <h3 className="text-xl font-cinzel font-semibold mb-2 group-hover:text-amber-600 transition-colors">{video.data.title}</h3>
-                      <p className="text-amber-600 font-medium text-sm mb-2">{video.data.player}</p>
-                      <p className="text-stone-600 text-sm mb-3 leading-relaxed">{video.data.description}</p>
-                      <p className="text-stone-400 text-xs">
+                      <h3 className="text-xl font-cinzel font-semibold mb-2 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{video.data.title}</h3>
+                      <p className="text-amber-600 dark:text-amber-400 font-medium text-sm mb-2">{video.data.player}</p>
+                      <p className="text-stone-600 dark:text-stone-300 text-sm mb-3 leading-relaxed">{video.data.description}</p>
+                      <p className="text-stone-400 dark:text-stone-500 text-xs">
                         {video.data.date ? new Date(video.data.date).toLocaleDateString('en-US', { 
                           year: 'numeric', 
                           month: 'long', 
@@ -151,7 +151,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
         {displayRegular.length > 0 && (
           <FadeIn>
             <motion.h2 
-              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700"
+              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -167,7 +167,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
                 return (
                   <StaggerItem key={video.slug}>
                     <motion.div 
-                      className="group bg-white rounded-lg shadow-md overflow-hidden cursor-pointer"
+                      className="group bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden cursor-pointer"
                       whileHover={{ y: -5, scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                       transition={{ duration: 0.3 }}
@@ -194,9 +194,9 @@ export default function VideosContent({ videos }: VideosContentProps) {
                         </div>
                       </div>
                       <div className="p-4">
-                        <h3 className="text-lg font-cinzel font-semibold mb-1 group-hover:text-amber-600 transition-colors line-clamp-2">{video.data.title}</h3>
-                        <p className="text-amber-600 text-sm font-medium mb-2">{video.data.player}</p>
-                        <p className="text-stone-500 text-xs">
+                        <h3 className="text-lg font-cinzel font-semibold mb-1 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors line-clamp-2">{video.data.title}</h3>
+                        <p className="text-amber-600 dark:text-amber-400 text-sm font-medium mb-2">{video.data.player}</p>
+                        <p className="text-stone-500 dark:text-stone-400 text-xs">
                           {video.data.date ? new Date(video.data.date).toLocaleDateString('en-US', { 
                             year: 'numeric', 
                             month: 'long', 
@@ -215,12 +215,12 @@ export default function VideosContent({ videos }: VideosContentProps) {
 
         <FadeIn className="mt-16">
           <motion.div 
-            className="bg-white rounded-lg shadow-sm p-8 text-center"
+            className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 text-center"
             whileHover={{ scale: 1.02 }}
             transition={{ duration: 0.3 }}
           >
             <motion.h2 
-              className="text-2xl font-cinzel mb-4"
+              className="text-2xl font-cinzel mb-4 text-stone-900 dark:text-stone-100"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -229,7 +229,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
               Subscribe for Updates
             </motion.h2>
             <motion.p 
-              className="text-stone-600 mb-6"
+              className="text-stone-600 dark:text-stone-300 mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -238,7 +238,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
               Get notified when new videos featuring Glenn Canin guitars are available.
             </motion.p>
             <motion.button 
-              className="bg-stone-900 text-white px-8 py-3 rounded-lg hover:bg-stone-800 transition-colors"
+              className="bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

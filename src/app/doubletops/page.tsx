@@ -1,5 +1,5 @@
 import DoubletopsContent from './DoubletopsContent';
-import { getGuitars } from '@/lib/markdown';
+import { getGuitars } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function DoubletopsPage() {
   // Fetch all guitars from CMS
-  const allGuitars = getGuitars();
+  const allGuitars = await getGuitars();
 
   return <DoubletopsContent guitars={allGuitars} />;
 }

@@ -37,7 +37,7 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
   return (
     <StaggerItem>
       <motion.div
-        className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300"
+        className="group bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300"
         whileHover={{ y: -8, scale: 1.02 }}
         transition={{ duration: 0.3 }}
       >
@@ -97,14 +97,14 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: index * 0.1 + 0.3 }}
         >
-          <h3 className="font-cinzel text-xl font-semibold text-stone-900 mb-2 group-hover:text-amber-600 transition-colors">
+          <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
             {guitar.data.title}
           </h3>
-          <p className="text-sm text-amber-600 mb-3 font-medium">{guitar.data.year}</p>
-          <p className="text-stone-600 mb-4 leading-relaxed">{guitar.data.description}</p>
+          <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 font-medium">{guitar.data.year}</p>
+          <p className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed">{guitar.data.description}</p>
           <Link
             href={`/for-sale#guitar-${guitar.slug}`}
-            className="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium transition-colors group"
+            className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
           >
             View Details 
             <motion.span
@@ -123,13 +123,13 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
 
 export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuitarsProps) {
   return (
-    <section className="py-16 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-12">
           <motion.h2 
-            className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 mb-4"
+            className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px" }}
@@ -138,7 +138,7 @@ export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuit
             {title || "Featured Instruments"}
           </motion.h2>
           <motion.p 
-            className="text-lg text-stone-600 max-w-2xl mx-auto"
+            className="text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "0px" }}

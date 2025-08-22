@@ -1,5 +1,5 @@
 import PlayersContent from "./PlayersContent";
-import { getPlayers } from "@/lib/markdown";
+import { getPlayers } from "@/lib/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function PlayersPage() {
   // Fetch players from CMS
-  const allPlayers = getPlayers();
+  const allPlayers = await getPlayers();
 
   return <PlayersContent players={allPlayers} />;
 }

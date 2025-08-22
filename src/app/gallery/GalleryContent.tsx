@@ -33,7 +33,7 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
   return (
     <StaggerItem>
       <motion.div
-        className="group bg-white rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer"
+        className="group bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300 cursor-pointer"
         onClick={onClick}
         whileHover={{ y: -8, scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -49,7 +49,7 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
           {/* Category badge */}
           {item.data.category && (
             <motion.div
-              className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium"
+              className="absolute top-4 left-4 bg-amber-600 dark:bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
@@ -61,7 +61,7 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
           {/* Featured badge */}
           {item.data.featured && (
             <motion.div
-              className="absolute top-4 right-4 bg-stone-900 text-white px-3 py-1 rounded-full text-sm font-medium"
+              className="absolute top-4 right-4 bg-stone-900 dark:bg-stone-700 text-white px-3 py-1 rounded-full text-sm font-medium"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.3 }}
@@ -95,11 +95,11 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <h3 className="font-cinzel text-xl font-semibold text-stone-900 mb-2 group-hover:text-amber-600 transition-colors">
+          <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
             {item.data.title}
           </h3>
           {item.data.date && (
-            <p className="text-sm text-amber-600 mb-3 font-medium">
+            <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 font-medium">
               {new Date(item.data.date).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
@@ -107,7 +107,7 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
               })}
             </p>
           )}
-          <p className="text-sm text-stone-600 line-clamp-2">{item.data.description}</p>
+          <p className="text-sm text-stone-600 dark:text-stone-300 line-clamp-2">{item.data.description}</p>
         </motion.div>
       </motion.div>
     </StaggerItem>
@@ -128,14 +128,14 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
   const categories = Array.from(new Set(displayItems.map(item => item.data.category).filter(Boolean)));
 
   return (
-    <div className="py-16 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-12">
           <motion.h1 
-            className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 mb-8"
+            className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -144,7 +144,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
           </motion.h1>
           
           <motion.p 
-            className="text-lg text-stone-600 max-w-3xl mx-auto leading-relaxed"
+            className="text-lg text-stone-600 dark:text-stone-300 max-w-3xl mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -157,7 +157,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
         {/* Featured Items */}
         {displayFeatured.length > 0 && (
           <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 mb-8 text-center">Featured</h2>
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Featured</h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
               {displayFeatured.map((item) => (
                 <GalleryCard
@@ -183,7 +183,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
               {categories.map((category) => (
                 <span 
                   key={category}
-                  className="px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium"
+                  className="px-4 py-2 bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded-full text-sm font-medium"
                 >
                   {category}
                 </span>
@@ -208,7 +208,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
         <AnimatePresence>
           {selectedItem && (
             <motion.div 
-              className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4" 
+              className="fixed inset-0 bg-black dark:bg-black bg-opacity-50 dark:bg-opacity-70 z-50 flex items-center justify-center p-4" 
               onClick={() => setSelectedItem(null)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -216,7 +216,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
               transition={{ duration: 0.3 }}
             >
               <motion.div 
-                className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" 
+                className="bg-white dark:bg-stone-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" 
                 onClick={(e) => e.stopPropagation()}
                 initial={{ scale: 0.8, opacity: 0, y: 50 }}
                 animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -227,7 +227,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <motion.h2 
-                        className="font-cinzel text-2xl font-bold text-stone-900"
+                        className="font-cinzel text-2xl font-bold text-stone-900 dark:text-stone-100"
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
@@ -236,7 +236,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                       </motion.h2>
                       {selectedItem.data.category && (
                         <motion.p
-                          className="text-amber-600 font-medium mt-1"
+                          className="text-amber-600 dark:text-amber-400 font-medium mt-1"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.15 }}
@@ -247,7 +247,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                     </div>
                     <motion.button
                       onClick={() => setSelectedItem(null)}
-                      className="text-stone-500 hover:text-stone-700 text-2xl p-2 hover:bg-stone-100 rounded-full transition-colors"
+                      className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 text-2xl p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-full transition-colors"
                       whileHover={{ scale: 1.1, rotate: 90 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -282,8 +282,8 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
                           >
-                            <h3 className="font-semibold text-lg mb-2 text-amber-700">Date</h3>
-                            <p className="text-stone-600">
+                            <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Date</h3>
+                            <p className="text-stone-600 dark:text-stone-300">
                               {new Date(selectedItem.data.date).toLocaleDateString('en-US', { 
                                 year: 'numeric', 
                                 month: 'long', 
@@ -299,8 +299,8 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                           >
-                            <h3 className="font-semibold text-lg mb-2 text-amber-700">Description</h3>
-                            <p className="text-stone-600 leading-relaxed">{selectedItem.data.description}</p>
+                            <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Description</h3>
+                            <p className="text-stone-600 dark:text-stone-300 leading-relaxed">{selectedItem.data.description}</p>
                           </motion.div>
                         )}
                         

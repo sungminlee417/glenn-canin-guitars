@@ -59,14 +59,14 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/wood-grain-pattern.svg')] opacity-5" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 mb-6"
+            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -74,7 +74,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
             Double Top Guitars
           </motion.h1>
           <motion.p
-            className="text-xl text-stone-600 max-w-3xl mx-auto"
+            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -87,14 +87,14 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
 
         <div className="mb-16 prose prose-stone max-w-none">
           <motion.div
-            className="bg-white rounded-lg shadow-sm p-8 border border-amber-100"
+            className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 border border-amber-100 dark:border-amber-600"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             whileHover={{ scale: 1.01 }}
           >
             <motion.h2
-              className="text-3xl font-cinzel mb-6 text-amber-700"
+              className="text-3xl font-cinzel mb-6 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -102,7 +102,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               The Double Top Innovation
             </motion.h2>
             <motion.p
-              className="text-stone-600 mb-4 leading-relaxed"
+              className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -115,7 +115,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
             </motion.p>
 
             <motion.h3
-              className="text-2xl font-cinzel mt-8 mb-4 text-amber-600"
+              className="text-2xl font-cinzel mt-8 mb-4 text-amber-600 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -127,7 +127,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               {benefits.map((benefit, index) => (
                 <StaggerItem key={index}>
                   <motion.div
-                    className="flex items-center space-x-3 text-stone-600"
+                    className="flex items-center space-x-3 text-stone-600 dark:text-stone-300"
                     transition={{ duration: 0.2 }}
                   >
                     <motion.div
@@ -146,7 +146,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
             </StaggerChildren>
 
             <motion.h3
-              className="text-2xl font-cinzel mt-8 mb-4 text-amber-600"
+              className="text-2xl font-cinzel mt-8 mb-4 text-amber-600 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -154,7 +154,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               Construction Process
             </motion.h3>
             <motion.p
-              className="text-stone-600 leading-relaxed"
+              className="text-stone-600 dark:text-stone-300 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
@@ -173,7 +173,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
         {doubletopGuitars.length > 0 ? (
           <FadeIn>
             <motion.h2
-              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700"
+              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -184,7 +184,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               {doubletopGuitars.map((guitar) => (
                 <StaggerItem key={guitar.slug}>
                   <motion.div
-                    className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
+                    className="bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
                     whileHover={{ y: -4, scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
@@ -197,27 +197,27 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                         alt={guitar.data.title || "Guitar"}
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute top-4 left-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                      <div className="absolute top-4 left-4 bg-amber-600 dark:bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium">
                         Double Top
                       </div>
                     </div>
                     <div className="p-4">
-                      <h3 className="text-lg font-cinzel font-semibold text-stone-900 mb-1">
+                      <h3 className="text-lg font-cinzel font-semibold text-stone-900 dark:text-stone-100 mb-1">
                         {guitar.data.title}
                       </h3>
-                      <p className="text-sm text-amber-600 mb-2">
+                      <p className="text-sm text-amber-600 dark:text-amber-400 mb-2">
                         {guitar.data.year}
                       </p>
-                      <p className="text-xl font-bold text-stone-900 mb-2">
+                      <p className="text-xl font-bold text-stone-900 dark:text-stone-100 mb-2">
                         {guitar.data.price}
                       </p>
-                      <p className="text-stone-600 text-sm mb-4 line-clamp-2">
+                      <p className="text-stone-600 dark:text-stone-300 text-sm mb-4 line-clamp-2">
                         {guitar.data.description}
                       </p>
 
                       <div className="flex gap-2">
                         <motion.button
-                          className="flex-1 bg-stone-900 text-white px-4 py-2.5 rounded-lg hover:bg-stone-800 transition-colors text-sm font-medium flex items-center justify-center"
+                          className="flex-1 bg-amber-600 dark:bg-amber-500 text-white px-4 py-2.5 rounded-lg hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors text-sm font-medium flex items-center justify-center"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           transition={{ duration: 0.1 }}
@@ -230,7 +230,7 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                           Inquire
                         </motion.button>
                         <motion.button
-                          className="px-4 py-2.5 border border-stone-300 rounded-lg hover:bg-stone-50 transition-colors text-sm font-medium"
+                          className="px-4 py-2.5 border border-stone-300 dark:border-stone-600 text-stone-900 dark:text-stone-100 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors text-sm font-medium"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           transition={{ duration: 0.1 }}
@@ -250,14 +250,14 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
         {/* Guitar Detail Modal */}
         {selectedGuitar && (
           <motion.div
-            className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 bg-black dark:bg-black bg-opacity-50 dark:bg-opacity-70 z-50 flex items-center justify-center p-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setSelectedGuitar(null)}
           >
             <motion.div
-              className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-stone-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
@@ -266,16 +266,16 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
               <div className="p-6">
                 <div className="flex justify-between items-start mb-4">
                   <div>
-                    <h2 className="font-cinzel text-2xl font-bold text-stone-900">
+                    <h2 className="font-cinzel text-2xl font-bold text-stone-900 dark:text-stone-100">
                       {selectedGuitar.data.title}
                     </h2>
-                    <p className="text-amber-600 font-medium">
+                    <p className="text-amber-600 dark:text-amber-400 font-medium">
                       Double Top Construction
                     </p>
                   </div>
                   <button
                     onClick={() => setSelectedGuitar(null)}
-                    className="text-stone-500 hover:text-stone-700 text-2xl p-2 hover:bg-stone-100 rounded-full transition-colors"
+                    className="text-stone-500 dark:text-stone-400 hover:text-stone-700 dark:hover:text-stone-200 text-2xl p-2 hover:bg-stone-100 dark:hover:bg-stone-700 rounded-full transition-colors"
                   >
                     ✕
                   </button>
@@ -297,20 +297,20 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                   <div>
                     <div className="space-y-4">
                       <div>
-                        <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                        <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">
                           Price
                         </h3>
-                        <p className="text-2xl font-bold text-stone-900">
+                        <p className="text-2xl font-bold text-stone-900 dark:text-stone-100">
                           {selectedGuitar.data.price}
                         </p>
                       </div>
 
                       {selectedGuitar.data.description && (
                         <div>
-                          <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">
                             Description
                           </h3>
-                          <p className="text-stone-600 leading-relaxed">
+                          <p className="text-stone-600 dark:text-stone-300 leading-relaxed">
                             {selectedGuitar.data.description}
                           </p>
                         </div>
@@ -318,36 +318,36 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
 
                       {selectedGuitar.data.specifications && (
                         <div>
-                          <h3 className="font-semibold text-lg mb-2 text-amber-700">
+                          <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">
                             Specifications
                           </h3>
                           <div className="space-y-2 text-sm">
                             {selectedGuitar.data.specifications.topWood && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">
+                                <span className="font-medium text-stone-700 dark:text-stone-300">
                                   Top:
                                 </span>
-                                <span className="text-stone-600">
+                                <span className="text-stone-600 dark:text-stone-400">
                                   {selectedGuitar.data.specifications.topWood}
                                 </span>
                               </div>
                             )}
                             {selectedGuitar.data.specifications.backSides && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">
+                                <span className="font-medium text-stone-700 dark:text-stone-300">
                                   Back & Sides:
                                 </span>
-                                <span className="text-stone-600">
+                                <span className="text-stone-600 dark:text-stone-400">
                                   {selectedGuitar.data.specifications.backSides}
                                 </span>
                               </div>
                             )}
                             {selectedGuitar.data.specifications.scaleLength && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">
+                                <span className="font-medium text-stone-700 dark:text-stone-300">
                                   Scale Length:
                                 </span>
-                                <span className="text-stone-600">
+                                <span className="text-stone-600 dark:text-stone-400">
                                   {
                                     selectedGuitar.data.specifications
                                       .scaleLength
@@ -357,10 +357,10 @@ export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
                             )}
                             {selectedGuitar.data.specifications.nutWidth && (
                               <div className="flex justify-between">
-                                <span className="font-medium text-stone-700">
+                                <span className="font-medium text-stone-700 dark:text-stone-300">
                                   Nut Width:
                                 </span>
-                                <span className="text-stone-600">
+                                <span className="text-stone-600 dark:text-stone-400">
                                   {selectedGuitar.data.specifications.nutWidth}
                                 </span>
                               </div>

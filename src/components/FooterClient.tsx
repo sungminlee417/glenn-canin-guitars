@@ -42,6 +42,10 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
     { href: "/contact", label: "Contact" },
   ];
 
+  // Show admin link in development or when ?admin=true is in URL
+  const showAdminLink = process.env.NODE_ENV === 'development' || 
+    (typeof window !== 'undefined' && window.location.search.includes('admin=true'));
+
   // Use CMS data with fallbacks
   const companyName = footerContent?.data?.companyName || "Glenn Canin Guitars";
   const description = footerContent?.data?.description || "Handcrafted concert classical guitars for professional musicians worldwide. Each instrument is meticulously crafted to inspire musical excellence.";
@@ -73,7 +77,7 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
   };
 
   return (
-    <footer className="bg-stone-900 text-white relative overflow-hidden">
+    <footer className="bg-stone-900 dark:bg-stone-950 text-white relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/wood-grain.svg')] opacity-5" />
       
@@ -211,6 +215,21 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
                   </Link>
                 </motion.li>
               ))}
+              {showAdminLink && (
+                <motion.li 
+                  initial={{ opacity: 0, x: 10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: 0.3 + quickLinks.length * 0.05 }}
+                >
+                  <Link 
+                    href="/studio" 
+                    className="text-stone-400 hover:text-amber-400 transition-colors duration-200 text-xs block py-1 border-t border-stone-700 pt-3 mt-3"
+                  >
+                    ⚙️ Admin Studio
+                  </Link>
+                </motion.li>
+              )}
             </ul>
           </motion.div>
           

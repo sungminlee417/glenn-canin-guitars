@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -22,7 +23,7 @@ export default function Header() {
 
   return (
     <motion.header 
-      className="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-stone-200"
+      className="bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm shadow-sm sticky top-0 z-50 border-b border-stone-200 dark:border-stone-700"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
@@ -34,7 +35,7 @@ export default function Header() {
             whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.2 }}
           >
-            <Link href="/" className="font-cinzel text-xl md:text-2xl font-semibold text-stone-900 hover:text-amber-600 transition-colors">
+            <Link href="/" className="font-cinzel text-xl md:text-2xl font-semibold text-stone-900 dark:text-stone-100 hover:text-amber-600 transition-colors">
               Glenn Canin Guitars
             </Link>
           </motion.div>
@@ -49,7 +50,7 @@ export default function Header() {
               >
                 <Link
                   href={item.href}
-                  className="relative text-sm font-medium text-stone-700 hover:text-amber-600 transition-all duration-300 group"
+                  className="relative text-sm font-medium text-stone-700 dark:text-stone-300 hover:text-amber-600 transition-all duration-300 group"
                 >
                   {item.name}
                   <motion.span
@@ -62,10 +63,12 @@ export default function Header() {
             ))}
           </div>
 
-          <div className="lg:hidden">
-            <motion.button
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <div className="lg:hidden">
+              <motion.button
               type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-700 hover:text-amber-600 transition-colors"
+              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-700 dark:text-stone-300 hover:text-amber-600 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.95 }}
             >
@@ -93,7 +96,8 @@ export default function Header() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.button>
+              </motion.button>
+            </div>
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import { getPageContent } from "@/lib/markdown";
+import { getPageContent } from "@/lib/cms";
 import FooterClient from "./FooterClient";
 
 interface FooterContent {
@@ -17,8 +17,8 @@ interface FooterContent {
   content: string;
 }
 
-export default function FooterWrapper() {
-  const footerContent = getPageContent('footer') as FooterContent | null;
+export default async function FooterWrapper() {
+  const footerContent = await getPageContent('footer') as FooterContent | null;
   
   return <FooterClient footerContent={footerContent} />;
 }

@@ -1,5 +1,5 @@
 import ContactContent from "./ContactContent";
-import { getPageContent } from "@/lib/markdown";
+import { getPageContent } from "@/lib/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   // Fetch CMS content
-  const contactContent = getPageContent('contact');
+  const contactContent = await getPageContent('contact');
 
   return <ContactContent contactContent={contactContent} />;
 }

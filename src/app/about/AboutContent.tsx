@@ -71,14 +71,14 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
       ];
 
   return (
-    <div className="py-16 bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/wood-texture.svg')] opacity-5" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn className="text-center mb-12">
           <motion.h1
-            className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 mb-8"
+            className="font-cinzel text-4xl md:text-5xl font-bold text-stone-900 dark:text-stone-100 mb-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -100,13 +100,13 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
               >
-                <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700">
+                <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700 dark:text-amber-400">
                   {journeyTitle}
                 </h2>
                 {journeyParagraphs.map((paragraph, index) => (
                   <motion.p
                     key={index}
-                    className="text-stone-600 mb-4 leading-relaxed"
+                    className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -199,13 +199,13 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700">
+              <h2 className="font-cinzel text-2xl font-semibold mb-4 text-amber-700 dark:text-amber-400">
                 {philosophyTitle}
               </h2>
               {philosophyParagraphs.map((paragraph, index) => (
                 <motion.p
                   key={index}
-                  className="text-stone-600 mb-4 leading-relaxed"
+                  className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
@@ -217,7 +217,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
           </FadeIn>
 
           <motion.div
-            className="bg-gradient-to-br from-stone-100 to-amber-50 p-8 rounded-lg border border-amber-200 relative overflow-hidden"
+            className="bg-gradient-to-br from-stone-100 to-amber-50 dark:from-stone-700 dark:to-stone-800 p-8 rounded-lg border border-amber-200 dark:border-amber-600 relative overflow-hidden"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -229,7 +229,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
 
             <div className="relative">
               <motion.h2
-                className="font-cinzel text-2xl font-semibold mb-6 text-amber-700"
+                className="font-cinzel text-2xl font-semibold mb-6 text-amber-700 dark:text-amber-400"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
@@ -241,7 +241,7 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
                 {achievements.map((achievement, index) => (
                   <StaggerItem key={index}>
                     <motion.div
-                      className="flex items-center space-x-3 text-stone-700"
+                      className="flex items-center space-x-3 text-stone-700 dark:text-stone-300"
                       transition={{ duration: 0.2 }}
                     >
                       <motion.div

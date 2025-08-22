@@ -24,13 +24,13 @@ export default function ContactSection() {
   };
 
   return (
-    <section className="py-16 bg-gray-50">
+    <section className="py-16 bg-gray-50 dark:bg-stone-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="font-cinzel text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <h2 className="font-cinzel text-3xl md:text-4xl font-bold text-gray-900 dark:text-stone-100 mb-4">
             Get In Touch
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-stone-300 max-w-2xl mx-auto">
             Whether you&apos;re interested in commissioning a custom guitar or have questions about my instruments, 
             I&apos;d love to hear from you.
           </p>
@@ -38,38 +38,38 @@ export default function ContactSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Contact Information</h3>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-stone-100 mb-6">Contact Information</h3>
             
             <div className="space-y-4">
               <div className="flex items-start">
-                <Phone className="h-6 w-6 text-blue-600 mt-1 mr-3" />
+                <Phone className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
-                  <p className="font-medium text-gray-900">Phone</p>
-                  <p className="text-gray-600">415-407-1191</p>
+                  <p className="font-medium text-gray-900 dark:text-stone-100">Phone</p>
+                  <p className="text-gray-600 dark:text-stone-300">415-407-1191</p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <Mail className="h-6 w-6 text-blue-600 mt-1 mr-3" />
+                <Mail className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
-                  <p className="font-medium text-gray-900">Email</p>
-                  <p className="text-gray-600">glenncanin@hotmail.com</p>
+                  <p className="font-medium text-gray-900 dark:text-stone-100">Email</p>
+                  <p className="text-gray-600 dark:text-stone-300">glenncanin@hotmail.com</p>
                 </div>
               </div>
               
               <div className="flex items-start">
-                <MapPin className="h-6 w-6 text-blue-600 mt-1 mr-3" />
+                <MapPin className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
-                  <p className="font-medium text-gray-900">Workshop</p>
-                  <p className="text-gray-600">Mill Valley, California</p>
-                  <p className="text-gray-600">By appointment only</p>
+                  <p className="font-medium text-gray-900 dark:text-stone-100">Workshop</p>
+                  <p className="text-gray-600 dark:text-stone-300">Mill Valley, California</p>
+                  <p className="text-gray-600 dark:text-stone-300">By appointment only</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 p-6 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-gray-900 mb-2">Workshop Visits</h4>
-              <p className="text-gray-600 text-sm">
+            <div className="mt-8 p-6 bg-amber-50 dark:bg-stone-700 rounded-lg">
+              <h4 className="font-semibold text-gray-900 dark:text-stone-100 mb-2">Workshop Visits</h4>
+              <p className="text-gray-600 dark:text-stone-300 text-sm">
                 I welcome visits to my workshop by appointment. This is a great opportunity to see 
                 guitars in various stages of construction and try completed instruments.
               </p>
@@ -77,11 +77,11 @@ export default function ContactSection() {
           </div>
 
           <div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">Send a Message</h3>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-stone-100 mb-6">Send a Message</h3>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">
                   Name
                 </label>
                 <input
@@ -91,12 +91,12 @@ export default function ContactSection() {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-stone-600 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">
                   Email
                 </label>
                 <input
@@ -106,12 +106,12 @@ export default function ContactSection() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-stone-600 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">
                   Subject
                 </label>
                 <select
@@ -120,7 +120,7 @@ export default function ContactSection() {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-stone-600 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 >
                   <option value="">Select a subject</option>
                   <option value="commission">Commission a Guitar</option>
@@ -131,7 +131,7 @@ export default function ContactSection() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">
                   Message
                 </label>
                 <textarea
@@ -141,13 +141,13 @@ export default function ContactSection() {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 dark:border-stone-600 rounded-md focus:ring-amber-500 focus:border-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gray-900 text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800 transition-colors"
+                className="w-full bg-amber-600 dark:bg-amber-500 text-white px-6 py-3 rounded-md font-medium hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
               >
                 Send Message
               </button>

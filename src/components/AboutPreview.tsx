@@ -30,7 +30,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
   return (
     <section
       ref={ref}
-      className="py-16 bg-gradient-to-b from-white to-stone-50 relative overflow-hidden"
+      className="py-16 bg-gradient-to-b from-white to-stone-50 dark:from-stone-900 dark:to-stone-800 relative overflow-hidden"
     >
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/wood-pattern.svg')] opacity-5" />
@@ -40,7 +40,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
           <motion.div style={{ y: textY }}>
             <FadeIn>
               <motion.h2
-                className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 mb-6"
+                className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-6"
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "0px" }}
@@ -51,7 +51,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
             </FadeIn>
 
             <motion.div
-              className="space-y-4 text-stone-600 leading-relaxed"
+              className="space-y-4 text-stone-600 dark:text-stone-300 leading-relaxed"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true, margin: "0px" }}
@@ -92,7 +92,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
             >
               <Link
                 href="/about"
-                className="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium transition-colors group"
+                className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
               >
                 Learn More About My Craft
                 <motion.span

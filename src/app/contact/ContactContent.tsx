@@ -64,14 +64,14 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
   const hours = contactContent?.data?.hours || "Workshop visits by appointment only\nMonday - Friday: 9:00 AM - 5:00 PM";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-[url('/images/contact-pattern.svg')] opacity-5" />
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 mb-6"
+            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -79,7 +79,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
             {title}
           </motion.h1>
           <motion.p
-            className="text-xl text-stone-600 max-w-3xl mx-auto"
+            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -95,44 +95,44 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <h3 className="text-2xl font-cinzel font-semibold text-stone-900 mb-8 text-amber-700">Contact Information</h3>
+            <h3 className="text-2xl font-cinzel font-semibold text-amber-700 dark:text-amber-400 mb-8">Contact Information</h3>
             
             <div className="space-y-6">
               <motion.div 
-                className="flex items-start p-4 rounded-lg hover:bg-stone-50 transition-colors"
+                className="flex items-start p-4 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                <Phone className="h-6 w-6 text-amber-600 mt-1 mr-4 flex-shrink-0" />
+                <Phone className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-4 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-stone-900">Phone</p>
-                  <p className="text-stone-600">{phone}</p>
+                  <p className="font-semibold text-stone-900 dark:text-stone-100">Phone</p>
+                  <p className="text-stone-600 dark:text-stone-300">{phone}</p>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="flex items-start p-4 rounded-lg hover:bg-stone-50 transition-colors"
+                className="flex items-start p-4 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                <Mail className="h-6 w-6 text-amber-600 mt-1 mr-4 flex-shrink-0" />
+                <Mail className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-4 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-stone-900">Email</p>
-                  <p className="text-stone-600">{email}</p>
+                  <p className="font-semibold text-stone-900 dark:text-stone-100">Email</p>
+                  <p className="text-stone-600 dark:text-stone-300">{email}</p>
                 </div>
               </motion.div>
               
               <motion.div 
-                className="flex items-start p-4 rounded-lg hover:bg-stone-50 transition-colors"
+                className="flex items-start p-4 rounded-lg hover:bg-stone-50 dark:hover:bg-stone-700 transition-colors"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                <MapPin className="h-6 w-6 text-amber-600 mt-1 mr-4 flex-shrink-0" />
+                <MapPin className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-4 flex-shrink-0" />
                 <div>
-                  <p className="font-semibold text-stone-900">Workshop Location</p>
-                  <div className="text-stone-600 whitespace-pre-line">{address}</div>
+                  <p className="font-semibold text-stone-900 dark:text-stone-100">Workshop Location</p>
+                  <div className="text-stone-600 dark:text-stone-300 whitespace-pre-line">{address}</div>
                   {hours && (
-                    <div className="text-stone-500 text-sm whitespace-pre-line mt-1">{hours}</div>
+                    <div className="text-stone-500 dark:text-stone-400 text-sm whitespace-pre-line mt-1">{hours}</div>
                   )}
                 </div>
               </motion.div>
@@ -147,11 +147,11 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
           >
             <motion.form 
               onSubmit={handleSubmit}
-              className="bg-white p-8 rounded-lg shadow-sm border border-stone-200"
+              className="bg-white dark:bg-stone-800 p-8 rounded-lg shadow-sm border border-stone-200 dark:border-stone-600"
               whileHover={{ scale: 1.01 }}
               transition={{ duration: 0.3 }}
             >
-              <h3 className="text-2xl font-cinzel font-semibold text-stone-900 mb-6 text-amber-700">Send a Message</h3>
+              <h3 className="text-2xl font-cinzel font-semibold text-amber-700 dark:text-amber-400 mb-6">Send a Message</h3>
               
               {isSubmitted ? (
                 <motion.div
@@ -166,8 +166,8 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                   >
                     <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   </motion.div>
-                  <h4 className="text-xl font-semibold text-stone-900 mb-2">Message Sent!</h4>
-                  <p className="text-stone-600">Thank you for your message. I&apos;ll get back to you soon.</p>
+                  <h4 className="text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2">Message Sent!</h4>
+                  <p className="text-stone-600 dark:text-stone-300">Thank you for your message. I&apos;ll get back to you soon.</p>
                 </motion.div>
               ) : (
                 <div className="space-y-6">
@@ -176,7 +176,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       whileFocus={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-2">
+                      <label htmlFor="name" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">
                         Name *
                       </label>
                       <input
@@ -186,7 +186,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                         placeholder="Your name"
                       />
                     </motion.div>
@@ -195,7 +195,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       whileFocus={{ scale: 1.02 }}
                       transition={{ duration: 0.2 }}
                     >
-                      <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">
                         Email *
                       </label>
                       <input
@@ -205,7 +205,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                         placeholder="your@email.com"
                       />
                     </motion.div>
@@ -215,7 +215,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                     whileFocus={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <label htmlFor="subject" className="block text-sm font-medium text-stone-700 mb-2">
+                    <label htmlFor="subject" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">
                       Subject *
                     </label>
                     <select
@@ -224,7 +224,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-stone-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                     >
                       <option value="">Select a subject</option>
                       <option value="custom-order">Custom Guitar Order</option>
@@ -238,7 +238,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                     whileFocus={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <label htmlFor="message" className="block text-sm font-medium text-stone-700 mb-2">
+                    <label htmlFor="message" className="block text-sm font-medium text-stone-700 dark:text-stone-300 mb-2">
                       Message *
                     </label>
                     <textarea
@@ -256,7 +256,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-stone-900 text-white px-6 py-3 rounded-lg font-semibold hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                    className="w-full bg-amber-600 dark:bg-amber-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                     whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                     whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
                     transition={{ duration: 0.2 }}
@@ -281,7 +281,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
 
         <FadeIn className="mt-16">
           <motion.div 
-            className="bg-stone-900 text-white rounded-lg p-8 text-center"
+            className="bg-stone-900 dark:bg-stone-800 text-white rounded-lg p-8 text-center"
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
@@ -295,7 +295,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
               Ready to Begin Your Guitar Journey?
             </motion.h3>
             <motion.p 
-              className="text-stone-200 mb-6 max-w-2xl mx-auto"
+              className="text-stone-200 dark:text-stone-300 mb-6 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "0px" }}
@@ -306,7 +306,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
             </motion.p>
             <motion.a 
               href="/ordering"
-              className="inline-block bg-amber-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 transition-colors"
+              className="inline-block bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

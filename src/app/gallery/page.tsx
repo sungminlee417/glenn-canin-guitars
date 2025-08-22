@@ -1,5 +1,5 @@
 import GalleryContent from './GalleryContent';
-import { getGalleryItems } from '@/lib/markdown';
+import { getGalleryItems } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function GalleryPage() {
   // Fetch gallery items from CMS
-  const allGalleryItems = getGalleryItems();
+  const allGalleryItems = await getGalleryItems();
 
   return <GalleryContent galleryItems={allGalleryItems} />;
 }

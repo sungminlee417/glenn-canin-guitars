@@ -1,5 +1,5 @@
 import ForSaleContent from './ForSaleContent';
-import { getGuitars } from '@/lib/markdown';
+import { getAvailableGuitars } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ForSalePage() {
-  // Fetch all guitars from CMS
-  const allGuitars = getGuitars();
-  const availableGuitars = allGuitars.filter(guitar => guitar.data.available !== false);
+  // Fetch available guitars from CMS
+  const availableGuitars = await getAvailableGuitars();
 
   return <ForSaleContent guitars={availableGuitars} />;
 }

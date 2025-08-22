@@ -1,5 +1,5 @@
 import VideosContent from './VideosContent';
-import { getVideos } from '@/lib/markdown';
+import { getVideos } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function VideosPage() {
   // Fetch videos from CMS
-  const allVideos = getVideos();
+  const allVideos = await getVideos();
 
   return <VideosContent videos={allVideos} />;
 }

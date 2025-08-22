@@ -6,15 +6,23 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "studio": "sanity dev",
+    "studio:build": "sanity build",
+    "studio:deploy": "sanity deploy"
   },
   "dependencies": {
-    "decap-cms-app": "^3.8.3",
+    "@portabletext/react": "^4.0.1",
+    "@sanity/cli": "^4.5.0",
+    "@sanity/client": "^7.9.0",
+    "@sanity/image-url": "^1.1.0",
+    "@sanity/structure": "^2.36.2",
+    "@sanity/vision": "^4.5.0",
     "framer-motion": "^12.23.12",
-    "gray-matter": "^4.0.3",
     "lucide-react": "^0.539.0",
     "marked": "^16.1.2",
     "next": "15.1.4",
+    "next-sanity": "^10.0.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
