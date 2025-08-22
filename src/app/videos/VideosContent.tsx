@@ -21,7 +21,17 @@ interface Video {
   content: string;
 }
 
+interface VideosContent {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
 interface VideosContentProps {
+  videosContent: VideosContent | null;
   videos: Video[];
 }
 
@@ -88,7 +98,7 @@ function VideoCard({ video, videoId, onClick, featured = false }: VideoCardProps
   );
 }
 
-export default function VideosContent({ videos }: VideosContentProps) {
+export default function VideosContent({ videosContent, videos }: VideosContentProps) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   
   const { featuredVideos, regularVideos } = useMemo(() => {

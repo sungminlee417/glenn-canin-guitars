@@ -35,11 +35,21 @@ interface Guitar {
   content: string;
 }
 
+interface DoubletopsContent {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
 interface DoubletopsContentProps {
+  doubletopsContent: DoubletopsContent | null;
   guitars: Guitar[];
 }
 
-export default function DoubletopsContent({ guitars }: DoubletopsContentProps) {
+export default function DoubletopsContent({ doubletopsContent, guitars }: DoubletopsContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
 
   // Filter for double top guitars

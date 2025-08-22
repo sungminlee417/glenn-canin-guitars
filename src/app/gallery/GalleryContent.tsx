@@ -20,7 +20,17 @@ interface GalleryItem {
   content: string;
 }
 
+interface GalleryContent {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
 interface GalleryContentProps {
+  galleryContent: GalleryContent | null;
   galleryItems: GalleryItem[];
 }
 
@@ -114,7 +124,7 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
   );
 }
 
-export default function GalleryContent({ galleryItems }: GalleryContentProps) {
+export default function GalleryContent({ galleryContent, galleryItems }: GalleryContentProps) {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
 
   const featuredItems = galleryItems.filter(item => item.data.featured);

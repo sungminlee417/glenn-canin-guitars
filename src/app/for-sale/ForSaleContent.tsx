@@ -32,11 +32,21 @@ interface Guitar {
   content: string;
 }
 
+interface ForSaleContent {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
 interface ForSaleContentProps {
+  forSaleContent: ForSaleContent | null;
   guitars: Guitar[];
 }
 
-export default function ForSaleContent({ guitars }: ForSaleContentProps) {
+export default function ForSaleContent({ forSaleContent, guitars }: ForSaleContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
   
   const featuredGuitars = guitars.filter(guitar => guitar.data.featured);

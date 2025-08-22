@@ -19,11 +19,21 @@ interface Player {
   content: string;
 }
 
+interface PlayersContent {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
 interface PlayersContentProps {
+  playersContent: PlayersContent | null;
   players: Player[];
 }
 
-export default function PlayersContent({ players }: PlayersContentProps) {
+export default function PlayersContent({ playersContent, players }: PlayersContentProps) {
   const featuredPlayers = players.filter(player => player.data.featured);
   const regularPlayers = players.filter(player => !player.data.featured);
   

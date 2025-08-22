@@ -1,5 +1,5 @@
 import PlayersContent from "./PlayersContent";
-import { getPlayers } from "@/lib/cms";
+import { getPlayersPageContent, getPlayers } from "@/lib/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -15,8 +15,9 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function PlayersPage() {
-  // Fetch players from CMS
+  // Fetch CMS content
+  const playersContent = await getPlayersPageContent();
   const allPlayers = await getPlayers();
 
-  return <PlayersContent players={allPlayers} />;
+  return <PlayersContent playersContent={playersContent} players={allPlayers} />;
 }

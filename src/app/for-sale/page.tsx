@@ -1,5 +1,5 @@
 import ForSaleContent from './ForSaleContent';
-import { getAvailableGuitars } from '@/lib/cms';
+import { getForSalePageContent, getAvailableGuitars } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -15,8 +15,9 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function ForSalePage() {
-  // Fetch available guitars from CMS
+  // Fetch CMS content
+  const forSaleContent = await getForSalePageContent();
   const availableGuitars = await getAvailableGuitars();
 
-  return <ForSaleContent guitars={availableGuitars} />;
+  return <ForSaleContent forSaleContent={forSaleContent} guitars={availableGuitars} />;
 }

@@ -1,5 +1,5 @@
 import VideosContent from './VideosContent';
-import { getVideos } from '@/lib/cms';
+import { getVideosPageContent, getVideos } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -15,8 +15,9 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default async function VideosPage() {
-  // Fetch videos from CMS
+  // Fetch CMS content
+  const videosContent = await getVideosPageContent();
   const allVideos = await getVideos();
 
-  return <VideosContent videos={allVideos} />;
+  return <VideosContent videosContent={videosContent} videos={allVideos} />;
 }
