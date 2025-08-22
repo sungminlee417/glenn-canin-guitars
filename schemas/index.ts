@@ -2,12 +2,30 @@ import guitar from './guitar'
 import player from './player'
 import galleryItem from './galleryItem'
 import video from './video'
-import page from './page'
+import homePage from './homePage'
+import aboutPage from './aboutPage'
+import contactPage from './contactPage'
+import orderingPage from './orderingPage'
+import doubletopsPage from './doubletopsPage'
+import videosPage from './videosPage'
+import galleryPage from './galleryPage'
+import playersPage from './playersPage'
+import forSalePage from './forSalePage'
+import footerSettings from './footerSettings'
 
 export const schemaTypes = [
   guitar,
   player,
   galleryItem,
   video,
-  page,
+  homePage,
+  aboutPage,
+  contactPage,
+  orderingPage,
+  doubletopsPage,
+  videosPage,
+  galleryPage,
+  playersPage,
+  forSalePage,
+  footerSettings,
 ]

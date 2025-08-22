@@ -8,6 +8,8 @@ import FadeIn from "@/components/animations/FadeIn";
 interface HomeContent {
   data: {
     aboutPreview?: string;
+    aboutPreviewTitle?: string;
+    aboutPreviewLinkText?: string;
     [key: string]: unknown;
   };
   content: string;
@@ -46,7 +48,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
                 viewport={{ once: true, margin: "0px" }}
                 transition={{ duration: 0.6 }}
               >
-                Master Luthier Since 1985
+{homeContent?.data?.aboutPreviewTitle}
               </motion.h2>
             </FadeIn>
 
@@ -94,7 +96,7 @@ export default function AboutPreview({ homeContent }: AboutPreviewProps) {
                 href="/about"
                 className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
               >
-                Learn More About My Craft
+{homeContent?.data?.aboutPreviewLinkText}
                 <motion.span
                   className="ml-2"
                   animate={{ x: [0, 4, 0] }}

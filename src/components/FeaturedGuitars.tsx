@@ -23,6 +23,8 @@ interface Guitar {
 interface FeaturedGuitarsProps {
   featuredGuitars: Guitar[];
   title?: string;
+  description?: string;
+  buttonText?: string;
 }
 
 interface GuitarCardProps {
@@ -121,7 +123,7 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
   );
 }
 
-export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuitarsProps) {
+export default function FeaturedGuitars({ featuredGuitars, title, description, buttonText }: FeaturedGuitarsProps) {
   return (
     <section className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
       <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
@@ -144,7 +146,7 @@ export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuit
             viewport={{ once: true, margin: "0px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Each guitar is meticulously crafted using the finest tonewoods and traditional techniques combined with modern innovations
+{description}
           </motion.p>
         </FadeIn>
         
@@ -163,7 +165,7 @@ export default function FeaturedGuitars({ featuredGuitars, title }: FeaturedGuit
               href="/for-sale"
               className="inline-block bg-gradient-to-r from-amber-600 to-amber-700 text-white px-8 py-3 rounded-md font-medium hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              View All Available Guitars
+{buttonText}
             </Link>
           </motion.div>
         </FadeIn>

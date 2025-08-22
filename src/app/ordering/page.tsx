@@ -1,5 +1,5 @@
 import OrderingContent from "./OrderingContent";
-import { getPageContent } from "@/lib/cms";
+import { getOrderingPageContent } from "@/lib/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const revalidate = 60;
 
 export default async function OrderingPage() {
   // Fetch CMS content
-  const orderingContent = await getPageContent('ordering');
+  const orderingContent = await getOrderingPageContent();
 
   return <OrderingContent orderingContent={orderingContent} />;
 }

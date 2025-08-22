@@ -1,5 +1,5 @@
 import AboutContent from "./AboutContent";
-import { getPageContent } from "@/lib/cms";
+import { getAboutPageContent } from "@/lib/cms";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,7 +16,7 @@ export const revalidate = 60;
 
 export default async function AboutPage() {
   // Fetch CMS content
-  const aboutContent = await getPageContent('about');
+  const aboutContent = await getAboutPageContent();
 
   return <AboutContent aboutContent={aboutContent} />;
 }

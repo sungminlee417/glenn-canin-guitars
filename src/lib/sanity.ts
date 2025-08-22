@@ -17,28 +17,223 @@ export const urlFor = (source: any) => {
 };
 
 // GROQ queries for different content types
-export async function getPageContent(pageName: string) {
+export async function getHomePageContent() {
   try {
-    const query = `*[_type == "page" && slug.current == $pageName][0]{
+    const query = `*[_type == "homePage"][0]{
       _id,
       _createdAt,
       title,
-      slug,
-      content,
+      heroTitle,
+      heroSubtitle,
       heroImage,
-      aboutHeroImage,
-      "data": {
-        title,
-        heroImage,
-        aboutHeroImage
-      }
+      aboutPreview,
+      aboutPreviewTitle,
+      aboutPreviewLinkText,
+      featuredGuitarsTitle,
+      featuredGuitarsDescription,
+      featuredGuitarsButtonText
     }`;
     
-    return await client.fetch(query, { pageName });
+    return await client.fetch(query);
   } catch {
-    console.log(`Sanity fetch failed for page ${pageName}, falling back to markdown`);
+    console.log('Sanity fetch failed for home page');
     return null;
   }
+}
+
+export async function getAboutPageContent() {
+  try {
+    const query = `*[_type == "aboutPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      aboutHeroImage,
+      journeyTitle,
+      journeyContent,
+      philosophyTitle,
+      philosophyContent,
+      achievementsTitle,
+      achievements
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for about page');
+    return null;
+  }
+}
+
+export async function getContactPageContent() {
+  try {
+    const query = `*[_type == "contactPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription,
+      workshopSectionTitle,
+      workshopSectionDescription,
+      address,
+      phone,
+      email,
+      hours
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for contact page');
+    return null;
+  }
+}
+
+export async function getOrderingPageContent() {
+  try {
+    const query = `*[_type == "orderingPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      processSteps,
+      content
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for ordering page');
+    return null;
+  }
+}
+
+export async function getFooterSettings() {
+  try {
+    const query = `*[_type == "footerSettings"][0]{
+      _id,
+      _createdAt,
+      companyName,
+      description,
+      footerPhone,
+      footerEmail,
+      location,
+      locationNote,
+      establishedYear,
+      tagline,
+      country,
+      socialMedia,
+      trustlineText
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for footer settings');
+    return null;
+  }
+}
+
+export async function getDoubletopsPageContent() {
+  try {
+    const query = `*[_type == "doubletopsPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription,
+      innovationSectionTitle,
+      innovationSectionContent,
+      benefitsSectionTitle,
+      benefits,
+      availableGuitarsTitle
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for doubletops page');
+    return null;
+  }
+}
+
+export async function getVideosPageContent() {
+  try {
+    const query = `*[_type == "videosPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription,
+      featuredVideosTitle,
+      moreVideosTitle
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for videos page');
+    return null;
+  }
+}
+
+export async function getGalleryPageContent() {
+  try {
+    const query = `*[_type == "galleryPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for gallery page');
+    return null;
+  }
+}
+
+export async function getPlayersPageContent() {
+  try {
+    const query = `*[_type == "playersPage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription,
+      featuredPlayersTitle,
+      allPlayersTitle,
+      ctaSectionTitle,
+      ctaSectionDescription
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for players page');
+    return null;
+  }
+}
+
+export async function getForSalePageContent() {
+  try {
+    const query = `*[_type == "forSalePage"][0]{
+      _id,
+      _createdAt,
+      title,
+      pageTitle,
+      pageDescription,
+      availabilityNoticeTitle,
+      availabilityNoticeText,
+      featuredInstrumentsTitle,
+      availableInstrumentsTitle,
+      inquireButtonText
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for for sale page');
+    return null;
+  }
+}
+
+// Legacy function for backward compatibility - will be removed
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function getPageContent(_pageName: string) {
+  console.warn(`getPageContent is deprecated. Use specific page functions instead.`);
+  return null;
 }
 
 export async function getGuitars() {

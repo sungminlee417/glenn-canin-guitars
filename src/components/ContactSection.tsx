@@ -3,7 +3,25 @@
 import { useState } from "react";
 import { Mail, Phone, MapPin } from "lucide-react";
 
-export default function ContactSection() {
+interface ContactData {
+  data: {
+    pageTitle?: string;
+    pageDescription?: string;
+    workshopSectionTitle?: string;
+    workshopSectionDescription?: string;
+    phone?: string;
+    email?: string;
+    address?: string;
+    [key: string]: unknown;
+  };
+  content: string;
+}
+
+interface ContactSectionProps {
+  contactContent?: ContactData | null;
+}
+
+export default function ContactSection({ contactContent }: ContactSectionProps) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -28,11 +46,10 @@ export default function ContactSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="font-cinzel text-3xl md:text-4xl font-bold text-gray-900 dark:text-stone-100 mb-4">
-            Get In Touch
+            {contactContent?.data?.pageTitle}
           </h2>
           <p className="text-lg text-gray-600 dark:text-stone-300 max-w-2xl mx-auto">
-            Whether you&apos;re interested in commissioning a custom guitar or have questions about my instruments, 
-            I&apos;d love to hear from you.
+            {contactContent?.data?.pageDescription}
           </p>
         </div>
 
@@ -45,7 +62,7 @@ export default function ContactSection() {
                 <Phone className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900 dark:text-stone-100">Phone</p>
-                  <p className="text-gray-600 dark:text-stone-300">415-407-1191</p>
+                  <p className="text-gray-600 dark:text-stone-300">{contactContent?.data?.phone}</p>
                 </div>
               </div>
               
@@ -53,7 +70,7 @@ export default function ContactSection() {
                 <Mail className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900 dark:text-stone-100">Email</p>
-                  <p className="text-gray-600 dark:text-stone-300">glenncanin@hotmail.com</p>
+                  <p className="text-gray-600 dark:text-stone-300">{contactContent?.data?.email}</p>
                 </div>
               </div>
               
@@ -61,17 +78,19 @@ export default function ContactSection() {
                 <MapPin className="h-6 w-6 text-amber-600 dark:text-amber-400 mt-1 mr-3" />
                 <div>
                   <p className="font-medium text-gray-900 dark:text-stone-100">Workshop</p>
-                  <p className="text-gray-600 dark:text-stone-300">Mill Valley, California</p>
-                  <p className="text-gray-600 dark:text-stone-300">By appointment only</p>
+                  <div className="text-gray-600 dark:text-stone-300 whitespace-pre-line">
+                    {contactContent?.data?.address}
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="mt-8 p-6 bg-amber-50 dark:bg-stone-700 rounded-lg">
-              <h4 className="font-semibold text-gray-900 dark:text-stone-100 mb-2">Workshop Visits</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-stone-100 mb-2">
+                {contactContent?.data?.workshopSectionTitle}
+              </h4>
               <p className="text-gray-600 dark:text-stone-300 text-sm">
-                I welcome visits to my workshop by appointment. This is a great opportunity to see 
-                guitars in various stages of construction and try completed instruments.
+                {contactContent?.data?.workshopSectionDescription}
               </p>
             </div>
           </div>

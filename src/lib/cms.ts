@@ -1,7 +1,16 @@
 // Sanity CMS integration
 
 import {
-  getPageContent as getSanityPageContent,
+  getHomePageContent as getSanityHomePageContent,
+  getAboutPageContent as getSanityAboutPageContent,
+  getContactPageContent as getSanityContactPageContent,
+  getOrderingPageContent as getSanityOrderingPageContent,
+  getDoubletopsPageContent as getSanityDoubletopsPageContent,
+  getVideosPageContent as getSanityVideosPageContent,
+  getGalleryPageContent as getSanityGalleryPageContent,
+  getPlayersPageContent as getSanityPlayersPageContent,
+  getForSalePageContent as getSanityForSalePageContent,
+  getFooterSettings as getSanityFooterSettings,
   getGuitars as getSanityGuitars,
   getPlayers as getSanityPlayers,
   getGalleryItems as getSanityGalleryItems,
@@ -52,10 +61,67 @@ function transformSanityPageData(data: any) {
   }
 }
 
-// API functions
-export async function getPageContent(pageName: string) {
-  const data = await getSanityPageContent(pageName)
+// API functions for specific page types
+export async function getHomePageContent() {
+  const data = await getSanityHomePageContent()
   return transformSanityPageData(data)
+}
+
+export async function getAboutPageContent() {
+  const data = await getSanityAboutPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getContactPageContent() {
+  const data = await getSanityContactPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getOrderingPageContent() {
+  const data = await getSanityOrderingPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getFooterSettings() {
+  const data = await getSanityFooterSettings()
+  return transformSanityPageData(data)
+}
+
+export async function getDoubletopsPageContent() {
+  const data = await getSanityDoubletopsPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getVideosPageContent() {
+  const data = await getSanityVideosPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getGalleryPageContent() {
+  const data = await getSanityGalleryPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getPlayersPageContent() {
+  const data = await getSanityPlayersPageContent()
+  return transformSanityPageData(data)
+}
+
+export async function getForSalePageContent() {
+  const data = await getSanityForSalePageContent()
+  return transformSanityPageData(data)
+}
+
+// Legacy function for backward compatibility
+export async function getPageContent(pageName: string) {
+  console.warn(`getPageContent('${pageName}') is deprecated. Use specific page functions instead.`);
+  switch(pageName) {
+    case 'home': return getHomePageContent();
+    case 'about': return getAboutPageContent();
+    case 'contact': return getContactPageContent();
+    case 'ordering': return getOrderingPageContent();
+    default: return null;
+  }
 }
 
 export async function getGuitars() {

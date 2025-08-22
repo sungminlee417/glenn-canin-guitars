@@ -15,6 +15,7 @@ interface FooterContent {
     establishedYear?: string;
     tagline?: string;
     country?: string;
+    trustlineText?: string;
     socialMedia?: {
       instagram?: string;
       facebook?: string;
@@ -115,7 +116,7 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
               transition={{ duration: 0.6, delay: 0.3 }}
             >
               <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              <span className="ml-2 text-stone-400 text-sm">Trusted by professionals</span>
+              <span className="ml-2 text-stone-400 text-sm">{footerContent?.data?.trustlineText}</span>
             </motion.div>
             
             {/* Social Media Links */}
