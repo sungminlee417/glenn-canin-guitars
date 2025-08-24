@@ -30,12 +30,12 @@ function transformSanityData(data: any) {
       const transformed = {
         ...item,
         slug: item.slug?.current || item.slug,
-        // Transform image URLs at top level
-        mainImage: item.mainImage ? urlFor(item.mainImage).url() : undefined,
-        photo: item.photo ? urlFor(item.photo).url() : undefined,
-        image: item.image ? urlFor(item.image).url() : undefined,
-        heroImage: item.heroImage ? urlFor(item.heroImage).url() : undefined,
-        aboutHeroImage: item.aboutHeroImage ? urlFor(item.aboutHeroImage).url() : undefined,
+        // Transform image URLs at top level - handle both direct asset references and nested asset objects
+        mainImage: item.mainImage ? (item.mainImage.asset ? item.mainImage.asset.url : urlFor(item.mainImage).url()) : undefined,
+        photo: item.photo ? (item.photo.asset ? item.photo.asset.url : urlFor(item.photo).url()) : undefined,
+        image: item.image ? (item.image.asset ? item.image.asset.url : urlFor(item.image).url()) : undefined,
+        heroImage: item.heroImage ? (item.heroImage.asset ? item.heroImage.asset.url : urlFor(item.heroImage).url()) : undefined,
+        aboutHeroImage: item.aboutHeroImage ? (item.aboutHeroImage.asset ? item.aboutHeroImage.asset.url : urlFor(item.aboutHeroImage).url()) : undefined,
       }
       
       // Also transform images in nested data object if it exists
@@ -57,12 +57,12 @@ function transformSanityData(data: any) {
   const transformed = {
     ...data,
     slug: data.slug?.current || data.slug,
-    // Transform image URLs
-    mainImage: data.mainImage ? urlFor(data.mainImage).url() : undefined,
-    photo: data.photo ? urlFor(data.photo).url() : undefined,
-    image: data.image ? urlFor(data.image).url() : undefined,
-    heroImage: data.heroImage ? urlFor(data.heroImage).url() : undefined,
-    aboutHeroImage: data.aboutHeroImage ? urlFor(data.aboutHeroImage).url() : undefined,
+    // Transform image URLs - handle both direct asset references and nested asset objects
+    mainImage: data.mainImage ? (data.mainImage.asset ? data.mainImage.asset.url : urlFor(data.mainImage).url()) : undefined,
+    photo: data.photo ? (data.photo.asset ? data.photo.asset.url : urlFor(data.photo).url()) : undefined,
+    image: data.image ? (data.image.asset ? data.image.asset.url : urlFor(data.image).url()) : undefined,
+    heroImage: data.heroImage ? (data.heroImage.asset ? data.heroImage.asset.url : urlFor(data.heroImage).url()) : undefined,
+    aboutHeroImage: data.aboutHeroImage ? (data.aboutHeroImage.asset ? data.aboutHeroImage.asset.url : urlFor(data.aboutHeroImage).url()) : undefined,
   }
   
   // Also transform images in nested data object if it exists
@@ -85,8 +85,11 @@ function transformSanityData(data: any) {
 function transformSanityPageData(data: any) {
   if (!data) return null
   
+  // First transform any images in the data
+  const transformedData = transformSanityData(data)
+  
   return {
-    data: data.data || data,
+    data: transformedData || data,
     content: data.content || '',
   }
 }

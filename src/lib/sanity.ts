@@ -19,13 +19,18 @@ export const urlFor = (source: any) => {
 // GROQ queries for different content types
 export async function getHomePageContent() {
   try {
-    const query = `*[_type == "homePage"][0]{
+    const query = `*[_type == "homePage" && _id == "homePage"][0]{
       _id,
       _createdAt,
       title,
       heroTitle,
       heroSubtitle,
-      heroImage,
+      heroImage{
+        asset->{
+          _id,
+          url
+        }
+      },
       aboutPreview,
       aboutPreviewTitle,
       aboutPreviewLinkText,
@@ -34,16 +39,17 @@ export async function getHomePageContent() {
       featuredGuitarsButtonText
     }`;
     
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for home page');
+    const result = await client.fetch(query);
+    return result;
+  } catch (error) {
+    console.log('Sanity fetch failed for home page:', error);
     return null;
   }
 }
 
 export async function getAboutPageContent() {
   try {
-    const query = `*[_type == "aboutPage"][0]{
+    const query = `*[_type == "aboutPage" && _id == "aboutPage"][0]{
       _id,
       _createdAt,
       title,
@@ -65,7 +71,7 @@ export async function getAboutPageContent() {
 
 export async function getContactPageContent() {
   try {
-    const query = `*[_type == "contactPage"][0]{
+    const query = `*[_type == "contactPage" && _id == "contactPage"][0]{
       _id,
       _createdAt,
       title,
@@ -88,7 +94,7 @@ export async function getContactPageContent() {
 
 export async function getOrderingPageContent() {
   try {
-    const query = `*[_type == "orderingPage"][0]{
+    const query = `*[_type == "orderingPage" && _id == "orderingPage"][0]{
       _id,
       _createdAt,
       title,
@@ -105,7 +111,7 @@ export async function getOrderingPageContent() {
 
 export async function getFooterSettings() {
   try {
-    const query = `*[_type == "footerSettings"][0]{
+    const query = `*[_type == "footerSettings" && _id == "footerSettings"][0]{
       _id,
       _createdAt,
       companyName,
@@ -130,7 +136,7 @@ export async function getFooterSettings() {
 
 export async function getDoubletopsPageContent() {
   try {
-    const query = `*[_type == "doubletopsPage"][0]{
+    const query = `*[_type == "doubletopsPage" && _id == "doubletopsPage"][0]{
       _id,
       _createdAt,
       title,
@@ -152,7 +158,7 @@ export async function getDoubletopsPageContent() {
 
 export async function getVideosPageContent() {
   try {
-    const query = `*[_type == "videosPage"][0]{
+    const query = `*[_type == "videosPage" && _id == "videosPage"][0]{
       _id,
       _createdAt,
       title,
@@ -171,7 +177,7 @@ export async function getVideosPageContent() {
 
 export async function getGalleryPageContent() {
   try {
-    const query = `*[_type == "galleryPage"][0]{
+    const query = `*[_type == "galleryPage" && _id == "galleryPage"][0]{
       _id,
       _createdAt,
       title,
@@ -188,7 +194,7 @@ export async function getGalleryPageContent() {
 
 export async function getPlayersPageContent() {
   try {
-    const query = `*[_type == "playersPage"][0]{
+    const query = `*[_type == "playersPage" && _id == "playersPage"][0]{
       _id,
       _createdAt,
       title,
@@ -209,7 +215,7 @@ export async function getPlayersPageContent() {
 
 export async function getForSalePageContent() {
   try {
-    const query = `*[_type == "forSalePage"][0]{
+    const query = `*[_type == "forSalePage" && _id == "forSalePage"][0]{
       _id,
       _createdAt,
       title,
