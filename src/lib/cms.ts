@@ -26,19 +26,35 @@ function transformSanityData(data: any) {
   if (!data) return null
   
   if (Array.isArray(data)) {
-    return data.map(item => ({
-      ...item,
-      slug: item.slug?.current || item.slug,
-      // Transform image URLs
-      mainImage: item.mainImage ? urlFor(item.mainImage).url() : undefined,
-      photo: item.photo ? urlFor(item.photo).url() : undefined,
-      image: item.image ? urlFor(item.image).url() : undefined,
-      heroImage: item.heroImage ? urlFor(item.heroImage).url() : undefined,
-      aboutHeroImage: item.aboutHeroImage ? urlFor(item.aboutHeroImage).url() : undefined,
-    }))
+    return data.map(item => {
+      const transformed = {
+        ...item,
+        slug: item.slug?.current || item.slug,
+        // Transform image URLs at top level
+        mainImage: item.mainImage ? urlFor(item.mainImage).url() : undefined,
+        photo: item.photo ? urlFor(item.photo).url() : undefined,
+        image: item.image ? urlFor(item.image).url() : undefined,
+        heroImage: item.heroImage ? urlFor(item.heroImage).url() : undefined,
+        aboutHeroImage: item.aboutHeroImage ? urlFor(item.aboutHeroImage).url() : undefined,
+      }
+      
+      // Also transform images in nested data object if it exists
+      if (transformed.data) {
+        transformed.data = {
+          ...transformed.data,
+          mainImage: transformed.data.mainImage ? urlFor(transformed.data.mainImage).url() : undefined,
+          photo: transformed.data.photo ? urlFor(transformed.data.photo).url() : undefined,
+          image: transformed.data.image ? urlFor(transformed.data.image).url() : undefined,
+          heroImage: transformed.data.heroImage ? urlFor(transformed.data.heroImage).url() : undefined,
+          aboutHeroImage: transformed.data.aboutHeroImage ? urlFor(transformed.data.aboutHeroImage).url() : undefined,
+        }
+      }
+      
+      return transformed
+    })
   }
   
-  return {
+  const transformed = {
     ...data,
     slug: data.slug?.current || data.slug,
     // Transform image URLs
@@ -48,6 +64,20 @@ function transformSanityData(data: any) {
     heroImage: data.heroImage ? urlFor(data.heroImage).url() : undefined,
     aboutHeroImage: data.aboutHeroImage ? urlFor(data.aboutHeroImage).url() : undefined,
   }
+  
+  // Also transform images in nested data object if it exists
+  if (transformed.data) {
+    transformed.data = {
+      ...transformed.data,
+      mainImage: transformed.data.mainImage ? urlFor(transformed.data.mainImage).url() : undefined,
+      photo: transformed.data.photo ? urlFor(transformed.data.photo).url() : undefined,
+      image: transformed.data.image ? urlFor(transformed.data.image).url() : undefined,
+      heroImage: transformed.data.heroImage ? urlFor(transformed.data.heroImage).url() : undefined,
+      aboutHeroImage: transformed.data.aboutHeroImage ? urlFor(transformed.data.aboutHeroImage).url() : undefined,
+    }
+  }
+  
+  return transformed
 }
 
 // Helper function to transform Sanity page data to match expected structure
