@@ -41,18 +41,6 @@ export default defineType({
       type: 'text',
       rows: 6,
     }),
-    defineField({
-      name: 'achievementsTitle',
-      title: 'Achievements Section Title',
-      type: 'string',
-      initialValue: 'Awards & Recognition',
-    }),
-    defineField({
-      name: 'achievements',
-      title: 'Achievements',
-      type: 'array',
-      of: [{ type: 'string' }],
-    }),
   ],
   preview: {
     select: {

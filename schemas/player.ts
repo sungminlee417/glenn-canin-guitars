@@ -48,24 +48,17 @@ export default defineType({
       title: 'Website',
       type: 'url',
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      initialValue: false,
-    }),
   ],
   preview: {
     select: {
       title: 'name',
       media: 'photo',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, featured } = selection
+      const { title } = selection
       return {
         title: title,
-        subtitle: featured ? 'Featured Artist' : 'Artist',
+        subtitle: 'Artist',
         media: selection.media,
       }
     },

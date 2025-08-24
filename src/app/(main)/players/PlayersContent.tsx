@@ -12,7 +12,6 @@ interface Player {
     photo?: string;
     bio?: string;
     website?: string;
-    featured?: boolean;
     guitars?: (string | { model?: string; year?: number; description?: string })[];
     [key: string]: unknown;
   };
@@ -35,11 +34,6 @@ interface PlayersContentProps {
 
 export default function PlayersContent({ players }: PlayersContentProps) {
   // Note: playersContent parameter temporarily unused until CMS integration is complete
-  const featuredPlayers = players.filter(player => player.data.featured);
-  const regularPlayers = players.filter(player => !player.data.featured);
-  
-  const displayFeatured = featuredPlayers;
-  const displayRegular = regularPlayers;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -49,7 +43,7 @@ export default function PlayersContent({ players }: PlayersContentProps) {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <h1 className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6">
-            Featured Players
+            Professional Players
           </h1>
           <p className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto">
             Meet the world-class musicians who choose Glenn Canin guitars for their 
@@ -57,25 +51,16 @@ export default function PlayersContent({ players }: PlayersContentProps) {
           </p>
         </FadeIn>
 
-        {/* Featured Players */}
-        {displayFeatured.length > 0 && (
+        {/* All Players */}
+        {players.length > 0 && (
           <>
             <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Artist Profiles</h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {displayFeatured.map((player) => (
+              {players.map((player) => (
                 <PlayerCard key={player.slug} player={player} />
               ))}
             </StaggerChildren>
           </>
-        )}
-
-        {/* Regular Players */}
-        {displayRegular.length > 0 && (
-          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {displayRegular.map((player) => (
-              <PlayerCard key={player.slug} player={player} />
-            ))}
-          </StaggerChildren>
         )}
 
         <FadeIn className="mt-16">
@@ -123,17 +108,6 @@ function PlayerCard({ player }: PlayerCardProps) {
             className="w-full h-full object-cover"
           />
           
-          {/* Featured badge */}
-          {player.data.featured && (
-            <motion.div
-              className="absolute top-4 right-4 bg-amber-600 dark:bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-            >
-              Featured Artist
-            </motion.div>
-          )}
           
           {/* Overlay effect */}
           <motion.div

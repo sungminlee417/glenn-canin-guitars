@@ -1,20 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Clock, CreditCard, Package, Palette, FileText } from 'lucide-react';
+import { CheckCircle, Settings, DollarSign, Star } from 'lucide-react';
 import FadeIn from "@/components/animations/FadeIn";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 
-interface ProcessStep {
-  stepNumber: number;
+interface Option {
+  category: string;
   title: string;
   description: string;
+  price: string;
+  required: boolean;
+}
+
+interface PricingItem {
+  label: string;
+  value: string;
 }
 
 interface OrderingData {
   data: {
     title?: string;
-    processSteps?: ProcessStep[];
+    pageTitle?: string;
+    pageDescription?: string;
+    optionsTitle?: string;
+    basePrice?: string;
+    baseDescription?: string;
+    options?: Option[];
+    pricingItems?: PricingItem[];
+    pricingNote?: string;
+    includedFeaturesTitle?: string;
+    includedFeatures?: string[];
     [key: string]: unknown;
   };
   content: string;
@@ -25,53 +41,58 @@ interface OrderingContentProps {
 }
 
 export default function OrderingContent({ orderingContent }: OrderingContentProps) {
-  // Default process steps with icons
-  const defaultProcessSteps = [
-    {
-      stepNumber: 1,
-      title: "Initial Consultation",
-      description: "Discuss your needs, preferences, and specifications for your custom guitar",
-      icon: FileText,
-    },
-    {
-      stepNumber: 2,
-      title: "Wood Selection",
-      description: "Choose from our collection of premium tonewoods for your instrument",
-      icon: Palette,
-    },
-    {
-      stepNumber: 3,
-      title: "Design Confirmation",
-      description: "Finalize all specifications and aesthetic details",
-      icon: CheckCircle,
-    },
-    {
-      stepNumber: 4,
-      title: "Deposit",
-      description: "50% deposit required to begin construction",
-      icon: CreditCard,
-    },
-    {
-      stepNumber: 5,
-      title: "Construction",
-      description: "Your guitar is carefully crafted over 3-4 months",
-      icon: Clock,
-    },
-    {
-      stepNumber: 6,
-      title: "Final Payment & Delivery",
-      description: "Balance due upon completion, shipping or pickup arranged",
-      icon: Package,
-    },
+
+  const title = orderingContent?.data?.pageTitle || orderingContent?.data?.title || "Custom Guitar Ordering";
+  const description = orderingContent?.data?.pageDescription || "Commission a custom classical guitar tailored to your musical vision and playing style.";
+  const optionsTitle = orderingContent?.data?.optionsTitle || "Guitar Options & Upgrades";
+  const basePrice = orderingContent?.data?.basePrice || "$14,000";
+  const baseDescription = orderingContent?.data?.baseDescription || "Includes balsa core doubletop with cedar/cedar or spruce/cedar skins, Indian rosewood back/sides, elevated fingerboard, 20th fret, optional soundport, Barnett tuners, arched TKL case.";
+  
+  // Default options
+  const defaultOptions: Option[] = [
+    { category: 'Scale Length', title: '650mm (Standard)', description: 'Traditional classical guitar scale length', price: 'Included', required: false },
+    { category: 'Scale Length', title: '640mm (Short Scale)', description: 'Shorter scale length for easier playing', price: 'Included', required: false },
+    { category: 'Scale Length', title: '665mm (Long Scale)', description: 'Extended scale for increased tension and projection', price: 'Included', required: false },
+    { category: 'Wood Upgrades', title: '40-year-old Madagascar Rosewood', description: 'Premium aged Madagascar rosewood for back and sides', price: '+$3,000', required: false },
+    { category: 'Wood Upgrades', title: 'Brazilian Rosewood', description: 'Rare Brazilian rosewood for back and sides', price: '+$5,000', required: false },
+    { category: 'Hardware', title: 'Alessi Tuners', description: 'Premium tuning machines for superior stability', price: '+$500', required: false },
+    { category: 'Case', title: 'Bam or Visesnut Case', description: 'Upgrade to premium hardshell case', price: '+$500', required: false },
   ];
-
-  // Use CMS process steps if available, otherwise use defaults
-  const processSteps = orderingContent?.data?.processSteps?.map((step, index) => ({
-    ...step,
-    icon: defaultProcessSteps[index]?.icon || FileText,
-  })) || defaultProcessSteps;
-
-  const title = orderingContent?.data?.title || "Ordering Information";
+  
+  const options = orderingContent?.data?.options || defaultOptions;
+  
+  // Group options by category
+  const groupedOptions = options.reduce((groups, option) => {
+    const category = option.category;
+    if (!groups[category]) {
+      groups[category] = [];
+    }
+    groups[category].push(option);
+    return groups;
+  }, {} as Record<string, Option[]>);
+  
+  // Use CMS pricing items or defaults
+  const defaultPricingItems = [
+    { label: 'Waitlist', value: 'Contact for current wait time' },
+    { label: 'Deposit', value: '$500' },
+    { label: 'Balance', value: 'Due upon completion' },
+  ];
+  const pricingItems = orderingContent?.data?.pricingItems || defaultPricingItems;
+  
+  const pricingNote = orderingContent?.data?.pricingNote || "Customers must call or email to get on the waitlist. Pricing varies based on wood selection and optional upgrades.";
+  
+  // Use CMS included features or defaults
+  const defaultIncludedFeatures = [
+    "Balsa core doubletop construction",
+    "Cedar or spruce soundboard options",
+    "Indian rosewood back and sides (standard)",
+    "Elevated fingerboard with 20th fret access",
+    "Optional soundport",
+    "Barnett tuning machines (standard)",
+    "Arched TKL case included",
+  ];
+  const includedFeatures = orderingContent?.data?.includedFeatures || defaultIncludedFeatures;
+  const includedFeaturesTitle = orderingContent?.data?.includedFeaturesTitle || "What's Included";
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -94,10 +115,28 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Commission a custom classical guitar tailored to your musical vision and playing style.
+            {description}
           </motion.p>
         </FadeIn>
 
+        {/* Base Price Section */}
+        <FadeIn className="mb-16">
+          <motion.div
+            className="bg-gradient-to-r from-amber-50 to-stone-50 dark:from-amber-900/20 dark:to-stone-700 rounded-lg p-8 border border-amber-200 dark:border-amber-600 text-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-4">Base Price</h2>
+            <div className="text-5xl font-bold text-amber-600 dark:text-amber-400 mb-4">{basePrice}</div>
+            <p className="text-stone-600 dark:text-stone-300 max-w-3xl mx-auto leading-relaxed">
+              {baseDescription}
+            </p>
+          </motion.div>
+        </FadeIn>
+
+        {/* Options Section */}
         <FadeIn className="mb-16">
           <motion.div
             className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 border border-stone-200 dark:border-stone-600"
@@ -106,32 +145,53 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
             viewport={{ once: true, margin: "0px" }}
             transition={{ duration: 0.6 }}
           >
-            <h2 className="text-3xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6 text-center">The Process</h2>
+            <h2 className="text-3xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-8 text-center">{optionsTitle}</h2>
             
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {processSteps.map((step) => (
-                <StaggerItem key={step.stepNumber}>
-                  <motion.div
-                    className="p-6 rounded-lg border border-stone-200 dark:border-stone-600 hover:shadow-lg transition-all bg-stone-50 dark:bg-stone-700"
-                    whileHover={{ y: -5, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <div className="flex items-center mb-4">
-                      <motion.div
-                        className="w-10 h-10 bg-amber-600 dark:bg-amber-500 text-white rounded-full flex items-center justify-center mr-4 font-bold"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        {step.stepNumber}
-                      </motion.div>
-                      <step.icon className="w-6 h-6 text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-stone-900 dark:text-stone-100 mb-2">{step.title}</h3>
-                    <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">{step.description}</p>
-                  </motion.div>
-                </StaggerItem>
+            <div className="space-y-8">
+              {Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+                <motion.div
+                  key={category}
+                  className="border-b border-stone-200 dark:border-stone-600 pb-8 last:border-b-0"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <h3 className="text-2xl font-cinzel font-semibold text-stone-900 dark:text-stone-100 mb-6 flex items-center">
+                    <Settings className="w-6 h-6 mr-3 text-amber-600 dark:text-amber-400" />
+                    {category}
+                  </h3>
+                  
+                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {categoryOptions.map((option, index) => (
+                      <StaggerItem key={index}>
+                        <motion.div
+                          className="p-4 rounded-lg border border-stone-200 dark:border-stone-600 hover:shadow-lg transition-all bg-stone-50 dark:bg-stone-700 relative"
+                          whileHover={{ y: -3, scale: 1.01 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          {option.required && (
+                            <Star className="absolute top-3 right-3 w-5 h-5 text-amber-500" fill="currentColor" />
+                          )}
+                          
+                          <div className="flex justify-between items-start mb-2">
+                            <h4 className="text-lg font-semibold text-stone-900 dark:text-stone-100">{option.title}</h4>
+                            <span className={`text-sm font-bold px-2 py-1 rounded-full ${
+                              option.price === 'Included' 
+                                ? 'bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200'
+                                : 'bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-200'
+                            }`}>
+                              {option.price}
+                            </span>
+                          </div>
+                          <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">{option.description}</p>
+                        </motion.div>
+                      </StaggerItem>
+                    ))}
+                  </StaggerChildren>
+                </motion.div>
               ))}
-            </StaggerChildren>
+            </div>
           </motion.div>
         </FadeIn>
 
@@ -149,32 +209,17 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
               <h3 className="text-2xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6">Pricing & Timeline</h3>
               
               <div className="space-y-4">
-                <motion.div
-                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="font-medium text-stone-700 dark:text-stone-300">Starting Price:</span>
-                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">$8,000</span>
-                </motion.div>
-                
-                <motion.div
-                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="font-medium text-stone-700 dark:text-stone-300">Build Time:</span>
-                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">3-4 months</span>
-                </motion.div>
-                
-                <motion.div
-                  className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="font-medium text-stone-700 dark:text-stone-300">Deposit:</span>
-                  <span className="text-xl font-bold text-amber-600 dark:text-amber-400">50%</span>
-                </motion.div>
+                {pricingItems.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <span className="font-medium text-stone-700 dark:text-stone-300">{item.label}:</span>
+                    <span className="text-xl font-bold text-amber-600 dark:text-amber-400">{item.value}</span>
+                  </motion.div>
+                ))}
               </div>
               
               <motion.p
@@ -184,8 +229,7 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
                 viewport={{ once: true, margin: "0px" }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                Final pricing depends on wood selection, custom features, and decorative elements.
-                Payment plans available for qualifying customers.
+                {pricingNote}
               </motion.p>
             </motion.div>
           </FadeIn>
@@ -199,17 +243,10 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
               transition={{ duration: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <h3 className="text-2xl font-cinzel font-bold mb-6">What&apos;s Included</h3>
+              <h3 className="text-2xl font-cinzel font-bold mb-6">{includedFeaturesTitle}</h3>
               
               <ul className="space-y-3">
-                {[
-                  "Premium tonewood selection",
-                  "Custom specifications",
-                  "Professional setup",
-                  "Lifetime warranty",
-                  "Certificate of authenticity",
-                  "Hardshell case",
-                ].map((item, index) => (
+                {includedFeatures.map((item, index) => (
                   <motion.li
                     key={index}
                     className="flex items-center text-stone-200 dark:text-stone-300"

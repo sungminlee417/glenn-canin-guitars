@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import Image from 'next/image';
@@ -15,7 +15,6 @@ interface Video {
     description?: string;
     player?: string;
     date?: string;
-    featured?: boolean;
     [key: string]: unknown;
   };
   content: string;
@@ -39,10 +38,9 @@ interface VideoCardProps {
   video: Video;
   videoId: string;
   onClick: () => void;
-  featured?: boolean;
 }
 
-function VideoCard({ video, videoId, onClick, featured = false }: VideoCardProps) {
+function VideoCard({ video, videoId, onClick }: VideoCardProps) {
   const [imageError, setImageError] = useState(false);
   
   const thumbnailUrl = imageError 
@@ -73,14 +71,9 @@ function VideoCard({ video, videoId, onClick, featured = false }: VideoCardProps
             <Play className="w-8 h-8 text-stone-900" fill="currentColor" />
           </motion.div>
         </div>
-        {featured && (
-          <div className="absolute top-4 right-4 bg-amber-600 text-white px-3 py-1 rounded-full text-sm">
-            Featured
-          </div>
-        )}
       </div>
-      <div className={featured ? "p-6" : "p-4"}>
-        <h3 className={`font-cinzel font-semibold mb-2 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors ${featured ? 'text-xl' : 'text-lg'}`}>
+      <div className="p-4">
+        <h3 className="font-cinzel font-semibold mb-2 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-lg">
           {video.data.title}
         </h3>
         {video.data.player && (
@@ -102,14 +95,6 @@ export default function VideosContent({ videos }: VideosContentProps) {
   // Note: videosContent parameter temporarily unused until CMS integration is complete
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   
-  const { featuredVideos, regularVideos } = useMemo(() => {
-    if (!videos) return { featuredVideos: [], regularVideos: [] };
-    
-    return {
-      featuredVideos: videos.filter(video => video.data.featured),
-      regularVideos: videos.filter(video => !video.data.featured)
-    };
-  }, [videos]);
 
   const extractVideoId = (url: string) => {
     const match = url?.match(/(?:youtube\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
@@ -146,50 +131,11 @@ export default function VideosContent({ videos }: VideosContentProps) {
           </motion.p>
         </FadeIn>
 
-        {/* Featured Videos Section */}
-        {featuredVideos.length > 0 && (
-          <FadeIn className="mb-16">
-            <motion.h2 
-              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6 }}
-            >
-              Featured Videos
-            </motion.h2>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {featuredVideos.map((video) => {
-                const videoId = extractVideoId(video.data.youtubeUrl || '');
-                
-                return (
-                  <VideoCard
-                    key={video.slug}
-                    video={video}
-                    videoId={videoId}
-                    onClick={() => setSelectedVideo(video.data.youtubeUrl || '')}
-                    featured={true}
-                  />
-                );
-              })}
-            </div>
-          </FadeIn>
-        )}
-
         {/* All Videos Section */}
-        {regularVideos.length > 0 && (
+        {videos && videos.length > 0 && (
           <FadeIn>
-            <motion.h2 
-              className="text-3xl font-cinzel font-bold text-center mb-8 text-amber-700 dark:text-amber-400"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6 }}
-            >
-              More Videos
-            </motion.h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {regularVideos.map((video) => {
+              {videos.map((video) => {
                 const videoId = extractVideoId(video.data.youtubeUrl || '');
                 
                 return (
@@ -198,7 +144,6 @@ export default function VideosContent({ videos }: VideosContentProps) {
                       video={video}
                       videoId={videoId}
                       onClick={() => setSelectedVideo(video.data.youtubeUrl || '')}
-                      featured={false}
                     />
                   </StaggerItem>
                 );

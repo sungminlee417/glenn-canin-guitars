@@ -15,8 +15,6 @@ interface AboutData {
     journeyContent?: string;
     philosophyTitle?: string;
     philosophyContent?: string;
-    achievementsTitle?: string;
-    achievements?: string[];
     sections?: Array<{
       title: string;
       content: string;
@@ -41,19 +39,9 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
   const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   // Fallback data
-  const defaultAchievements = [
-    "Featured in Classical Guitar Magazine",
-    "Instruments played by international competition winners",
-    "Selected for major guitar exhibitions worldwide",
-    "Endorsed by leading classical guitarists",
-  ];
-
-  const achievements = aboutContent?.data?.achievements || defaultAchievements;
   const title = aboutContent?.data?.title || "About Glenn Canin";
   const journeyTitle = aboutContent?.data?.journeyTitle || "My Journey";
   const philosophyTitle = aboutContent?.data?.philosophyTitle || "Philosophy";
-  const achievementsTitle =
-    aboutContent?.data?.achievementsTitle || "Awards & Recognition";
 
   // Parse journey content into paragraphs
   const journeyParagraphs = aboutContent?.data?.journeyContent
@@ -221,52 +209,6 @@ export default function AboutContent({ aboutContent }: AboutContentProps) {
             </motion.div>
           </FadeIn>
 
-          <motion.div
-            className="bg-gradient-to-br from-stone-100 to-amber-50 dark:from-stone-700 dark:to-stone-800 p-8 rounded-lg border border-amber-200 dark:border-amber-600 relative overflow-hidden"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            whileHover={{ scale: 1.02 }}
-          >
-            {/* Background pattern */}
-            <div className="absolute inset-0 bg-[url('/images/musical-notes.svg')] opacity-5" />
-
-            <div className="relative">
-              <motion.h2
-                className="font-cinzel text-2xl font-semibold mb-6 text-amber-700 dark:text-amber-400"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-              >
-                {achievementsTitle}
-              </motion.h2>
-
-              <StaggerChildren className="space-y-3">
-                {achievements.map((achievement, index) => (
-                  <StaggerItem key={index}>
-                    <motion.div
-                      className="flex items-center space-x-3 text-stone-700 dark:text-stone-300"
-                      transition={{ duration: 0.2 }}
-                    >
-                      <motion.div
-                        className="w-2 h-2 bg-amber-500 rounded-full"
-                        whileInView={{ scale: [1, 1.2, 1] }}
-                        viewport={{ once: true }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          delay: index * 0.3,
-                        }}
-                      />
-                      <span className="leading-relaxed">{achievement}</span>
-                    </motion.div>
-                  </StaggerItem>
-                ))}
-              </StaggerChildren>
-            </div>
-          </motion.div>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 import DoubletopsContent from './DoubletopsContent';
-import { getDoubletopsPageContent, getGuitars } from '@/lib/cms';
+import { getDoubletopsPageContent } from '@/lib/cms';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -17,7 +17,6 @@ export const revalidate = 60;
 export default async function DoubletopsPage() {
   // Fetch CMS content
   const doubletopsContent = await getDoubletopsPageContent();
-  const allGuitars = await getGuitars();
 
-  return <DoubletopsContent doubletopsContent={doubletopsContent} guitars={allGuitars} />;
+  return <DoubletopsContent doubletopsContent={doubletopsContent} />;
 }

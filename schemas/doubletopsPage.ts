@@ -55,12 +55,6 @@ export default defineType({
         'Lighter weight compared to traditional construction'
       ],
     }),
-    defineField({
-      name: 'availableGuitarsTitle',
-      title: 'Available Guitars Section Title',
-      type: 'string',
-      initialValue: 'Available Double Top Guitars',
-    }),
   ],
   preview: {
     select: {

@@ -14,7 +14,6 @@ interface GalleryItem {
     image?: string;
     description?: string;
     date?: string;
-    featured?: boolean;
     [key: string]: unknown;
   };
   content: string;
@@ -68,17 +67,6 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
             </motion.div>
           )}
 
-          {/* Featured badge */}
-          {item.data.featured && (
-            <motion.div
-              className="absolute top-4 right-4 bg-stone-900 dark:bg-stone-700 text-white px-3 py-1 rounded-full text-sm font-medium"
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              Featured
-            </motion.div>
-          )}
           
           {/* Overlay effect */}
           <motion.div
@@ -127,16 +115,15 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
 export default function GalleryContent({ galleryItems }: GalleryContentProps) {
   // Note: galleryContent parameter temporarily unused until CMS integration is complete
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
 
-  const featuredItems = galleryItems.filter(item => item.data.featured);
-  const regularItems = galleryItems.filter(item => !item.data.featured);
-
-  const displayItems = galleryItems;
-  const displayFeatured = featuredItems;
-  const displayRegular = regularItems;
+  // Filter items based on selected category
+  const displayItems = selectedCategory === 'All' 
+    ? galleryItems 
+    : galleryItems.filter(item => item.data.category === selectedCategory);
 
   // Get unique categories for filtering
-  const categories = Array.from(new Set(displayItems.map(item => item.data.category).filter(Boolean)));
+  const categories = ['All', ...Array.from(new Set(galleryItems.map(item => item.data.category).filter(Boolean)))];
 
   return (
     <div className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -165,24 +152,9 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
           </motion.p>
         </FadeIn>
 
-        {/* Featured Items */}
-        {displayFeatured.length > 0 && (
-          <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Featured</h2>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {displayFeatured.map((item) => (
-                <GalleryCard
-                  key={item.slug}
-                  item={item}
-                  onClick={() => setSelectedItem(item)}
-                />
-              ))}
-            </StaggerChildren>
-          </>
-        )}
 
-        {/* Categories */}
-        {categories.length > 0 && (
+        {/* Category Filter */}
+        {categories.length > 1 && (
           <motion.div 
             className="mb-8 text-center"
             initial={{ opacity: 0, y: 20 }}
@@ -190,29 +162,70 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            <h3 className="text-lg font-cinzel font-semibold text-stone-900 dark:text-stone-100 mb-4">Filter by Category</h3>
             <div className="flex flex-wrap justify-center gap-2">
               {categories.map((category) => (
-                <span 
+                <motion.button
                   key={category}
-                  className="px-4 py-2 bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-200 rounded-full text-sm font-medium"
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    selectedCategory === category
+                      ? 'bg-amber-600 dark:bg-amber-500 text-white shadow-lg'
+                      : 'bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-200 hover:bg-amber-200 dark:hover:bg-amber-700'
+                  }`}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {category}
-                </span>
+                </motion.button>
               ))}
             </div>
+            
+            {/* Results count */}
+            <motion.p 
+              className="mt-4 text-sm text-stone-600 dark:text-stone-400"
+              key={selectedCategory} // Re-animate when category changes
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              {selectedCategory === 'All' 
+                ? `Showing all ${displayItems.length} items`
+                : `Showing ${displayItems.length} items in "${selectedCategory}"`
+              }
+            </motion.p>
           </motion.div>
         )}
 
         {/* All Items */}
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {displayRegular.map((item) => (
-            <GalleryCard
-              key={item.slug}
-              item={item}
-              onClick={() => setSelectedItem(item)}
-            />
-          ))}
-        </StaggerChildren>
+        {displayItems.length > 0 ? (
+          <StaggerChildren 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            key={selectedCategory} // Re-animate when category changes
+          >
+            {displayItems.map((item) => (
+              <GalleryCard
+                key={item.slug}
+                item={item}
+                onClick={() => setSelectedItem(item)}
+              />
+            ))}
+          </StaggerChildren>
+        ) : (
+          selectedCategory !== 'All' && (
+            <motion.div 
+              className="text-center py-12"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <p className="text-stone-600 dark:text-stone-400 text-lg">
+                No items found in the "{selectedCategory}" category.
+              </p>
+            </motion.div>
+          )
+        )}
 
 
         {/* Modal */}

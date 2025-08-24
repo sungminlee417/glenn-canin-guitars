@@ -44,24 +44,17 @@ export default defineType({
       type: 'string',
       description: 'Name of the guitarist or performer',
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      initialValue: false,
-    }),
   ],
   preview: {
     select: {
       title: 'title',
       player: 'player',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, player, featured } = selection
+      const { title, player } = selection
       return {
         title: title,
-        subtitle: `${player || 'Unknown Artist'}${featured ? ' • Featured' : ''}`,
+        subtitle: player || 'Unknown Artist',
       }
     },
   },

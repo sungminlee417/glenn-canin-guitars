@@ -51,9 +51,7 @@ export async function getAboutPageContent() {
       journeyTitle,
       journeyContent,
       philosophyTitle,
-      philosophyContent,
-      achievementsTitle,
-      achievements
+      philosophyContent
     }`;
     
     return await client.fetch(query);
@@ -92,7 +90,16 @@ export async function getOrderingPageContent() {
       _id,
       _createdAt,
       title,
-      processSteps,
+      pageTitle,
+      pageDescription,
+      optionsTitle,
+      basePrice,
+      baseDescription,
+      options,
+      pricingItems,
+      pricingNote,
+      includedFeaturesTitle,
+      includedFeatures,
       content
     }`;
     
@@ -163,8 +170,7 @@ export async function getDoubletopsPageContent() {
       innovationSectionTitle,
       innovationSectionContent,
       benefitsSectionTitle,
-      benefits,
-      availableGuitarsTitle
+      benefits
     }`;
     
     return await client.fetch(query);
@@ -363,13 +369,11 @@ export async function getPlayers() {
       bio,
       photo,
       website,
-      featured,
       "data": {
         name,
         bio,
         photo,
-        website,
-        featured
+        website
       }
     }`;
     
@@ -390,13 +394,13 @@ export async function getGalleryItems() {
       description,
       image,
       category,
-      featured,
+      date,
       "data": {
         title,
         description,
         image,
         category,
-        featured
+        date
       }
     }`;
     
@@ -417,13 +421,11 @@ export async function getVideos() {
       description,
       youtubeUrl,
       player,
-      featured,
       "data": {
         title,
         description,
         youtubeUrl,
-        player,
-        featured
+        player
       }
     }`;
     

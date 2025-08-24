@@ -65,25 +65,18 @@ export default defineType({
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      initialValue: false,
-    }),
   ],
   preview: {
     select: {
       title: 'title',
       category: 'category',
       media: 'image',
-      featured: 'featured',
     },
     prepare(selection) {
-      const { title, category, featured } = selection
+      const { title, category } = selection
       return {
         title: title,
-        subtitle: `${category || 'Uncategorized'}${featured ? ' • Featured' : ''}`,
+        subtitle: category || 'Uncategorized',
         media: selection.media,
       }
     },
