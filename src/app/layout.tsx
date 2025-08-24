@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "@/components/Header";
-import FooterWrapper from "@/components/FooterWrapper";
 import { cinzel, raleway } from "@/lib/fonts";
 import Script from "next/script";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
@@ -160,11 +158,7 @@ export default function RootLayout({
         />
       </head>
       <body className="font-raleway antialiased bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
-        <Header />
-        <main className="min-h-screen">
-          {children}
-        </main>
-        <FooterWrapper />
+        {children}
       </body>
     </html>
   );
