@@ -3,9 +3,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import FadeIn from "@/components/animations/FadeIn";
-import StaggerChildren, {
-  StaggerItem,
-} from "@/components/animations/StaggerChildren";
 
 interface AboutData {
   data: {

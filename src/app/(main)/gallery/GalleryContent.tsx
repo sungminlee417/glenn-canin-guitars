@@ -221,7 +221,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
               transition={{ duration: 0.6 }}
             >
               <p className="text-stone-600 dark:text-stone-400 text-lg">
-                No items found in the "{selectedCategory}" category.
+                No items found in the &quot;{selectedCategory}&quot; category.
               </p>
             </motion.div>
           )

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle, Settings, DollarSign, Star } from 'lucide-react';
+import { CheckCircle, Settings, Star } from 'lucide-react';
 import FadeIn from "@/components/animations/FadeIn";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 
