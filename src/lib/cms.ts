@@ -12,48 +12,26 @@ import {
   getForSalePageContent as getSanityForSalePageContent,
   getFooterSettings as getSanityFooterSettings,
   getNavigationSettings as getSanityNavigationSettings,
-  getGuitars as getSanityGuitars,
-  getPlayers as getSanityPlayers,
-  getGalleryItems as getSanityGalleryItems,
-  getVideos as getSanityVideos,
-  getFeaturedGuitars as getSanityFeaturedGuitars,
-  getAvailableGuitars as getSanityAvailableGuitars,
   urlFor
 } from './sanity'
+
+// Helper function to transform images in nested arrays
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function transformImageInArray(items: any[]) {
+  if (!Array.isArray(items)) return items
+  
+  return items.map(item => ({
+    ...item,
+    mainImage: item.mainImage ? urlFor(item.mainImage).url() : undefined,
+    photo: item.photo ? urlFor(item.photo).url() : undefined,
+    image: item.image ? urlFor(item.image).url() : undefined,
+  }))
+}
 
 // Helper function to transform Sanity data for components expecting Markdown structure
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function transformSanityData(data: any) {
   if (!data) return null
-  
-  if (Array.isArray(data)) {
-    return data.map(item => {
-      const transformed = {
-        ...item,
-        slug: item.slug?.current || item.slug,
-        // Transform image URLs at top level - handle both direct asset references and nested asset objects
-        mainImage: item.mainImage ? (item.mainImage.asset ? item.mainImage.asset.url : urlFor(item.mainImage).url()) : undefined,
-        photo: item.photo ? (item.photo.asset ? item.photo.asset.url : urlFor(item.photo).url()) : undefined,
-        image: item.image ? (item.image.asset ? item.image.asset.url : urlFor(item.image).url()) : undefined,
-        heroImage: item.heroImage ? (item.heroImage.asset ? item.heroImage.asset.url : urlFor(item.heroImage).url()) : undefined,
-        aboutHeroImage: item.aboutHeroImage ? (item.aboutHeroImage.asset ? item.aboutHeroImage.asset.url : urlFor(item.aboutHeroImage).url()) : undefined,
-      }
-      
-      // Also transform images in nested data object if it exists
-      if (transformed.data) {
-        transformed.data = {
-          ...transformed.data,
-          mainImage: transformed.data.mainImage ? urlFor(transformed.data.mainImage).url() : undefined,
-          photo: transformed.data.photo ? urlFor(transformed.data.photo).url() : undefined,
-          image: transformed.data.image ? urlFor(transformed.data.image).url() : undefined,
-          heroImage: transformed.data.heroImage ? urlFor(transformed.data.heroImage).url() : undefined,
-          aboutHeroImage: transformed.data.aboutHeroImage ? urlFor(transformed.data.aboutHeroImage).url() : undefined,
-        }
-      }
-      
-      return transformed
-    })
-  }
   
   const transformed = {
     ...data,
@@ -64,18 +42,11 @@ function transformSanityData(data: any) {
     image: data.image ? (data.image.asset ? data.image.asset.url : urlFor(data.image).url()) : undefined,
     heroImage: data.heroImage ? (data.heroImage.asset ? data.heroImage.asset.url : urlFor(data.heroImage).url()) : undefined,
     aboutHeroImage: data.aboutHeroImage ? (data.aboutHeroImage.asset ? data.aboutHeroImage.asset.url : urlFor(data.aboutHeroImage).url()) : undefined,
-  }
-  
-  // Also transform images in nested data object if it exists
-  if (transformed.data) {
-    transformed.data = {
-      ...transformed.data,
-      mainImage: transformed.data.mainImage ? urlFor(transformed.data.mainImage).url() : undefined,
-      photo: transformed.data.photo ? urlFor(transformed.data.photo).url() : undefined,
-      image: transformed.data.image ? urlFor(transformed.data.image).url() : undefined,
-      heroImage: transformed.data.heroImage ? urlFor(transformed.data.heroImage).url() : undefined,
-      aboutHeroImage: transformed.data.aboutHeroImage ? urlFor(transformed.data.aboutHeroImage).url() : undefined,
-    }
+    // Transform embedded arrays
+    galleryItems: data.galleryItems ? transformImageInArray(data.galleryItems) : undefined,
+    players: data.players ? transformImageInArray(data.players) : undefined,
+    videos: data.videos ? data.videos : undefined, // Videos don't need image transformation
+    guitars: data.guitars ? transformImageInArray(data.guitars) : undefined,
   }
   
   return transformed
@@ -163,35 +134,6 @@ export async function getPageContent(pageName: string) {
   }
 }
 
-export async function getGuitars() {
-  const data = await getSanityGuitars()
-  return transformSanityData(data)
-}
-
-export async function getFeaturedGuitars() {
-  const data = await getSanityFeaturedGuitars()
-  return transformSanityData(data)
-}
-
-export async function getAvailableGuitars() {
-  const data = await getSanityAvailableGuitars()
-  return transformSanityData(data)
-}
-
-export async function getPlayers() {
-  const data = await getSanityPlayers()
-  return transformSanityData(data)
-}
-
-export async function getGalleryItems() {
-  const data = await getSanityGalleryItems()
-  return transformSanityData(data)
-}
-
-export async function getVideos() {
-  const data = await getSanityVideos()
-  return transformSanityData(data)
-}
 
 // Export image URL helper for Sanity
 export { urlFor } from './sanity'

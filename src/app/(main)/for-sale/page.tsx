@@ -1,23 +1,29 @@
 import ForSaleContent from './ForSaleContent';
-import { getForSalePageContent, getAvailableGuitars } from '@/lib/cms';
+import { getForSalePageContent } from '@/lib/sanity';
 import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Guitars For Sale',
-  description: 'Browse our collection of handcrafted classical and double top guitars for sale. Each Glenn Canin guitar is a unique masterpiece built for professional musicians.',
-  openGraph: {
-    title: 'Classical Guitars For Sale | Glenn Canin Guitars',
-    description: 'Explore available handcrafted classical and double top guitars by master luthier Glenn Canin. Concert-quality instruments for discerning musicians.',
-  },
-};
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
-export default async function ForSalePage() {
-  // Fetch CMS content
+export async function generateMetadata(): Promise<Metadata> {
   const forSaleContent = await getForSalePageContent();
-  const availableGuitars = await getAvailableGuitars();
+  
+  const title = forSaleContent?.title || 'Guitars For Sale';
+  const description = forSaleContent?.pageDescription || 'Browse our collection of handcrafted classical and double top guitars for sale. Each Glenn Canin guitar is a unique masterpiece built for professional musicians.';
 
-  return <ForSaleContent forSaleContent={forSaleContent} guitars={availableGuitars} />;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Glenn Canin Guitars`,
+      description,
+    },
+  };
+}
+
+export default async function ForSalePage() {
+  // Fetch CMS content including guitars
+  const forSaleContent = await getForSalePageContent();
+
+  return <ForSaleContent forSaleContent={forSaleContent} />;
 }

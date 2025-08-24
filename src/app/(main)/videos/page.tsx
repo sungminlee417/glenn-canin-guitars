@@ -1,23 +1,29 @@
 import VideosContent from './VideosContent';
-import { getVideosPageContent, getVideos } from '@/lib/cms';
+import { getVideosPageContent } from '@/lib/sanity';
 import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Guitar Videos & Performances',
-  description: 'Watch performances on Glenn Canin guitars, workshop tours, and guitar making process videos. Hear the exceptional tone and projection of double top guitars.',
-  openGraph: {
-    title: 'Videos | Glenn Canin Guitars',
-    description: 'Experience the sound of Glenn Canin guitars through performance videos, workshop tours, and demonstrations.',
-  },
-};
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
-export default async function VideosPage() {
-  // Fetch CMS content
+export async function generateMetadata(): Promise<Metadata> {
   const videosContent = await getVideosPageContent();
-  const allVideos = await getVideos();
+  
+  const title = videosContent?.title || 'Guitar Videos & Performances';
+  const description = videosContent?.pageDescription || 'Watch performances on Glenn Canin guitars, workshop tours, and guitar making process videos. Hear the exceptional tone and projection of double top guitars.';
 
-  return <VideosContent videosContent={videosContent} videos={allVideos} />;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Glenn Canin Guitars`,
+      description,
+    },
+  };
+}
+
+export default async function VideosPage() {
+  // Fetch CMS content including videos
+  const videosContent = await getVideosPageContent();
+
+  return <VideosContent videosContent={videosContent} />;
 }

@@ -199,25 +199,25 @@ export default function OrderingContent({ orderingContent }: OrderingContentProp
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <FadeIn>
             <motion.div
-              className="bg-amber-50 dark:bg-amber-900/20 p-8 rounded-lg border border-amber-200 dark:border-amber-600"
+              className="bg-amber-50 dark:bg-amber-900/20 p-4 sm:p-8 rounded-lg border border-amber-200 dark:border-amber-600"
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "0px" }}
               transition={{ duration: 0.6 }}
               whileHover={{ scale: 1.02 }}
             >
-              <h3 className="text-2xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6">Pricing & Timeline</h3>
+              <h3 className="text-xl sm:text-2xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6">Pricing & Timeline</h3>
               
               <div className="space-y-4">
                 {pricingItems.map((item, index) => (
                   <motion.div
                     key={index}
-                    className="flex justify-between items-center p-3 bg-white dark:bg-stone-700 rounded-lg"
+                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 bg-white dark:bg-stone-700 rounded-lg gap-2"
                     whileHover={{ x: 5 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <span className="font-medium text-stone-700 dark:text-stone-300">{item.label}:</span>
-                    <span className="text-xl font-bold text-amber-600 dark:text-amber-400">{item.value}</span>
+                    <span className="font-medium text-stone-700 dark:text-stone-300 text-sm sm:text-base">{item.label}:</span>
+                    <span className="text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400">{item.value}</span>
                   </motion.div>
                 ))}
               </div>

@@ -57,6 +57,7 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
   const establishedYear = footerContent?.data?.establishedYear || "1985";
   const tagline = footerContent?.data?.tagline || "Handcrafted with passion";
   const country = footerContent?.data?.country || "Made in USA";
+  const trustlineText = footerContent?.data?.trustlineText || "Trusted by professional musicians worldwide";
   
   // Social media data
   const socialMedia = footerContent?.data?.socialMedia || {};
@@ -109,14 +110,16 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
               {description}
             </p>
             <motion.div 
-              className="flex space-x-1 text-amber-400"
+              className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              <span className="ml-2 text-stone-400 text-sm">{footerContent?.data?.trustlineText}</span>
+              <div className="flex space-x-1 text-amber-400">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <span className="text-stone-400 text-sm leading-relaxed">{trustlineText}</span>
             </motion.div>
             
             {/* Social Media Links */}

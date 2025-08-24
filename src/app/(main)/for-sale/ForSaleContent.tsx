@@ -8,53 +8,48 @@ import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChi
 import OptimizedImage from "@/components/ui/OptimizedImage";
 
 interface Guitar {
-  slug: string;
-  data: {
-    title?: string;
-    model?: string;
-    year?: number;
-    price?: string;
-    mainImage?: string;
-    description?: string;
-    featured?: boolean;
-    available?: boolean;
-    specifications?: {
-      topWood?: string;
-      backSides?: string;
-      neckWood?: string;
-      fingerboard?: string;
-      scaleLength?: string;
-      nutWidth?: string;
-      finish?: string;
-    };
-    [key: string]: unknown;
+  title?: string;
+  year?: number;
+  price?: string;
+  mainImage?: string;
+  description?: string;
+  specifications?: {
+    topWood?: string;
+    backSides?: string;
+    neckWood?: string;
+    fingerboard?: string;
+    scaleLength?: string;
+    nutWidth?: string;
+    finish?: string;
   };
-  content: string;
 }
 
 interface ForSaleContent {
-  data: {
-    pageTitle?: string;
-    pageDescription?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  pageTitle?: string;
+  pageDescription?: string;
+  availabilityNoticeTitle?: string;
+  availabilityNoticeText?: string;
+  availableInstrumentsTitle?: string;
+  guitars?: Guitar[];
+  inquireButtonText?: string;
+  [key: string]: unknown;
 }
 
 interface ForSaleContentProps {
   forSaleContent: ForSaleContent | null;
-  guitars: Guitar[];
 }
 
-export default function ForSaleContent({ guitars }: ForSaleContentProps) {
-  // Note: forSaleContent parameter temporarily unused until CMS integration is complete
+export default function ForSaleContent({ forSaleContent }: ForSaleContentProps) {
   const [selectedGuitar, setSelectedGuitar] = useState<Guitar | null>(null);
   
-  const featuredGuitars = guitars.filter(guitar => guitar.data.featured);
-  const regularGuitars = guitars.filter(guitar => !guitar.data.featured);
-  
-  const displayFeatured = featuredGuitars;
-  const displayRegular = regularGuitars;
+  // Extract data from CMS with fallbacks
+  const pageTitle = forSaleContent?.pageTitle || "Guitars For Sale";
+  const pageDescription = forSaleContent?.pageDescription || "Explore our collection of available guitars. Each instrument is meticulously crafted and ready to inspire your musical journey.";
+  const availabilityNoticeTitle = forSaleContent?.availabilityNoticeTitle || "Availability Notice";
+  const availabilityNoticeText = forSaleContent?.availabilityNoticeText || "All guitars shown are currently available. Instruments are sold on a first-come, first-served basis. Contact us to arrange a trial or to discuss purchase details.";
+  const availableInstrumentsTitle = forSaleContent?.availableInstrumentsTitle || "Available Instruments";
+  const inquireButtonText = forSaleContent?.inquireButtonText || "Inquire About This Guitar";
+  const guitars = forSaleContent?.guitars || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -64,11 +59,10 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <h1 className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6">
-            Guitars For Sale
+            {pageTitle}
           </h1>
           <p className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto">
-            Explore our collection of available guitars. Each instrument is meticulously 
-            crafted and ready to inspire your musical journey.
+            {pageDescription}
           </p>
         </FadeIn>
 
@@ -76,43 +70,32 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
           <div className="flex items-start">
             <Info className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 mr-3 flex-shrink-0" />
             <div className="text-sm text-amber-800 dark:text-amber-200">
-              <p className="font-semibold mb-1">Availability Notice</p>
-              <p>All guitars shown are currently available. Instruments are sold on a first-come, first-served basis. 
-              Contact us to arrange a trial or to discuss purchase details.</p>
+              <p className="font-semibold mb-1">{availabilityNoticeTitle}</p>
+              <p>{availabilityNoticeText}</p>
             </div>
           </div>
         </FadeIn>
 
-        {/* Featured Guitars */}
-        {displayFeatured.length > 0 && (
+        {/* Available Guitars */}
+        {guitars.length > 0 ? (
           <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Featured Instruments</h2>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-              {displayFeatured.map((guitar) => (
-                <GuitarCard
-                  key={guitar.slug}
-                  guitar={guitar}
-                  onClick={() => setSelectedGuitar(guitar)}
-                />
-              ))}
-            </StaggerChildren>
-          </>
-        )}
-
-        {/* Regular Guitars */}
-        {displayRegular.length > 0 && (
-          <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Available Instruments</h2>
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">{availableInstrumentsTitle}</h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {displayRegular.map((guitar) => (
+              {guitars.map((guitar, index) => (
                 <GuitarCard
-                  key={guitar.slug}
+                  key={index}
                   guitar={guitar}
                   onClick={() => setSelectedGuitar(guitar)}
                 />
               ))}
             </StaggerChildren>
           </>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-stone-600 dark:text-stone-400 text-lg">
+              No guitars are currently available. Please check back soon or contact us for upcoming instruments.
+            </p>
+          </div>
         )}
 
         {/* Modal */}
@@ -138,13 +121,8 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h2 className="font-cinzel text-2xl font-bold text-stone-900 dark:text-stone-100">
-                        {selectedGuitar.data.title}
+                        {selectedGuitar.title}
                       </h2>
-                      {selectedGuitar.data.model && (
-                        <p className="text-amber-600 dark:text-amber-400 font-medium mt-1">
-                          Model: {selectedGuitar.data.model}
-                        </p>
-                      )}
                     </div>
                     <button
                       onClick={() => setSelectedGuitar(null)}
@@ -157,40 +135,40 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="relative h-96 rounded-lg overflow-hidden">
                       <OptimizedImage
-                        src={selectedGuitar.data.mainImage || "/images/guitar-placeholder.jpg"}
-                        alt={selectedGuitar.data.title || "Guitar"}
+                        src={selectedGuitar.mainImage || "/images/guitar-placeholder.jpg"}
+                        alt={selectedGuitar.title || "Guitar"}
                         className="w-full h-full object-cover"
                         priority
                       />
                     </div>
                     
                     <div className="space-y-4">
-                      {selectedGuitar.data.price && (
+                      {selectedGuitar.price && (
                         <div>
                           <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Price</h3>
-                          <p className="text-2xl font-bold text-stone-900 dark:text-stone-100">{selectedGuitar.data.price}</p>
+                          <p className="text-2xl font-bold text-stone-900 dark:text-stone-100">{selectedGuitar.price}</p>
                         </div>
                       )}
                       
-                      {selectedGuitar.data.year && (
+                      {selectedGuitar.year && (
                         <div>
                           <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Year</h3>
-                          <p className="text-stone-600 dark:text-stone-300">{selectedGuitar.data.year}</p>
+                          <p className="text-stone-600 dark:text-stone-300">{selectedGuitar.year}</p>
                         </div>
                       )}
                       
-                      {selectedGuitar.data.description && (
+                      {selectedGuitar.description && (
                         <div>
                           <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Description</h3>
-                          <p className="text-stone-600 dark:text-stone-300 leading-relaxed">{selectedGuitar.data.description}</p>
+                          <p className="text-stone-600 dark:text-stone-300 leading-relaxed">{selectedGuitar.description}</p>
                         </div>
                       )}
                       
-                      {selectedGuitar.data.specifications && (
+                      {selectedGuitar.specifications && (
                         <div>
                           <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Specifications</h3>
                           <div className="grid grid-cols-2 gap-3 text-sm">
-                            {Object.entries(selectedGuitar.data.specifications).map(([key, value]) => (
+                            {Object.entries(selectedGuitar.specifications).map(([key, value]) => (
                               value && (
                                 <div key={key}>
                                   <span className="font-medium text-stone-700 dark:text-stone-300 capitalize">
@@ -212,7 +190,7 @@ export default function ForSaleContent({ guitars }: ForSaleContentProps) {
                       href="/contact"
                       className="inline-block bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
                     >
-                      Inquire About This Guitar
+                      {inquireButtonText}
                     </a>
                   </div>
                 </div>
@@ -242,22 +220,16 @@ function GuitarCard({ guitar, onClick }: GuitarCardProps) {
       >
         <div className="relative h-64 overflow-hidden">
           <OptimizedImage
-            src={guitar.data.mainImage || "/images/guitar-placeholder.jpg"}
-            alt={guitar.data.title || "Guitar"}
+            src={guitar.mainImage || "/images/guitar-placeholder.jpg"}
+            alt={guitar.title || "Guitar"}
             className="w-full h-full object-cover"
           />
           
-          {/* Featured badge */}
-          {guitar.data.featured && (
-            <div className="absolute top-4 right-4 bg-amber-600 dark:bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              Featured
-            </div>
-          )}
           
           {/* Price badge */}
-          {guitar.data.price && (
+          {guitar.price && (
             <div className="absolute top-4 left-4 bg-stone-900 dark:bg-stone-700 text-white px-3 py-2 rounded-lg font-bold">
-              {guitar.data.price}
+              {guitar.price}
             </div>
           )}
           
@@ -271,19 +243,14 @@ function GuitarCard({ guitar, onClick }: GuitarCardProps) {
         
         <div className="p-6">
           <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-            {guitar.data.title}
+            {guitar.title}
           </h3>
-          {guitar.data.model && (
-            <p className="text-sm text-amber-600 dark:text-amber-400 mb-2 font-medium">
-              Model: {guitar.data.model}
-            </p>
-          )}
-          {guitar.data.year && (
+          {guitar.year && (
             <p className="text-sm text-stone-500 dark:text-stone-400 mb-3">
-              {guitar.data.year}
+              {guitar.year}
             </p>
           )}
-          <p className="text-sm text-stone-600 dark:text-stone-300 line-clamp-2">{guitar.data.description}</p>
+          <p className="text-sm text-stone-600 dark:text-stone-300 line-clamp-2">{guitar.description}</p>
         </div>
       </motion.div>
     </StaggerItem>

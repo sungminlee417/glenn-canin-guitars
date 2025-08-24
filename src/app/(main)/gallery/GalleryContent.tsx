@@ -7,30 +7,22 @@ import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChi
 import OptimizedImage from "@/components/ui/OptimizedImage";
 
 interface GalleryItem {
-  slug: string;
-  data: {
-    title?: string;
-    category?: string;
-    image?: string;
-    description?: string;
-    date?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  title?: string;
+  category?: string;
+  image?: string;
+  description?: string;
+  date?: string;
 }
 
 interface GalleryContent {
-  data: {
-    pageTitle?: string;
-    pageDescription?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  pageTitle?: string;
+  pageDescription?: string;
+  galleryItems?: GalleryItem[];
+  [key: string]: unknown;
 }
 
 interface GalleryContentProps {
   galleryContent: GalleryContent | null;
-  galleryItems: GalleryItem[];
 }
 
 interface GalleryCardProps {
@@ -50,20 +42,20 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
       >
         <div className="relative h-64 overflow-hidden">
           <OptimizedImage
-            src={item.data.image || "/images/gallery-placeholder.jpg"}
-            alt={item.data.title || "Gallery item"}
+            src={item.image || "/images/gallery-placeholder.jpg"}
+            alt={item.title || "Gallery item"}
             className="w-full h-full object-cover"
           />
           
           {/* Category badge */}
-          {item.data.category && (
+          {item.category && (
             <motion.div
               className="absolute top-4 left-4 bg-amber-600 dark:bg-amber-500 text-white px-3 py-1 rounded-full text-sm font-medium"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {item.data.category}
+              {item.category}
             </motion.div>
           )}
 
@@ -94,36 +86,40 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
           transition={{ delay: 0.3 }}
         >
           <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-            {item.data.title}
+            {item.title}
           </h3>
-          {item.data.date && (
+          {item.date && (
             <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 font-medium">
-              {new Date(item.data.date).toLocaleDateString('en-US', { 
+              {new Date(item.date).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
               })}
             </p>
           )}
-          <p className="text-sm text-stone-600 dark:text-stone-300 line-clamp-2">{item.data.description}</p>
+          <p className="text-sm text-stone-600 dark:text-stone-300 line-clamp-2">{item.description}</p>
         </motion.div>
       </motion.div>
     </StaggerItem>
   );
 }
 
-export default function GalleryContent({ galleryItems }: GalleryContentProps) {
-  // Note: galleryContent parameter temporarily unused until CMS integration is complete
+export default function GalleryContent({ galleryContent }: GalleryContentProps) {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+  // Extract data from CMS with fallbacks
+  const pageTitle = galleryContent?.pageTitle || "Guitar Gallery";
+  const pageDescription = galleryContent?.pageDescription || "Explore the artistry behind Glenn Canin guitars - from finished instruments to workshop moments that capture the craftsmanship process.";
+  const galleryItems = galleryContent?.galleryItems || [];
 
   // Filter items based on selected category
   const displayItems = selectedCategory === 'All' 
     ? galleryItems 
-    : galleryItems.filter(item => item.data.category === selectedCategory);
+    : galleryItems.filter(item => item.category === selectedCategory);
 
   // Get unique categories for filtering
-  const categories = ['All', ...Array.from(new Set(galleryItems.map(item => item.data.category).filter(Boolean)))];
+  const categories = ['All', ...Array.from(new Set(galleryItems.map(item => item.category).filter(Boolean)))];
 
   return (
     <div className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -138,7 +134,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Gallery
+            {pageTitle}
           </motion.h1>
           
           <motion.p 
@@ -147,8 +143,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Explore the artistry behind Glenn Canin guitars - from finished instruments to 
-            workshop moments that capture the craftsmanship process.
+            {pageDescription}
           </motion.p>
         </FadeIn>
 
@@ -204,9 +199,9 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             key={selectedCategory} // Re-animate when category changes
           >
-            {displayItems.map((item) => (
+            {displayItems.map((item, index) => (
               <GalleryCard
-                key={item.slug}
+                key={`${item.title}-${index}`}
                 item={item}
                 onClick={() => setSelectedItem(item)}
               />
@@ -256,16 +251,16 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
                       >
-                        {selectedItem.data.title}
+                        {selectedItem.title}
                       </motion.h2>
-                      {selectedItem.data.category && (
+                      {selectedItem.category && (
                         <motion.p
                           className="text-amber-600 dark:text-amber-400 font-medium mt-1"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: 0.15 }}
                         >
-                          {selectedItem.data.category}
+                          {selectedItem.category}
                         </motion.p>
                       )}
                     </div>
@@ -287,8 +282,8 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                       transition={{ delay: 0.2 }}
                     >
                       <OptimizedImage
-                        src={selectedItem.data.image || "/images/gallery-placeholder.jpg"}
-                        alt={selectedItem.data.title || "Gallery item"}
+                        src={selectedItem.image || "/images/gallery-placeholder.jpg"}
+                        alt={selectedItem.title || "Gallery item"}
                         className="w-full h-full object-cover"
                         priority
                       />
@@ -300,7 +295,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                       transition={{ delay: 0.3 }}
                     >
                       <div className="space-y-4">
-                        {selectedItem.data.date && (
+                        {selectedItem.date && (
                           <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -308,7 +303,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                           >
                             <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Date</h3>
                             <p className="text-stone-600 dark:text-stone-300">
-                              {new Date(selectedItem.data.date).toLocaleDateString('en-US', { 
+                              {new Date(selectedItem.date).toLocaleDateString('en-US', { 
                                 year: 'numeric', 
                                 month: 'long', 
                                 day: 'numeric' 
@@ -317,14 +312,14 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
                           </motion.div>
                         )}
                         
-                        {selectedItem.data.description && (
+                        {selectedItem.description && (
                           <motion.div
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.5 }}
                           >
                             <h3 className="font-semibold text-lg mb-2 text-amber-700 dark:text-amber-400">Description</h3>
-                            <p className="text-stone-600 dark:text-stone-300 leading-relaxed">{selectedItem.data.description}</p>
+                            <p className="text-stone-600 dark:text-stone-300 leading-relaxed">{selectedItem.description}</p>
                           </motion.div>
                         )}
                         

@@ -189,7 +189,8 @@ export async function getVideosPageContent() {
       pageTitle,
       pageDescription,
       featuredVideosTitle,
-      moreVideosTitle
+      moreVideosTitle,
+      videos
     }`;
     
     return await client.fetch(query);
@@ -206,7 +207,8 @@ export async function getGalleryPageContent() {
       _createdAt,
       title,
       pageTitle,
-      pageDescription
+      pageDescription,
+      galleryItems
     }`;
     
     return await client.fetch(query);
@@ -226,6 +228,7 @@ export async function getPlayersPageContent() {
       pageDescription,
       featuredPlayersTitle,
       allPlayersTitle,
+      players,
       ctaSectionTitle,
       ctaSectionDescription
     }`;
@@ -247,8 +250,8 @@ export async function getForSalePageContent() {
       pageDescription,
       availabilityNoticeTitle,
       availabilityNoticeText,
-      featuredInstrumentsTitle,
       availableInstrumentsTitle,
+      guitars,
       inquireButtonText
     }`;
     
@@ -266,172 +269,5 @@ export async function getPageContent(_pageName: string) {
   return null;
 }
 
-export async function getGuitars() {
-  try {
-    const query = `*[_type == "guitar"] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      title,
-      slug,
-      description,
-      price,
-      specifications,
-      mainImage,
-      featured,
-      available,
-      "data": {
-        title,
-        description,
-        price,
-        specifications,
-        mainImage,
-        featured,
-        available
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for guitars, falling back to markdown');
-    return [];
-  }
-}
 
-export async function getFeaturedGuitars() {
-  try {
-    const query = `*[_type == "guitar" && featured == true] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      title,
-      slug,
-      description,
-      price,
-      specifications,
-      mainImage,
-      featured,
-      available,
-      "data": {
-        title,
-        description,
-        price,
-        specifications,
-        mainImage,
-        featured,
-        available
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for featured guitars, falling back to markdown');
-    return [];
-  }
-}
 
-export async function getAvailableGuitars() {
-  try {
-    const query = `*[_type == "guitar" && available != false] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      title,
-      slug,
-      description,
-      price,
-      specifications,
-      mainImage,
-      featured,
-      available,
-      "data": {
-        title,
-        description,
-        price,
-        specifications,
-        mainImage,
-        featured,
-        available
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for available guitars, falling back to markdown');
-    return [];
-  }
-}
-
-export async function getPlayers() {
-  try {
-    const query = `*[_type == "player"] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      name,
-      slug,
-      bio,
-      photo,
-      website,
-      "data": {
-        name,
-        bio,
-        photo,
-        website
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for players, falling back to markdown');
-    return [];
-  }
-}
-
-export async function getGalleryItems() {
-  try {
-    const query = `*[_type == "galleryItem"] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      title,
-      slug,
-      description,
-      image,
-      category,
-      date,
-      "data": {
-        title,
-        description,
-        image,
-        category,
-        date
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for gallery items, falling back to markdown');
-    return [];
-  }
-}
-
-export async function getVideos() {
-  try {
-    const query = `*[_type == "video"] | order(_createdAt desc) {
-      _id,
-      _createdAt,
-      title,
-      slug,
-      description,
-      youtubeUrl,
-      player,
-      "data": {
-        title,
-        description,
-        youtubeUrl,
-        player
-      }
-    }`;
-    
-    return await client.fetch(query);
-  } catch {
-    console.log('Sanity fetch failed for videos, falling back to markdown');
-    return [];
-  }
-}

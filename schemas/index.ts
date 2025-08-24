@@ -1,7 +1,3 @@
-import guitar from './guitar'
-import player from './player'
-import galleryItem from './galleryItem'
-import video from './video'
 import homePage from './homePage'
 import aboutPage from './aboutPage'
 import contactPage from './contactPage'
@@ -15,10 +11,6 @@ import footerSettings from './footerSettings'
 import navigationSettings from './navigationSettings'
 
 export const schemaTypes = [
-  guitar,
-  player,
-  galleryItem,
-  video,
   homePage,
   aboutPage,
   contactPage,

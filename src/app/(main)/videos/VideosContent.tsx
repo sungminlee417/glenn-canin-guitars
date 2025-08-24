@@ -8,30 +8,23 @@ import FadeIn from '@/components/animations/FadeIn';
 import StaggerChildren, { StaggerItem } from '@/components/animations/StaggerChildren';
 
 interface Video {
-  slug: string;
-  data: {
-    title?: string;
-    youtubeUrl?: string;
-    description?: string;
-    player?: string;
-    date?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  title?: string;
+  youtubeUrl?: string;
+  description?: string;
+  player?: string;
 }
 
 interface VideosContent {
-  data: {
-    pageTitle?: string;
-    pageDescription?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  pageTitle?: string;
+  pageDescription?: string;
+  featuredVideosTitle?: string;
+  moreVideosTitle?: string;
+  videos?: Video[];
+  [key: string]: unknown;
 }
 
 interface VideosContentProps {
   videosContent: VideosContent | null;
-  videos: Video[];
 }
 
 interface VideoCardProps {
@@ -57,7 +50,7 @@ function VideoCard({ video, videoId, onClick }: VideoCardProps) {
       <div className="aspect-video bg-stone-100 relative overflow-hidden">
         <Image 
           src={thumbnailUrl} 
-          alt={video.data.title || "Video"}
+          alt={video.title || "Video"}
           fill
           className="object-cover transition-transform duration-300 group-hover:scale-110"
           onError={() => setImageError(true)}
@@ -74,16 +67,16 @@ function VideoCard({ video, videoId, onClick }: VideoCardProps) {
       </div>
       <div className="p-4">
         <h3 className="font-cinzel font-semibold mb-2 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-lg">
-          {video.data.title}
+          {video.title}
         </h3>
-        {video.data.player && (
+        {video.player && (
           <p className="text-amber-600 dark:text-amber-400 font-medium text-sm mb-2">
-            {video.data.player}
+            {video.player}
           </p>
         )}
-        {video.data.description && (
+        {video.description && (
           <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
-            {video.data.description}
+            {video.description}
           </p>
         )}
       </div>
@@ -91,9 +84,13 @@ function VideoCard({ video, videoId, onClick }: VideoCardProps) {
   );
 }
 
-export default function VideosContent({ videos }: VideosContentProps) {
-  // Note: videosContent parameter temporarily unused until CMS integration is complete
+export default function VideosContent({ videosContent }: VideosContentProps) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+
+  // Extract data from CMS with fallbacks
+  const pageTitle = videosContent?.pageTitle || "Video Gallery";
+  const pageDescription = videosContent?.pageDescription || "Watch performances by world-class guitarists playing Glenn Canin instruments, and get an inside look at the guitar-making process.";
+  const videos = videosContent?.videos || [];
   
 
   const extractVideoId = (url: string) => {
@@ -118,7 +115,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            Video Gallery
+            {pageTitle}
           </motion.h1>
           <motion.p
             className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
@@ -126,8 +123,7 @@ export default function VideosContent({ videos }: VideosContentProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            Watch performances by world-class guitarists playing Glenn Canin instruments, 
-            and get an inside look at the guitar-making process.
+            {pageDescription}
           </motion.p>
         </FadeIn>
 
@@ -135,15 +131,15 @@ export default function VideosContent({ videos }: VideosContentProps) {
         {videos && videos.length > 0 && (
           <FadeIn>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videos.map((video) => {
-                const videoId = extractVideoId(video.data.youtubeUrl || '');
+              {videos.map((video, index) => {
+                const videoId = extractVideoId(video.youtubeUrl || '');
                 
                 return (
-                  <StaggerItem key={video.slug}>
+                  <StaggerItem key={`${video.title}-${index}`}>
                     <VideoCard
                       video={video}
                       videoId={videoId}
-                      onClick={() => setSelectedVideo(video.data.youtubeUrl || '')}
+                      onClick={() => setSelectedVideo(video.youtubeUrl || '')}
                     />
                   </StaggerItem>
                 );

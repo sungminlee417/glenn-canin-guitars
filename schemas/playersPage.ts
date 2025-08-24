@@ -37,6 +37,35 @@ export default defineType({
       initialValue: 'All Artists',
     }),
     defineField({
+      name: 'players',
+      title: 'Players',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'name', title: 'Name', type: 'string', validation: (Rule) => Rule.required() },
+            { 
+              name: 'photo', 
+              title: 'Photo', 
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative Text',
+                  description: 'Important for SEO and accessibility.',
+                },
+              ],
+            },
+            { name: 'bio', title: 'Biography', type: 'text', rows: 6 },
+            { name: 'website', title: 'Website', type: 'url' },
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: 'ctaSectionTitle',
       title: 'Call to Action Section Title',
       type: 'string',

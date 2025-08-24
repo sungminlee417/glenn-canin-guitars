@@ -38,16 +38,54 @@ export default defineType({
       initialValue: 'All guitars shown are currently available. Instruments are sold on a first-come, first-served basis. Contact us to arrange a trial or to discuss purchase details.',
     }),
     defineField({
-      name: 'featuredInstrumentsTitle',
-      title: 'Featured Instruments Section Title',
-      type: 'string',
-      initialValue: 'Featured Instruments',
-    }),
-    defineField({
       name: 'availableInstrumentsTitle',
       title: 'Available Instruments Section Title',
       type: 'string',
       initialValue: 'Available Instruments',
+    }),
+    defineField({
+      name: 'guitars',
+      title: 'Available Guitars',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'title', title: 'Guitar Title', type: 'string' },
+            { name: 'year', title: 'Year', type: 'number' },
+            { name: 'price', title: 'Price', type: 'string' },
+            { 
+              name: 'mainImage', 
+              title: 'Main Image', 
+              type: 'image',
+              options: { hotspot: true },
+              fields: [
+                {
+                  name: 'alt',
+                  type: 'string',
+                  title: 'Alternative Text',
+                  description: 'Important for SEO and accessibility.',
+                },
+              ],
+            },
+            { name: 'description', title: 'Description', type: 'text', rows: 3 },
+            {
+              name: 'specifications',
+              title: 'Specifications',
+              type: 'object',
+              fields: [
+                { name: 'topWood', title: 'Top Wood', type: 'string' },
+                { name: 'backSides', title: 'Back & Sides', type: 'string' },
+                { name: 'neckWood', title: 'Neck Wood', type: 'string' },
+                { name: 'fingerboard', title: 'Fingerboard', type: 'string' },
+                { name: 'scaleLength', title: 'Scale Length', type: 'string' },
+                { name: 'nutWidth', title: 'Nut Width', type: 'string' },
+                { name: 'finish', title: 'Finish', type: 'string' },
+              ],
+            },
+          ],
+        },
+      ],
     }),
     defineField({
       name: 'inquireButtonText',

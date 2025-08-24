@@ -6,34 +6,35 @@ import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChi
 import OptimizedImage from "@/components/ui/OptimizedImage";
 
 interface Player {
-  slug: string;
-  data: {
-    name?: string;
-    photo?: string;
-    bio?: string;
-    website?: string;
-    guitars?: (string | { model?: string; year?: number; description?: string })[];
-    [key: string]: unknown;
-  };
-  content: string;
+  name?: string;
+  photo?: string;
+  bio?: string;
+  website?: string;
 }
 
 interface PlayersContent {
-  data: {
-    pageTitle?: string;
-    pageDescription?: string;
-    [key: string]: unknown;
-  };
-  content: string;
+  pageTitle?: string;
+  pageDescription?: string;
+  featuredPlayersTitle?: string;
+  allPlayersTitle?: string;
+  players?: Player[];
+  ctaSectionTitle?: string;
+  ctaSectionDescription?: string;
+  [key: string]: unknown;
 }
 
 interface PlayersContentProps {
   playersContent: PlayersContent | null;
-  players: Player[];
 }
 
-export default function PlayersContent({ players }: PlayersContentProps) {
-  // Note: playersContent parameter temporarily unused until CMS integration is complete
+export default function PlayersContent({ playersContent }: PlayersContentProps) {
+  // Extract data from CMS with fallbacks
+  const pageTitle = playersContent?.pageTitle || "Professional Players";
+  const pageDescription = playersContent?.pageDescription || "Meet the world-class musicians who choose Glenn Canin guitars for their professional performances and recordings.";
+  const allPlayersTitle = playersContent?.allPlayersTitle || "All Artists";
+  const ctaSectionTitle = playersContent?.ctaSectionTitle || "Join Our Artist Family";
+  const ctaSectionDescription = playersContent?.ctaSectionDescription || "Interested in becoming a Glenn Canin artist? We work with musicians who appreciate exceptional craftsmanship and tonal excellence.";
+  const players = playersContent?.players || [];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
@@ -43,21 +44,20 @@ export default function PlayersContent({ players }: PlayersContentProps) {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
         <FadeIn className="text-center mb-16">
           <h1 className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6">
-            Professional Players
+            {pageTitle}
           </h1>
           <p className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto">
-            Meet the world-class musicians who choose Glenn Canin guitars for their 
-            professional performances and recordings.
+            {pageDescription}
           </p>
         </FadeIn>
 
         {/* All Players */}
         {players.length > 0 && (
           <>
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">Artist Profiles</h2>
+            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-8 text-center">{allPlayersTitle}</h2>
             <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {players.map((player) => (
-                <PlayerCard key={player.slug} player={player} />
+              {players.map((player, index) => (
+                <PlayerCard key={`${player.name}-${index}`} player={player} />
               ))}
             </StaggerChildren>
           </>
@@ -69,10 +69,9 @@ export default function PlayersContent({ players }: PlayersContentProps) {
             whileHover={{ scale: 1.01 }}
             transition={{ duration: 0.3 }}
           >
-            <h3 className="text-2xl font-cinzel mb-4">Join Our Artist Family</h3>
+            <h3 className="text-2xl font-cinzel mb-4">{ctaSectionTitle}</h3>
             <p className="text-stone-200 dark:text-stone-300 mb-6 max-w-2xl mx-auto">
-              Interested in becoming a Glenn Canin artist? We work with musicians 
-              who appreciate exceptional craftsmanship and tonal excellence.
+              {ctaSectionDescription}
             </p>
             <motion.a 
               href="/contact"
@@ -103,8 +102,8 @@ function PlayerCard({ player }: PlayerCardProps) {
       >
         <div className="relative h-64 overflow-hidden">
           <OptimizedImage
-            src={player.data.photo || "/images/player-placeholder.jpg"}
-            alt={player.data.name || "Musician"}
+            src={player.photo || "/images/player-placeholder.jpg"}
+            alt={player.name || "Musician"}
             className="w-full h-full object-cover"
           />
           
@@ -124,40 +123,18 @@ function PlayerCard({ player }: PlayerCardProps) {
           transition={{ delay: 0.3 }}
         >
           <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-3 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-            {player.data.name}
+            {player.name}
           </h3>
           
-          {player.data.bio && (
+          {player.bio && (
             <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed mb-4 line-clamp-3">
-              {player.data.bio}
+              {player.bio}
             </p>
           )}
           
-          {player.data.guitars && player.data.guitars.length > 0 && (
-            <div className="mb-4">
-              <h4 className="font-medium text-stone-700 dark:text-stone-300 mb-2">Instruments:</h4>
-              <div className="space-y-1">
-                {player.data.guitars.slice(0, 2).map((guitar, index) => (
-                  <div key={index} className="text-xs text-stone-500 dark:text-stone-400">
-                    {typeof guitar === 'string' ? guitar : (
-                      <span>
-                        {guitar.model} {guitar.year && `(${guitar.year})`}
-                      </span>
-                    )}
-                  </div>
-                ))}
-                {player.data.guitars.length > 2 && (
-                  <div className="text-xs text-amber-600 dark:text-amber-400 font-medium">
-                    +{player.data.guitars.length - 2} more
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-          
-          {player.data.website && (
+          {player.website && (
             <motion.a
-              href={player.data.website}
+              href={player.website}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 text-sm font-medium transition-colors"

@@ -36,6 +36,37 @@ export default defineType({
       type: 'string',
       initialValue: 'More Videos',
     }),
+    defineField({
+      name: 'videos',
+      title: 'Videos',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'title', title: 'Title', type: 'string', validation: (Rule) => Rule.required() },
+            { 
+              name: 'youtubeUrl', 
+              title: 'YouTube URL', 
+              type: 'url',
+              validation: (Rule) => 
+                Rule.required().custom((url: string) => {
+                  if (!url) return true
+                  const isYoutube = url.includes('youtube.com') || url.includes('youtu.be') || url.includes('www.youtube.com')
+                  return isYoutube || 'Please provide a valid YouTube URL'
+                }),
+            },
+            { name: 'description', title: 'Description', type: 'text', rows: 4 },
+            { 
+              name: 'player', 
+              title: 'Player/Performer', 
+              type: 'string',
+              description: 'Name of the guitarist or performer',
+            },
+          ],
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

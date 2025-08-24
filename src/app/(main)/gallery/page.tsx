@@ -1,23 +1,29 @@
 import GalleryContent from './GalleryContent';
-import { getGalleryPageContent, getGalleryItems } from '@/lib/cms';
+import { getGalleryPageContent } from '@/lib/sanity';
 import { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Guitar Gallery',
-  description: 'Browse the gallery of Glenn Canin handcrafted classical and double top guitars. View detailed photos of finished instruments, workshop process, and craftsmanship details.',
-  openGraph: {
-    title: 'Guitar Gallery | Glenn Canin Guitars',
-    description: 'Explore stunning photographs of Glenn Canin guitars, from completed masterpieces to detailed craftsmanship shots.',
-  },
-};
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
-export default async function GalleryPage() {
-  // Fetch CMS content
+export async function generateMetadata(): Promise<Metadata> {
   const galleryContent = await getGalleryPageContent();
-  const allGalleryItems = await getGalleryItems();
+  
+  const title = galleryContent?.title || 'Guitar Gallery';
+  const description = galleryContent?.pageDescription || 'Browse the gallery of Glenn Canin handcrafted classical and double top guitars. View detailed photos of finished instruments, workshop process, and craftsmanship details.';
 
-  return <GalleryContent galleryContent={galleryContent} galleryItems={allGalleryItems} />;
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `${title} | Glenn Canin Guitars`,
+      description,
+    },
+  };
+}
+
+export default async function GalleryPage() {
+  // Fetch CMS content including gallery items
+  const galleryContent = await getGalleryPageContent();
+
+  return <GalleryContent galleryContent={galleryContent} />;
 }
