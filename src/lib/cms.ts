@@ -11,6 +11,7 @@ import {
   getPlayersPageContent as getSanityPlayersPageContent,
   getForSalePageContent as getSanityForSalePageContent,
   getFooterSettings as getSanityFooterSettings,
+  getNavigationSettings as getSanityNavigationSettings,
   getGuitars as getSanityGuitars,
   getPlayers as getSanityPlayers,
   getGalleryItems as getSanityGalleryItems,
@@ -117,6 +118,11 @@ export async function getOrderingPageContent() {
 
 export async function getFooterSettings() {
   const data = await getSanityFooterSettings()
+  return transformSanityPageData(data)
+}
+
+export async function getNavigationSettings() {
+  const data = await getSanityNavigationSettings()
   return transformSanityPageData(data)
 }
 

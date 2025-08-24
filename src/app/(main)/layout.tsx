@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import HeaderWrapper from "@/components/HeaderWrapper";
 import FooterWrapper from "@/components/FooterWrapper";
 
 export default function MainLayout({
@@ -8,8 +8,8 @@ export default function MainLayout({
 }) {
   return (
     <>
-      <Header />
-      <main className="min-h-screen">
+      <HeaderWrapper />
+      <main className="min-h-screen pt-16">
         {children}
       </main>
       <FooterWrapper />

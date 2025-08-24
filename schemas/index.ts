@@ -12,6 +12,7 @@ import galleryPage from './galleryPage'
 import playersPage from './playersPage'
 import forSalePage from './forSalePage'
 import footerSettings from './footerSettings'
+import navigationSettings from './navigationSettings'
 
 export const schemaTypes = [
   guitar,
@@ -28,4 +29,5 @@ export const schemaTypes = [
   playersPage,
   forSalePage,
   footerSettings,
+  navigationSettings,
 ]

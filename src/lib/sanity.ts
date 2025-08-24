@@ -30,13 +30,7 @@ export async function getHomePageContent() {
           _id,
           url
         }
-      },
-      aboutPreview,
-      aboutPreviewTitle,
-      aboutPreviewLinkText,
-      featuredGuitarsTitle,
-      featuredGuitarsDescription,
-      featuredGuitarsButtonText
+      }
     }`;
     
     const result = await client.fetch(query);
@@ -130,6 +124,30 @@ export async function getFooterSettings() {
     return await client.fetch(query);
   } catch {
     console.log('Sanity fetch failed for footer settings');
+    return null;
+  }
+}
+
+export async function getNavigationSettings() {
+  try {
+    const query = `*[_type == "navigationSettings" && _id == "navigationSettings"][0]{
+      _id,
+      _createdAt,
+      siteTitle,
+      homeLabel,
+      aboutLabel,
+      doubletopsLabel,
+      videosLabel,
+      galleryLabel,
+      playersLabel,
+      orderingLabel,
+      contactLabel,
+      forSaleLabel
+    }`;
+    
+    return await client.fetch(query);
+  } catch {
+    console.log('Sanity fetch failed for navigation settings');
     return null;
   }
 }

@@ -95,6 +95,9 @@ export default defineConfig({
                     S.listItem()
                       .title('🦶 Footer Settings')
                       .child(S.document().schemaType('footerSettings').documentId('footerSettings')),
+                    S.listItem()
+                      .title('🧭 Navigation Settings')
+                      .child(S.document().schemaType('navigationSettings').documentId('navigationSettings')),
                   ])
               ),
           ])
