@@ -59,7 +59,7 @@ export default defineType({
                 },
               ],
             },
-            { name: 'bio', title: 'Biography', type: 'text', rows: 6 },
+            { name: 'testimonial', title: 'Testimonial', type: 'text', rows: 6 },
             { name: 'website', title: 'Website', type: 'url' },
           ],
         },

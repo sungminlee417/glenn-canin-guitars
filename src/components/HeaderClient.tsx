@@ -86,9 +86,9 @@ export default function HeaderClient({ navigationSettings }: HeaderClientProps) 
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-center gap-2">
             <ThemeToggle />
-            <div className="xl:hidden">
+            <div className="xl:hidden flex items-center justify-center">
               <motion.button
               type="button"
               className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-700 dark:text-stone-300 hover:text-amber-600 transition-colors"

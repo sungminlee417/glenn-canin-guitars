@@ -8,7 +8,7 @@ import OptimizedImage from "@/components/ui/OptimizedImage";
 interface Player {
   name?: string;
   photo?: string;
-  bio?: string;
+  testimonial?: string;
   website?: string;
 }
 
@@ -96,10 +96,13 @@ function PlayerCard({ player }: PlayerCardProps) {
   return (
     <StaggerItem>
       <motion.div
-        className="group bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-        whileHover={{ y: -5, scale: 1.02 }}
-        transition={{ duration: 0.3 }}
+        className="group relative bg-white dark:bg-stone-800 rounded-xl shadow-lg border border-stone-200/50 dark:border-stone-700/50 overflow-hidden hover:shadow-2xl hover:border-amber-200 dark:hover:border-amber-700 transition-all duration-500"
+        whileHover={{ y: -8, scale: 1.03, rotateY: 2 }}
+        transition={{ duration: 0.4, ease: "easeOut" }}
       >
+        {/* Subtle musical pattern overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 to-transparent dark:from-amber-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute top-2 right-2 text-6xl text-stone-200/20 dark:text-stone-600/20 font-serif transform rotate-12 group-hover:rotate-6 transition-transform duration-500">♪</div>
         <div className="relative h-64 overflow-hidden">
           <OptimizedImage
             src={player.photo || "/images/player-placeholder.jpg"}
@@ -108,11 +111,18 @@ function PlayerCard({ player }: PlayerCardProps) {
           />
           
           
-          {/* Overlay effect */}
+          {/* Enhanced overlay effect */}
           <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             initial={{ opacity: 0 }}
             whileHover={{ opacity: 1 }}
+          />
+          
+          {/* Subtle shimmer effect */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out"
+            initial={{ x: "-100%" }}
+            whileHover={{ x: "100%" }}
           />
         </div>
         
@@ -126,10 +136,14 @@ function PlayerCard({ player }: PlayerCardProps) {
             {player.name}
           </h3>
           
-          {player.bio && (
-            <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed mb-4 line-clamp-3">
-              {player.bio}
-            </p>
+          {player.testimonial && (
+            <div className="relative mb-4">
+              <div className="absolute -top-2 -left-2 text-4xl text-amber-600/30 dark:text-amber-400/30 font-serif leading-none">&ldquo;</div>
+              <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed italic pl-4 relative">
+                {player.testimonial}
+              </p>
+              <div className="absolute -bottom-2 -right-2 text-4xl text-amber-600/30 dark:text-amber-400/30 font-serif leading-none rotate-180">&rdquo;</div>
+            </div>
           )}
           
           {player.website && (
