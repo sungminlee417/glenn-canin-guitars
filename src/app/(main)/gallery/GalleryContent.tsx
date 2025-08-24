@@ -167,7 +167,7 @@ export default function GalleryContent({ galleryItems }: GalleryContentProps) {
               {categories.map((category) => (
                 <motion.button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => setSelectedCategory(category || 'All')}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
                     selectedCategory === category
                       ? 'bg-amber-600 dark:bg-amber-500 text-white shadow-lg'

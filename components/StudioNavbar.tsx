@@ -1,6 +1,7 @@
 import React from 'react';
+import type { NavbarProps } from 'sanity';
 
-export function StudioNavbar(props: any) {
+export function StudioNavbar(props: NavbarProps) {
   return (
     <div>
       {/* Custom return button */}
@@ -13,8 +14,9 @@ export function StudioNavbar(props: any) {
         borderBottom: '1px solid #44403c',
         fontSize: '14px'
       }}>
-        <a
-          href="/"
+        <button
+          type="button"
+          onClick={() => window.open('/', '_blank')}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -22,14 +24,17 @@ export function StudioNavbar(props: any) {
             color: 'white',
             textDecoration: 'none',
             fontSize: '14px',
-            fontWeight: 500
+            fontWeight: 500,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer'
           }}
           onMouseOver={(e) => e.currentTarget.style.color = '#f59e0b'}
           onMouseOut={(e) => e.currentTarget.style.color = 'white'}
         >
           <span style={{ fontSize: '16px' }}>←</span>
           <span>Return to Glenn Canin Guitars</span>
-        </a>
+        </button>
         
         <span style={{ color: '#a8a29e', fontSize: '12px' }}>
           CMS Studio
