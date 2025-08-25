@@ -247,8 +247,8 @@ export default function GalleryContent({ galleryContent }: GalleryContentProps) 
                     <div>
                       <motion.h2 
                         className="font-cinzel text-2xl font-bold text-stone-900 dark:text-stone-100"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
                         transition={{ delay: 0.1 }}
                       >
                         {selectedItem.title}
@@ -256,8 +256,8 @@ export default function GalleryContent({ galleryContent }: GalleryContentProps) 
                       {selectedItem.category && (
                         <motion.p
                           className="text-amber-600 dark:text-amber-400 font-medium mt-1"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
                           transition={{ delay: 0.15 }}
                         >
                           {selectedItem.category}
@@ -274,11 +274,11 @@ export default function GalleryContent({ galleryContent }: GalleryContentProps) 
                     </motion.button>
                   </div>
                   
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-hidden">
                     <motion.div 
                       className="relative h-96 rounded-lg overflow-hidden"
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.2 }}
                     >
                       <OptimizedImage
@@ -290,8 +290,8 @@ export default function GalleryContent({ galleryContent }: GalleryContentProps) 
                     </motion.div>
                     
                     <motion.div
-                      initial={{ opacity: 0, x: 30 }}
-                      animate={{ opacity: 1, x: 0 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
                     >
                       <div className="space-y-4">
