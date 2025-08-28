@@ -102,7 +102,7 @@ export default function ForSaleContent({ forSaleContent }: ForSaleContentProps) 
         <AnimatePresence>
           {selectedGuitar && (
             <motion.div 
-              className="fixed inset-0 bg-black dark:bg-black bg-opacity-50 dark:bg-opacity-70 z-50 flex items-center justify-center p-4" 
+              className="fixed inset-0 bg-black dark:bg-black bg-opacity-50 dark:bg-opacity-70 z-[10000] flex items-center justify-center p-4" 
               onClick={() => setSelectedGuitar(null)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
