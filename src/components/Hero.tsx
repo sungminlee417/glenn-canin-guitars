@@ -58,30 +58,29 @@ export default function Hero({ homeContent }: HeroProps) {
 
         {/* Right: image plate — full-bleed on mobile, framed on desktop */}
         <motion.div
-          className="lg:col-span-7 relative"
+          className="lg:col-span-7"
           initial={reduce ? false : { opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1.4, ease: "easeOut", delay: 0.1 }}
         >
-          <motion.div
-            className="relative aspect-[4/5] lg:aspect-[3/4] w-full overflow-hidden"
-            style={{ y }}
-          >
-            {heroImage ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={heroImage}
-                alt="Handcrafted classical guitar by Glenn Canin"
-                className="w-full h-full object-cover"
-                loading="eager"
-                fetchPriority="high"
-              />
-            ) : (
-              <div className="w-full h-full bg-gradient-to-br from-brand-walnut/40 via-brand-walnut/20 to-brand-cream-deep" />
-            )}
+          <motion.div className="relative" style={{ y }}>
+            <div className="relative aspect-[4/5] lg:aspect-[3/4] w-full overflow-hidden">
+              {heroImage ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={heroImage}
+                  alt="Handcrafted classical guitar by Glenn Canin"
+                  className="w-full h-full object-cover"
+                  loading="eager"
+                  fetchPriority="high"
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-brand-walnut/40 via-brand-walnut/20 to-brand-cream-deep" />
+              )}
+            </div>
+            {/* Corner rule — subtle craft detail, moves with the image */}
+            <div className="hidden lg:block absolute -bottom-4 -right-4 w-24 h-24 border-r border-b border-brand-walnut/40 dark:border-brand-cream/20 pointer-events-none" />
           </motion.div>
-          {/* Corner rule — subtle craft detail */}
-          <div className="hidden lg:block absolute -bottom-4 -right-4 w-24 h-24 border-r border-b border-brand-walnut/40 dark:border-brand-cream/20 pointer-events-none" />
         </motion.div>
       </div>
     </section>
