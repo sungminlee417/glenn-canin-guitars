@@ -15,40 +15,50 @@ import {
   urlFor
 } from './sanity'
 
-// Helper function to transform images in nested arrays
+// Sanity CDN sizing helpers — request appropriately-sized images with
+// modern format (avif/webp) and reasonable quality instead of full-res originals.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function cardUrl(image: any): string | undefined {
+  if (!image) return undefined
+  return urlFor(image).width(1200).auto('format').quality(78).url()
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function heroUrl(image: any): string | undefined {
+  if (!image) return undefined
+  return urlFor(image).width(2400).auto('format').quality(82).url()
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function transformImageInArray(items: any[]) {
   if (!Array.isArray(items)) return items
-  
+
   return items.map(item => ({
     ...item,
-    mainImage: item.mainImage ? urlFor(item.mainImage).url() : undefined,
-    photo: item.photo ? urlFor(item.photo).url() : undefined,
-    image: item.image ? urlFor(item.image).url() : undefined,
+    mainImage: cardUrl(item.mainImage),
+    photo: cardUrl(item.photo),
+    image: cardUrl(item.image),
   }))
 }
 
-// Helper function to transform Sanity data for components expecting Markdown structure
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function transformSanityData(data: any) {
   if (!data) return null
-  
+
   const transformed = {
     ...data,
     slug: data.slug?.current || data.slug,
-    // Transform image URLs - handle both direct asset references and nested asset objects
-    mainImage: data.mainImage ? (data.mainImage.asset ? data.mainImage.asset.url : urlFor(data.mainImage).url()) : undefined,
-    photo: data.photo ? (data.photo.asset ? data.photo.asset.url : urlFor(data.photo).url()) : undefined,
-    image: data.image ? (data.image.asset ? data.image.asset.url : urlFor(data.image).url()) : undefined,
-    heroImage: data.heroImage ? (data.heroImage.asset ? data.heroImage.asset.url : urlFor(data.heroImage).url()) : undefined,
-    aboutHeroImage: data.aboutHeroImage ? (data.aboutHeroImage.asset ? data.aboutHeroImage.asset.url : urlFor(data.aboutHeroImage).url()) : undefined,
-    // Transform embedded arrays
+    mainImage: cardUrl(data.mainImage),
+    photo: cardUrl(data.photo),
+    image: cardUrl(data.image),
+    heroImage: heroUrl(data.heroImage),
+    aboutHeroImage: heroUrl(data.aboutHeroImage),
     galleryItems: data.galleryItems ? transformImageInArray(data.galleryItems) : undefined,
     players: data.players ? transformImageInArray(data.players) : undefined,
-    videos: data.videos ? data.videos : undefined, // Videos don't need image transformation
+    videos: data.videos ? data.videos : undefined,
     guitars: data.guitars ? transformImageInArray(data.guitars) : undefined,
   }
-  
+
   return transformed
 }
 
