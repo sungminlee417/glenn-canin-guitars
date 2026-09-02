@@ -195,20 +195,43 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
 
                 <div>
                   <label htmlFor="subject" className={labelClasses}>Subject</label>
-                  <select
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className={inputClasses}
-                  >
-                    <option value="">Select an inquiry</option>
-                    <option value="Custom Guitar Order">Custom guitar order</option>
-                    <option value="Available Guitars">Available guitars</option>
-                    <option value="Workshop Visit">Workshop visit</option>
-                    <option value="General Inquiry">General inquiry</option>
-                  </select>
+                  <div className="relative">
+                    <select
+                      id="subject"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className={`${inputClasses} appearance-none pr-10 cursor-pointer ${
+                        formData.subject
+                          ? "text-brand-ink dark:text-brand-cream"
+                          : "text-brand-ink-soft/50 dark:text-brand-cream/40"
+                      }`}
+                    >
+                      <option value="" disabled>Select an inquiry</option>
+                      <option value="Custom Guitar Order">Custom guitar order</option>
+                      <option value="Available Guitars">Available guitars</option>
+                      <option value="Workshop Visit">Workshop visit</option>
+                      <option value="General Inquiry">General inquiry</option>
+                    </select>
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-brand-forest dark:text-brand-forest-light"
+                    >
+                      <svg
+                        width="14"
+                        height="8"
+                        viewBox="0 0 14 8"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.25"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M1 1L7 7L13 1" />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
 
                 <div>
