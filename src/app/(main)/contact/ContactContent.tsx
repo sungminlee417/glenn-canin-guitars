@@ -1,8 +1,144 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { CheckCircle, AlertCircle } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
+
+const SUBJECT_OPTIONS = [
+  { value: "Custom Guitar Order", label: "Custom guitar order" },
+  { value: "Available Guitars", label: "Available guitars" },
+  { value: "Workshop Visit", label: "Workshop visit" },
+  { value: "General Inquiry", label: "General inquiry" },
+];
+
+interface SubjectSelectProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function SubjectSelect({ value, onChange }: SubjectSelectProps) {
+  const [open, setOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const currentLabel = SUBJECT_OPTIONS.find((o) => o.value === value)?.label;
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      } else if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.min(SUBJECT_OPTIONS.length - 1, i + 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((i) => Math.max(0, i - 1));
+      } else if (e.key === "Enter" && activeIndex >= 0) {
+        e.preventDefault();
+        onChange(SUBJECT_OPTIONS[activeIndex].value);
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDocClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDocClick);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open, activeIndex, onChange]);
+
+  useEffect(() => {
+    if (open) {
+      const currentIdx = SUBJECT_OPTIONS.findIndex((o) => o.value === value);
+      setActiveIndex(currentIdx >= 0 ? currentIdx : 0);
+    }
+  }, [open, value]);
+
+  return (
+    <div ref={rootRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className={`w-full flex items-center justify-between px-4 py-3 bg-transparent border-b border-brand-rule focus:outline-none focus:border-brand-forest dark:focus:border-brand-forest-light transition-colors text-left cursor-pointer ${
+          currentLabel
+            ? "text-brand-ink dark:text-brand-cream"
+            : "text-brand-ink-soft/50 dark:text-brand-cream/40"
+        }`}
+      >
+        <span>{currentLabel || "Select an inquiry"}</span>
+        <motion.span
+          animate={{ rotate: open ? 180 : 0 }}
+          transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+          className="text-brand-forest dark:text-brand-forest-light"
+          aria-hidden="true"
+        >
+          <svg width="14" height="8" viewBox="0 0 14 8" fill="none" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M1 1L7 7L13 1" />
+          </svg>
+        </motion.span>
+      </button>
+
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            role="listbox"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute left-0 right-0 top-full mt-1 z-20 bg-brand-cream-soft dark:bg-stone-900 border border-brand-rule/60 dark:border-stone-800 shadow-[0_20px_40px_-20px_rgba(26,26,26,0.15)] overflow-hidden"
+          >
+            {SUBJECT_OPTIONS.map((option, i) => {
+              const isSelected = option.value === value;
+              const isActive = i === activeIndex;
+              return (
+                <li key={option.value}>
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={isSelected}
+                    onMouseEnter={() => setActiveIndex(i)}
+                    onClick={() => {
+                      onChange(option.value);
+                      setOpen(false);
+                    }}
+                    className={`w-full text-left px-4 py-3 flex items-center justify-between transition-colors ${
+                      isActive
+                        ? "bg-brand-cream-deep dark:bg-stone-800 text-brand-forest dark:text-brand-forest-light"
+                        : "text-brand-ink dark:text-brand-cream/90"
+                    } ${
+                      i < SUBJECT_OPTIONS.length - 1
+                        ? "border-b border-brand-rule/40 dark:border-stone-800"
+                        : ""
+                    }`}
+                  >
+                    <span className="text-sm">{option.label}</span>
+                    {isSelected && (
+                      <span
+                        aria-hidden="true"
+                        className="font-cinzel text-[10px] tracking-[0.24em] uppercase text-brand-walnut dark:text-brand-walnut-light"
+                      >
+                        Selected
+                      </span>
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 interface ContactData {
   data: {
@@ -195,43 +331,10 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
 
                 <div>
                   <label htmlFor="subject" className={labelClasses}>Subject</label>
-                  <div className="relative">
-                    <select
-                      id="subject"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className={`${inputClasses} appearance-none pr-10 cursor-pointer ${
-                        formData.subject
-                          ? "text-brand-ink dark:text-brand-cream"
-                          : "text-brand-ink-soft/50 dark:text-brand-cream/40"
-                      }`}
-                    >
-                      <option value="" disabled>Select an inquiry</option>
-                      <option value="Custom Guitar Order">Custom guitar order</option>
-                      <option value="Available Guitars">Available guitars</option>
-                      <option value="Workshop Visit">Workshop visit</option>
-                      <option value="General Inquiry">General inquiry</option>
-                    </select>
-                    <span
-                      aria-hidden="true"
-                      className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-brand-forest dark:text-brand-forest-light"
-                    >
-                      <svg
-                        width="14"
-                        height="8"
-                        viewBox="0 0 14 8"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.25"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M1 1L7 7L13 1" />
-                      </svg>
-                    </span>
-                  </div>
+                  <SubjectSelect
+                    value={formData.subject}
+                    onChange={(value) => setFormData((prev) => ({ ...prev, subject: value }))}
+                  />
                 </div>
 
                 <div>
