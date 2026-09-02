@@ -109,13 +109,9 @@ function GuitarCard({ guitar, index }: GuitarCardProps) {
             className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
           >
             View Details 
-            <motion.span
-              className="ml-2"
-              animate={{ x: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-            >
+            <span className="ml-2 inline-block transition-transform duration-200 ease-out group-hover:translate-x-1">
               →
-            </motion.span>
+            </span>
           </Link>
         </motion.div>
       </motion.div>

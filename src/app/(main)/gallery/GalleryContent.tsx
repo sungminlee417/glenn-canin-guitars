@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import FadeIn from "@/components/animations/FadeIn";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
@@ -107,6 +107,20 @@ function GalleryCard({ item, onClick }: GalleryCardProps) {
 export default function GalleryContent({ galleryContent }: GalleryContentProps) {
   const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
+  useEffect(() => {
+    if (!selectedItem) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedItem(null);
+    };
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [selectedItem]);
 
   // Extract data from CMS with fallbacks
   const pageTitle = galleryContent?.pageTitle || "Guitar Gallery";

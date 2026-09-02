@@ -82,6 +82,7 @@ export default function OptimizedImage({
             <img
               src={blurDataURL}
               alt=""
+              aria-hidden="true"
               className="w-full h-full object-cover filter blur-sm"
             />
           )}
@@ -125,16 +126,6 @@ export default function OptimizedImage({
         />
       )}
 
-      {/* Loading indicator */}
-      {!isLoaded && !isError && isInView && (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div
-            className="w-8 h-8 border-2 border-amber-600 border-t-transparent rounded-full"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-          />
-        </div>
-      )}
     </div>
   );
 }

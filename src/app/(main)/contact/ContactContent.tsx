@@ -219,7 +219,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
+                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:border-amber-500 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                         placeholder="Your name"
                       />
                     </motion.div>
@@ -238,7 +238,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
+                        className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:border-amber-500 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                         placeholder="your@email.com"
                       />
                     </motion.div>
@@ -257,7 +257,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       value={formData.subject}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
+                      className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:border-amber-500 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                     >
                       <option value="">Select a subject</option>
                       <option value="Custom Guitar Order">Custom Guitar Order</option>
@@ -281,7 +281,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       onChange={handleChange}
                       required
                       rows={6}
-                      className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all resize-none"
+                      className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-amber-400/50 focus:border-amber-500 bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all resize-none"
                       placeholder="Tell me about your project or question..."
                     />
                   </motion.div>

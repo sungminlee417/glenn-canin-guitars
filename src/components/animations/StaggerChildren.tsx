@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ReactNode } from 'react';
 
 interface StaggerChildrenProps {
@@ -14,13 +14,19 @@ const item = {
   show: { opacity: 1, y: 0 },
 };
 
+const itemReduced = {
+  hidden: { opacity: 1, y: 0 },
+  show: { opacity: 1, y: 0 },
+};
+
 export default function StaggerChildren({ children, className = '', staggerDelay = 0.1 }: StaggerChildrenProps) {
+  const reduce = useReducedMotion();
   const dynamicContainer = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: reduce ? 1 : 0 },
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: staggerDelay,
+        staggerChildren: reduce ? 0 : staggerDelay,
       },
     },
   };
@@ -39,8 +45,9 @@ export default function StaggerChildren({ children, className = '', staggerDelay
 }
 
 export function StaggerItem({ children, className = '' }: { children: ReactNode; className?: string }) {
+  const reduce = useReducedMotion();
   return (
-    <motion.div variants={item} className={className}>
+    <motion.div variants={reduce ? itemReduced : item} className={className}>
       {children}
     </motion.div>
   );

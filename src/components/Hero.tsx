@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
 
 interface HomeContent {
@@ -24,8 +24,9 @@ export default function Hero({ homeContent }: HeroProps) {
     offset: ["start start", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const reduce = useReducedMotion();
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["0%", "50%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], reduce ? [1, 1] : [1, 0]);
 
   return (
     <section ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
