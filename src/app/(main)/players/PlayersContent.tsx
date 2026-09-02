@@ -80,7 +80,7 @@ export default function PlayersContent({ playersContent }: PlayersContentProps) 
 
   return (
     <div className="bg-brand-cream dark:bg-stone-950 pt-24 pb-24 lg:pt-32 lg:pb-32">
-      <div className="mx-auto max-w-6xl px-6 lg:px-12">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <FadeIn className="mb-20 lg:mb-28 max-w-3xl">
           <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
             Artists
