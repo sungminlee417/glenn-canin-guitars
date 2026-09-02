@@ -1,8 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
 import FadeIn from "@/components/animations/FadeIn";
 
 interface HomeContent {
@@ -20,163 +18,55 @@ interface AboutPreviewProps {
 }
 
 export default function AboutPreview({ homeContent }: AboutPreviewProps) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
-  const imageY = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const title = homeContent?.data?.aboutPreviewTitle || "On the Craft";
+  const preview = homeContent?.data?.aboutPreview;
+  const linkText = homeContent?.data?.aboutPreviewLinkText || "More about the workshop";
 
   return (
-    <section
-      ref={ref}
-      className="py-16 bg-gradient-to-b from-white to-stone-50 dark:from-stone-900 dark:to-stone-800 relative overflow-hidden"
-    >
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('/images/wood-pattern.svg')] opacity-5" />
+    <section className="py-24 lg:py-32 bg-brand-cream dark:bg-stone-950">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+        {/* Left: eyebrow + rule */}
+        <FadeIn className="lg:col-span-4">
+          <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+            The Maker
+          </p>
+          <h2 className="font-cinzel text-4xl md:text-5xl font-normal text-brand-ink dark:text-brand-cream leading-[1.1] tracking-tight mb-8">
+            {title}
+          </h2>
+          <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30" />
+        </FadeIn>
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div style={{ y: textY }}>
-            <FadeIn>
-              <motion.h2
-                className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-6"
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "0px" }}
-                transition={{ duration: 0.6 }}
-              >
-{homeContent?.data?.aboutPreviewTitle}
-              </motion.h2>
-            </FadeIn>
+        {/* Right: prose */}
+        <FadeIn className="lg:col-span-7 lg:col-start-6">
+          <div className="text-lg lg:text-xl text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light space-y-6">
+            {preview ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: preview.replace(/\n\n+/g, "</p><p>").replace(/\n/g, "<br />"),
+                }}
+              />
+            ) : (
+              <p>
+                For nearly four decades I have built classical guitars, one instrument at a time, in a small
+                workshop in Mill Valley. Each guitar is a conversation between traditional Spanish
+                lutherie and the modern double-top construction that has quietly reshaped the concert
+                repertoire.
+              </p>
+            )}
+          </div>
 
-            <motion.div
-              className="space-y-4 text-stone-600 dark:text-stone-300 leading-relaxed"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+          <div className="mt-12">
+            <Link
+              href="/about"
+              className="group inline-flex items-center gap-3 border-b border-brand-ink dark:border-brand-cream pb-1 font-cinzel text-[11px] tracking-[0.28em] text-brand-ink dark:text-brand-cream uppercase transition-colors hover:text-brand-forest dark:hover:text-brand-forest-light hover:border-brand-forest dark:hover:border-brand-forest-light"
             >
-              {homeContent?.data?.aboutPreview ? (
-                <motion.div
-                  className="prose prose-stone max-w-none"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "0px" }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                  dangerouslySetInnerHTML={{ 
-                    __html: homeContent.data.aboutPreview.replace(/\n/g, '<br />') 
-                  }}
-                />
-              ) : (
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "0px" }}
-                  transition={{ duration: 0.6, delay: 0.3 }}
-                >
-                  For nearly four decades, I have dedicated myself to crafting exceptional classical guitars. 
-                  Each instrument represents a perfect balance between traditional Spanish guitar-making 
-                  techniques and innovative modern approaches like doubletop construction.
-                </motion.p>
-              )}
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              whileHover={{ x: 10 }}
-              className="mt-6"
-            >
-              <Link
-                href="/about"
-                className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
-              >
-{homeContent?.data?.aboutPreviewLinkText}
-                <motion.span
-                  className="ml-2"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
-                  →
-                </motion.span>
-              </Link>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            className="relative h-96 lg:h-full min-h-[400px] rounded-lg overflow-hidden group"
-            style={{ y: imageY }}
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Gradient background with animation */}
-            <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-amber-200 via-amber-300 to-amber-500"
-              animate={{
-                background: [
-                  "linear-gradient(135deg, #fde68a, #f59e0b, #d97706)",
-                  "linear-gradient(135deg, #fed7aa, #fb923c, #ea580c)",
-                  "linear-gradient(135deg, #fde68a, #f59e0b, #d97706)",
-                ],
-              }}
-              transition={{ duration: 8, repeat: Infinity }}
-            />
-
-            {/* Decorative overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-stone-900/20 to-transparent" />
-
-            {/* Workshop icon with animation */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <motion.div
-                className="text-amber-700"
-                initial={{ scale: 0.8, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                viewport={{ once: true, margin: "0px" }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-              >
-                <svg
-                  className="w-32 h-32"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <motion.path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-                    initial={{ pathLength: 0 }}
-                    whileInView={{ pathLength: 1 }}
-                    viewport={{ once: true, margin: "0px" }}
-                    transition={{ duration: 2, delay: 0.5 }}
-                  />
-                </svg>
-              </motion.div>
-            </div>
-
-            {/* Floating elements */}
-            <motion.div
-              className="absolute top-4 right-4 w-3 h-3 bg-amber-400 rounded-full"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-            />
-            <motion.div
-              className="absolute bottom-8 left-6 w-2 h-2 bg-amber-500 rounded-full"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: 1 }}
-            />
-            <motion.div
-              className="absolute top-12 left-8 w-1.5 h-1.5 bg-amber-300 rounded-full"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 4, repeat: Infinity, delay: 1.5 }}
-            />
-          </motion.div>
-        </div>
+              {linkText}
+              <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+                →
+              </span>
+            </Link>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

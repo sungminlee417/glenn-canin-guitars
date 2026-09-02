@@ -2,20 +2,26 @@ import Link from 'next/link';
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 flex items-center justify-center px-4">
-      <div className="text-center">
-        <h1 className="text-9xl font-cinzel font-bold text-stone-300 dark:text-stone-600 mb-4">404</h1>
-        <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-4">
-          Page Not Found
-        </h2>
-        <p className="text-stone-600 dark:text-stone-300 mb-8 max-w-md mx-auto">
-          The page you&apos;re looking for doesn&apos;t exist. It may have been moved or deleted.
+    <div className="min-h-screen bg-brand-cream dark:bg-stone-950 flex items-center justify-center px-6">
+      <div className="max-w-xl text-center">
+        <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-8">
+          404
         </p>
-        <Link 
+        <h1 className="font-cinzel text-4xl md:text-5xl font-normal text-brand-ink dark:text-brand-cream leading-[1.1] tracking-tight mb-8">
+          Page Not Found
+        </h1>
+        <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30 mx-auto mb-8" />
+        <p className="text-lg text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light mb-10">
+          The page you&apos;re looking for doesn&apos;t exist, or has moved elsewhere in the workshop.
+        </p>
+        <Link
           href="/"
-          className="inline-block bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
+          className="group inline-flex items-center gap-3 border-b border-brand-ink dark:border-brand-cream pb-1 font-cinzel text-[11px] tracking-[0.28em] uppercase text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light hover:border-brand-forest dark:hover:border-brand-forest-light transition-colors"
         >
-          Return Home
+          Return home
+          <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+            →
+          </span>
         </Link>
       </div>
     </div>

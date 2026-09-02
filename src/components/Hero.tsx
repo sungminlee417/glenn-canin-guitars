@@ -21,74 +21,69 @@ export default function Hero({ homeContent }: HeroProps) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start start", "end start"]
+    offset: ["start start", "end start"],
   });
 
   const reduce = useReducedMotion();
-  const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], reduce ? [1, 1] : [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], reduce ? ["0%", "0%"] : ["0%", "20%"]);
+
+  const title = homeContent?.data?.heroTitle || "Glenn Canin Guitars";
+  const subtitle = homeContent?.data?.heroSubtitle || "Handcrafted classical instruments";
+  const heroImage = homeContent?.data?.heroImage;
 
   return (
-    <section ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden -mt-16">
-      {/* Parallax Background */}
-      <motion.div 
-        className="absolute inset-0 z-0"
-        style={{ y }}
-      >
-        {homeContent?.data?.heroImage ? (
-          <div 
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${homeContent.data.heroImage})` }}
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-900 via-amber-800 to-stone-900" />
-        )}
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-[url('/images/wood-texture.jpg')] opacity-10 mix-blend-overlay" />
-      </motion.div>
-
-      {/* Animated overlay pattern */}
-      <motion.div 
-        className="absolute inset-0 z-10"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.1 }}
-        transition={{ duration: 2 }}
-      >
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="guitar-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
-              <circle cx="50" cy="50" r="1" fill="currentColor" className="text-amber-300" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#guitar-pattern)" />
-        </svg>
-      </motion.div>
-
-      {/* Content */}
-      <motion.div 
-        className="relative z-20 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
-        style={{ opacity }}
-      >
-        <motion.h1 
-          className="text-5xl md:text-7xl font-cinzel font-bold text-white mb-6"
-          initial={{ opacity: 0, y: 30 }}
+    <section
+      ref={ref}
+      className="relative min-h-screen -mt-16 pt-16 bg-brand-cream dark:bg-stone-950 overflow-hidden"
+    >
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 pt-16 lg:pt-24 pb-16 lg:pb-24 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center min-h-[calc(100vh-4rem)]">
+        {/* Left: type stack */}
+        <motion.div
+          className="lg:col-span-5 relative z-10"
+          initial={reduce ? false : { opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
-          {homeContent?.data?.heroTitle || "Glenn Canin Guitars"}
-        </motion.h1>
-        
-        <motion.p 
-          className="text-xl md:text-2xl text-amber-100 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6 lg:mb-8">
+            Mill Valley, California · Est. 1985
+          </p>
+          <h1 className="font-cinzel font-normal text-brand-ink dark:text-brand-cream leading-[1.05] text-[clamp(2.5rem,6vw,4.5rem)] tracking-tight mb-8">
+            {title}
+          </h1>
+          <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30 mb-8" />
+          <p className="text-lg lg:text-xl text-brand-ink-soft dark:text-brand-cream/80 leading-relaxed max-w-md">
+            {subtitle}
+          </p>
+        </motion.div>
+
+        {/* Right: image plate — full-bleed on mobile, framed on desktop */}
+        <motion.div
+          className="lg:col-span-7 relative"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1.4, ease: "easeOut", delay: 0.1 }}
         >
-          {homeContent?.data?.heroSubtitle || "Master craftsmanship since 1985"}
-        </motion.p>
-
-      </motion.div>
-
+          <motion.div
+            className="relative aspect-[4/5] lg:aspect-[3/4] w-full overflow-hidden"
+            style={{ y }}
+          >
+            {heroImage ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={heroImage}
+                alt="Handcrafted classical guitar by Glenn Canin"
+                className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority="high"
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-brand-walnut/40 via-brand-walnut/20 to-brand-cream-deep" />
+            )}
+          </motion.div>
+          {/* Corner rule — subtle craft detail */}
+          <div className="hidden lg:block absolute -bottom-4 -right-4 w-24 h-24 border-r border-b border-brand-walnut/40 dark:border-brand-cream/20 pointer-events-none" />
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -35,6 +35,21 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* Global smooth cross-fade while theme is switching. Class is added by
+     ThemeToggle for ~700ms during the flip, then removed so page-level
+     hover/focus transitions don't get slowed down. */
+  html.theme-transitioning,
+  html.theme-transitioning *,
+  html.theme-transitioning *::before,
+  html.theme-transitioning *::after {
+    transition:
+      background-color 500ms ease,
+      color 500ms ease,
+      border-color 500ms ease,
+      fill 500ms ease,
+      stroke 500ms ease !important;
+  }
 }
 
 @layer utilities {

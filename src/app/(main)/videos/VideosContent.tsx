@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 import Image from 'next/image';
 import FadeIn from '@/components/animations/FadeIn';
@@ -17,8 +17,6 @@ interface Video {
 interface VideosContent {
   pageTitle?: string;
   pageDescription?: string;
-  featuredVideosTitle?: string;
-  moreVideosTitle?: string;
   videos?: Video[];
   [key: string]: unknown;
 }
@@ -27,168 +25,143 @@ interface VideosContentProps {
   videosContent: VideosContent | null;
 }
 
-interface VideoCardProps {
-  video: Video;
-  videoId: string;
-  onClick: () => void;
-}
-
-function VideoCard({ video, videoId, onClick }: VideoCardProps) {
+function VideoCard({ video, videoId, onClick }: { video: Video; videoId: string; onClick: () => void }) {
   const [imageError, setImageError] = useState(false);
-  
-  const thumbnailUrl = imageError 
+  const thumbnailUrl = imageError
     ? '/images/video-placeholder.jpg'
     : `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
 
   return (
-    <motion.div 
-      className="group cursor-pointer bg-white dark:bg-stone-800 rounded-lg shadow-lg overflow-hidden"
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ duration: 0.3 }}
-      onClick={onClick}
-    >
-      <div className="aspect-video bg-stone-100 relative overflow-hidden">
-        <Image 
-          src={thumbnailUrl} 
+    <button type="button" onClick={onClick} className="group block w-full text-left">
+      <div className="relative aspect-video bg-brand-cream-deep dark:bg-stone-800 overflow-hidden mb-4">
+        <Image
+          src={thumbnailUrl}
           alt={video.title || "Video"}
           fill
-          className="object-cover transition-transform duration-300 group-hover:scale-110"
+          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
           onError={() => setImageError(true)}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <motion.div
-            className="bg-white rounded-full p-4"
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Play className="w-8 h-8 text-stone-900" fill="currentColor" />
-          </motion.div>
+        <div className="absolute inset-0 bg-brand-ink/0 group-hover:bg-brand-ink/30 transition-colors duration-500 flex items-center justify-center">
+          <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-500 w-14 h-14 rounded-full bg-brand-cream/95 flex items-center justify-center">
+            <Play className="w-5 h-5 text-brand-ink ml-0.5" fill="currentColor" />
+          </div>
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="font-cinzel font-semibold mb-2 text-stone-900 dark:text-stone-100 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors text-lg">
-          {video.title}
-        </h3>
+      <div>
         {video.player && (
-          <p className="text-amber-600 dark:text-amber-400 font-medium text-sm mb-2">
+          <p className="font-cinzel text-[10px] tracking-[0.24em] text-brand-forest dark:text-brand-forest-light uppercase mb-2">
             {video.player}
           </p>
         )}
+        <h3 className="font-cinzel text-lg lg:text-xl font-normal text-brand-ink dark:text-brand-cream leading-tight mb-2 transition-colors group-hover:text-brand-forest dark:group-hover:text-brand-forest-light">
+          {video.title}
+        </h3>
         {video.description && (
-          <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">
+          <p className="text-sm text-brand-ink-soft dark:text-brand-cream/70 leading-relaxed line-clamp-2">
             {video.description}
           </p>
         )}
       </div>
-    </motion.div>
+    </button>
   );
 }
 
 export default function VideosContent({ videosContent }: VideosContentProps) {
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
-  // Extract data from CMS with fallbacks
-  const pageTitle = videosContent?.pageTitle || "Video Gallery";
-  const pageDescription = videosContent?.pageDescription || "Watch performances by world-class guitarists playing Glenn Canin instruments, and get an inside look at the guitar-making process.";
+  useEffect(() => {
+    if (!selectedVideo) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedVideo(null);
+    };
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [selectedVideo]);
+
+  const pageTitle = videosContent?.pageTitle || "Recordings";
+  const pageDescription = videosContent?.pageDescription || "Performances and workshop moments captured on video.";
   const videos = videosContent?.videos || [];
-  
 
   const extractVideoId = (url: string) => {
     const match = url?.match(/(?:youtube\.com\/embed\/|youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/);
     return match ? match[1] : '';
   };
 
-  const closeModal = () => {
-    setSelectedVideo(null);
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('/images/video-pattern.svg')] opacity-5" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <FadeIn className="text-center mb-16">
-          <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+    <div className="bg-brand-cream dark:bg-stone-950 pt-24 pb-24 lg:pt-32 lg:pb-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <FadeIn className="mb-20 lg:mb-28 max-w-3xl">
+          <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+            In Motion
+          </p>
+          <h1 className="font-cinzel text-4xl md:text-5xl lg:text-6xl font-normal text-brand-ink dark:text-brand-cream leading-[1.1] tracking-tight mb-8">
             {pageTitle}
-          </motion.h1>
-          <motion.p
-            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          </h1>
+          <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30 mb-8" />
+          <p className="text-lg text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light">
             {pageDescription}
-          </motion.p>
+          </p>
         </FadeIn>
 
-        {/* All Videos Section */}
-        {videos && videos.length > 0 && (
-          <FadeIn>
-            <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {videos.map((video, index) => {
-                const videoId = extractVideoId(video.youtubeUrl || '');
-                
-                return (
-                  <StaggerItem key={`${video.title}-${index}`}>
-                    <VideoCard
-                      video={video}
-                      videoId={videoId}
-                      onClick={() => setSelectedVideo(video.youtubeUrl || '')}
-                    />
-                  </StaggerItem>
-                );
-              })}
-            </StaggerChildren>
-          </FadeIn>
+        {videos.length > 0 && (
+          <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+            {videos.map((video, index) => (
+              <StaggerItem key={`${video.title}-${index}`}>
+                <VideoCard
+                  video={video}
+                  videoId={extractVideoId(video.youtubeUrl || '')}
+                  onClick={() => setSelectedVideo(video.youtubeUrl || '')}
+                />
+              </StaggerItem>
+            ))}
+          </StaggerChildren>
         )}
-
-        {/* Video Modal */}
-        <AnimatePresence>
-          {selectedVideo && (
-            <motion.div 
-              className="fixed inset-0 bg-black bg-opacity-75 z-[10000] flex items-center justify-center p-4" 
-              onClick={closeModal}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <motion.div 
-                className="bg-white dark:bg-stone-800 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-hidden relative" 
-                onClick={(e) => e.stopPropagation()}
-                initial={{ scale: 0.8, opacity: 0, y: 50 }}
-                animate={{ scale: 1, opacity: 1, y: 0 }}
-                exit={{ scale: 0.8, opacity: 0, y: 50 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
-                <button
-                  onClick={closeModal}
-                  className="absolute top-4 right-4 z-10 text-white bg-black bg-opacity-50 hover:bg-opacity-75 rounded-full p-2 transition-colors"
-                >
-                  <X className="w-6 h-6" />
-                </button>
-                
-                <div className="aspect-video">
-                  <iframe
-                    src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo)}?autoplay=1`}
-                    title="YouTube video player"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      <AnimatePresence>
+        {selectedVideo && (
+          <motion.div
+            className="fixed inset-0 bg-brand-ink/80 dark:bg-black/90 z-[10000] flex items-center justify-center p-4 sm:p-8"
+            onClick={() => setSelectedVideo(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.div
+              className="bg-brand-cream dark:bg-stone-900 max-w-5xl w-full overflow-hidden relative"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 24 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              <button
+                onClick={() => setSelectedVideo(null)}
+                aria-label="Close"
+                className="absolute top-4 right-4 z-10 text-brand-cream bg-brand-ink/60 hover:bg-brand-ink/80 rounded-full p-2 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              <div className="aspect-video">
+                <iframe
+                  src={`https://www.youtube.com/embed/${extractVideoId(selectedVideo)}?autoplay=1`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="w-full h-full"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

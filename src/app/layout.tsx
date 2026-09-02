@@ -132,7 +132,7 @@ export default function RootLayout({
     <html lang="en" className={`${cinzel.variable} ${raleway.variable}`}>
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#d97706" />
+        <meta name="theme-color" content="#f5efe0" />
         <link rel="apple-touch-icon" href="/icon-192.png" />
         <Script
           id="json-ld"
@@ -157,7 +157,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-raleway antialiased bg-white dark:bg-stone-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
+      <body className="font-raleway antialiased bg-brand-cream dark:bg-stone-950 text-brand-ink dark:text-brand-cream transition-colors duration-500">
         {children}
       </body>
     </html>

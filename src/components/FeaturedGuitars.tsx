@@ -1,7 +1,6 @@
 'use client';
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { useState } from "react";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 import FadeIn from "@/components/animations/FadeIn";
@@ -29,142 +28,99 @@ interface FeaturedGuitarsProps {
 
 interface GuitarCardProps {
   guitar: Guitar;
-  index: number;
 }
 
-function GuitarCard({ guitar, index }: GuitarCardProps) {
+function GuitarCard({ guitar }: GuitarCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
 
   return (
     <StaggerItem>
-      <motion.div
-        className="group bg-white dark:bg-stone-800 rounded-lg shadow-md overflow-hidden hover:shadow-2xl transition-all duration-300"
-        whileHover={{ y: -8, scale: 1.02 }}
-        transition={{ duration: 0.3 }}
+      <Link
+        href={`/for-sale#guitar-${guitar.slug}`}
+        className="group block"
       >
-        <div className="relative h-64 bg-gradient-to-br from-stone-200 to-stone-300 overflow-hidden">
+        <div className="relative aspect-[4/5] w-full overflow-hidden bg-brand-cream-deep dark:bg-stone-800 mb-5">
           {!imageLoaded && !imageError && (
-            <div className="absolute inset-0 animate-pulse bg-stone-300" />
+            <div className="absolute inset-0 bg-brand-cream-deep dark:bg-stone-800" />
           )}
           {imageError ? (
             <div className="absolute inset-0 flex items-center justify-center">
-              <motion.svg 
-                className="w-24 h-24 text-stone-400"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
+              <svg className="w-16 h-16 text-brand-walnut/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM21 16c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM7 9l12-3" />
-              </motion.svg>
+              </svg>
             </div>
           ) : (
-            <motion.img
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
               src={guitar.data.mainImage}
-              alt={guitar.data.title}
-              className={`w-full h-full object-cover transition-opacity duration-300 ${
-                imageLoaded ? 'opacity-100' : 'opacity-0'
-              }`}
+              alt={guitar.data.title || "Guitar"}
+              className={`w-full h-full object-cover transition-all duration-[900ms] ease-out ${
+                imageLoaded ? "opacity-100" : "opacity-0"
+              } group-hover:scale-[1.03]`}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageError(true)}
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
+              loading="lazy"
             />
           )}
-          
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-t from-stone-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            initial={{ opacity: 0 }}
-            whileHover={{ opacity: 1 }}
-          >
-            <div className="absolute bottom-4 left-4 text-white">
-              <motion.span
-                className="text-sm font-medium"
-                initial={{ y: 20, opacity: 0 }}
-                whileHover={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.1 }}
-              >
-                Click to view details
-              </motion.span>
-            </div>
-          </motion.div>
         </div>
-        
-        <motion.div 
-          className="p-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: index * 0.1 + 0.3 }}
-        >
-          <h3 className="font-cinzel text-xl font-semibold text-stone-900 dark:text-stone-100 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+
+        <div className="pt-1">
+          {guitar.data.year != null && (
+            <p className="font-cinzel text-[10px] tracking-[0.24em] text-brand-forest dark:text-brand-forest-light uppercase mb-2">
+              {guitar.data.year}
+            </p>
+          )}
+          <h3 className="font-cinzel text-xl lg:text-2xl font-normal text-brand-ink dark:text-brand-cream leading-tight mb-3 transition-colors group-hover:text-brand-forest dark:group-hover:text-brand-forest-light">
             {guitar.data.title}
           </h3>
-          <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 font-medium">{guitar.data.year}</p>
-          <p className="text-stone-600 dark:text-stone-300 mb-4 leading-relaxed">{guitar.data.description}</p>
-          <Link
-            href={`/for-sale#guitar-${guitar.slug}`}
-            className="inline-flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium transition-colors group"
-          >
-            View Details 
-            <span className="ml-2 inline-block transition-transform duration-200 ease-out group-hover:translate-x-1">
-              →
-            </span>
-          </Link>
-        </motion.div>
-      </motion.div>
+          {guitar.data.description && (
+            <p className="text-sm text-brand-ink-soft dark:text-brand-cream/70 leading-relaxed line-clamp-3">
+              {guitar.data.description}
+            </p>
+          )}
+        </div>
+      </Link>
     </StaggerItem>
   );
 }
 
 export default function FeaturedGuitars({ featuredGuitars, title, description, buttonText }: FeaturedGuitarsProps) {
   return (
-    <section className="py-16 bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/images/wood-grain.png')] opacity-5" />
-      
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn className="text-center mb-12">
-          <motion.h2 
-            className="font-cinzel text-3xl md:text-4xl font-bold text-stone-900 dark:text-stone-100 mb-4"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.6 }}
-          >
-            {title || "Featured Instruments"}
-          </motion.h2>
-          <motion.p 
-            className="text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {description || "A selection of recently completed instruments."}
-          </motion.p>
+    <section className="py-24 lg:py-32 bg-brand-cream-soft dark:bg-stone-900">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        <FadeIn className="mb-16 lg:mb-20 max-w-3xl">
+          <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+            The Work
+          </p>
+          <h2 className="font-cinzel text-4xl md:text-5xl lg:text-6xl font-normal text-brand-ink dark:text-brand-cream leading-[1.1] tracking-tight mb-8">
+            {title || "Recent Instruments"}
+          </h2>
+          <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30 mb-8" />
+          <p className="text-lg text-brand-ink-soft dark:text-brand-cream/80 leading-relaxed">
+            {description || "A selection of recently completed instruments, each built one at a time in the Mill Valley workshop."}
+          </p>
         </FadeIn>
-        
-        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {featuredGuitars.map((guitar, index) => (
-            <GuitarCard key={guitar.slug} guitar={guitar} index={index} />
+
+        <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16 lg:gap-y-20">
+          {featuredGuitars.map((guitar) => (
+            <GuitarCard key={guitar.slug} guitar={guitar} />
           ))}
         </StaggerChildren>
-        
-        <FadeIn className="text-center mt-12">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
+
+        {buttonText && (
+          <FadeIn className="mt-20 lg:mt-24 flex justify-start">
             <Link
               href="/for-sale"
-              className="inline-block bg-gradient-to-r from-amber-600 to-amber-700 text-white px-8 py-3 rounded-md font-medium hover:from-amber-700 hover:to-amber-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="group inline-flex items-center gap-3 border-b border-brand-ink dark:border-brand-cream pb-1 font-cinzel text-[11px] tracking-[0.28em] text-brand-ink dark:text-brand-cream uppercase transition-colors hover:text-brand-forest dark:hover:text-brand-forest-light hover:border-brand-forest dark:hover:border-brand-forest-light"
             >
-{buttonText}
+              {buttonText}
+              <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+                →
+              </span>
             </Link>
-          </motion.div>
-        </FadeIn>
+          </FadeIn>
+        )}
       </div>
     </section>
   );

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavigationSettings {
@@ -28,133 +28,94 @@ interface HeaderClientProps {
 }
 
 export default function HeaderClient({ navigationSettings }: HeaderClientProps) {
-  // Fixed navigation structure with editable labels
-  const navigation = [
-    { label: navigationSettings?.data?.homeLabel || "Home", href: "/" },
+  // Desktop nav: primary items only. Home is reached via the logo.
+  // Full list (including Home) appears in the mobile drawer.
+  const primaryNav = [
     { label: navigationSettings?.data?.aboutLabel || "About", href: "/about" },
-    { label: navigationSettings?.data?.doubletopsLabel || "Doubletops", href: "/doubletops" },
-    { label: navigationSettings?.data?.videosLabel || "Videos", href: "/videos" },
+    { label: navigationSettings?.data?.forSaleLabel || "For Sale", href: "/for-sale" },
     { label: navigationSettings?.data?.galleryLabel || "Gallery", href: "/gallery" },
     { label: navigationSettings?.data?.playersLabel || "Players", href: "/players" },
+    { label: navigationSettings?.data?.videosLabel || "Videos", href: "/videos" },
+    { label: navigationSettings?.data?.doubletopsLabel || "Doubletops", href: "/doubletops" },
     { label: navigationSettings?.data?.orderingLabel || "Ordering", href: "/ordering" },
     { label: navigationSettings?.data?.contactLabel || "Contact", href: "/contact" },
-    { label: navigationSettings?.data?.forSaleLabel || "For Sale", href: "/for-sale" },
+  ];
+  const mobileNav = [
+    { label: navigationSettings?.data?.homeLabel || "Home", href: "/" },
+    ...primaryNav,
   ];
 
   const siteTitle = navigationSettings?.data?.siteTitle || "Glenn Canin Guitars";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <motion.header 
-      className="fixed top-0 left-0 right-0 bg-white/95 dark:bg-stone-900/95 backdrop-blur-sm shadow-sm z-[9999] border-b border-stone-200 dark:border-stone-700"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-    >
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
-        <div className="flex w-full items-center justify-between py-4">
-          <motion.div 
-            className="flex items-center"
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.2 }}
+    <header className="fixed top-0 left-0 right-0 bg-brand-cream/90 dark:bg-stone-950/90 backdrop-blur-md z-[9999] border-b border-brand-rule/50 dark:border-stone-800">
+      <nav className="mx-auto max-w-7xl px-6 lg:px-12" aria-label="Top">
+        <div className="flex w-full items-center justify-between py-5">
+          <Link
+            href="/"
+            className="font-cinzel text-base md:text-lg tracking-[0.16em] uppercase text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
           >
-            <Link href="/" className="font-cinzel text-xl md:text-2xl font-semibold text-stone-900 dark:text-stone-100 hover:text-amber-600 transition-colors">
-{siteTitle}
-            </Link>
-          </motion.div>
-          
-          <div className="hidden xl:flex xl:gap-x-8">
-            {navigation.map((item, index) => (
-              <motion.div
+            {siteTitle}
+          </Link>
+
+          <div className="hidden lg:flex items-center gap-x-6 xl:gap-x-8">
+            {primaryNav.map((item) => (
+              <Link
                 key={item.label}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                href={item.href}
+                className="relative font-cinzel text-[10px] tracking-[0.22em] uppercase text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors group whitespace-nowrap"
               >
-                <Link
-                  href={item.href}
-                  className="relative text-sm font-medium text-stone-700 dark:text-stone-100 hover:text-amber-600 dark:hover:text-amber-400 transition-all duration-300 group"
-                >
-                  {item.label}
-                  <motion.span
-                    className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 group-hover:w-full transition-all duration-300"
-                    initial={{ width: 0 }}
-                    whileHover={{ width: "100%" }}
-                  />
-                </Link>
-              </motion.div>
+                {item.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-brand-forest dark:bg-brand-forest-light transition-all duration-300 group-hover:w-full" />
+              </Link>
             ))}
           </div>
 
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center gap-2">
             <ThemeToggle />
-            <div className="xl:hidden flex items-center justify-center">
-              <motion.button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-stone-700 dark:text-stone-300 hover:text-amber-600 transition-colors"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              whileTap={{ scale: 0.95 }}
-            >
-              <span className="sr-only">Open main menu</span>
-              <AnimatePresence mode="wait">
+            <div className="lg:hidden">
+              <button
+                type="button"
+                className="p-2 text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
                 {mobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X className="h-6 w-6" aria-hidden="true" />
-                  </motion.div>
+                  <X className="h-5 w-5" aria-hidden="true" />
                 ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu className="h-6 w-6" aria-hidden="true" />
-                  </motion.div>
+                  <Menu className="h-5 w-5" aria-hidden="true" />
                 )}
-              </AnimatePresence>
-              </motion.button>
+              </button>
             </div>
           </div>
         </div>
 
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div 
-              className="xl:hidden"
+            <motion.div
+              className="lg:hidden overflow-hidden"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="space-y-1 pb-3">
-                {navigation.map((item, index) => (
-                  <motion.div
+              <div className="space-y-1 py-4 border-t border-brand-rule/50 dark:border-stone-800">
+                {mobileNav.map((item) => (
+                  <Link
                     key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                    href={item.href}
+                    className="block px-2 py-3 font-cinzel text-[11px] tracking-[0.24em] uppercase text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Link
-                      href={item.href}
-                      className="block rounded-lg px-3 py-2 text-base font-medium text-stone-700 dark:text-stone-200 hover:bg-amber-50 dark:hover:bg-amber-900/20 hover:text-amber-600 dark:hover:text-amber-400 transition-all duration-200"
-                      onClick={() => setMobileMenuOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
+                    {item.label}
+                  </Link>
                 ))}
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </nav>
-    </motion.header>
+    </header>
   );
 }

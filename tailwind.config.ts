@@ -12,6 +12,18 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        brand: {
+          cream: "#f5efe0",
+          "cream-soft": "#faf6ec",
+          "cream-deep": "#ede4d0",
+          ink: "#1a1a1a",
+          "ink-soft": "#3d3936",
+          forest: "#2f4d3f",
+          "forest-light": "#4a7d68",
+          walnut: "#6b4423",
+          "walnut-light": "#8f6b3f",
+          rule: "#c9bfa5",
+        },
       },
       fontFamily: {
         'raleway': ['var(--font-raleway)', 'Raleway', 'sans-serif'],

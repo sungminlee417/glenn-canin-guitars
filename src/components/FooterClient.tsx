@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { Instagram, Facebook, Youtube, Twitter } from "lucide-react";
 
 interface FooterContent {
@@ -31,6 +30,17 @@ interface FooterClientProps {
   footerContent: FooterContent | null;
 }
 
+const socialUrl = (platform: string, handle: string) => {
+  if (handle.startsWith("http")) return handle;
+  switch (platform) {
+    case "instagram": return `https://instagram.com/${handle}`;
+    case "facebook": return `https://facebook.com/${handle}`;
+    case "youtube": return `https://youtube.com/${handle}`;
+    case "twitter": return `https://twitter.com/${handle}`;
+    default: return "#";
+  }
+};
+
 export default function FooterClient({ footerContent }: FooterClientProps) {
   const quickLinks = [
     { href: "/about", label: "About" },
@@ -43,276 +53,156 @@ export default function FooterClient({ footerContent }: FooterClientProps) {
     { href: "/contact", label: "Contact" },
   ];
 
-  // Show admin link in development or when ?admin=true is in URL
-  const showAdminLink = process.env.NODE_ENV === 'development' || 
-    (typeof window !== 'undefined' && window.location.search.includes('admin=true'));
+  const showAdminLink = process.env.NODE_ENV === "development" ||
+    (typeof window !== "undefined" && window.location.search.includes("admin=true"));
 
-  // Use CMS data with fallbacks
   const companyName = footerContent?.data?.companyName || "Glenn Canin Guitars";
-  const description = footerContent?.data?.description || "Handcrafted concert classical guitars for professional musicians worldwide. Each instrument is meticulously crafted to inspire musical excellence.";
+  const description = footerContent?.data?.description || "Handcrafted concert classical guitars, built one at a time in Mill Valley, California.";
   const phone = footerContent?.data?.phone || "415-407-1191";
   const email = footerContent?.data?.email || "glenncanin@hotmail.com";
   const location = footerContent?.data?.location || "Mill Valley, California";
-  const locationNote = footerContent?.data?.locationNote || "Visits by appointment only";
+  const locationNote = footerContent?.data?.locationNote || "Workshop visits by appointment";
   const establishedYear = footerContent?.data?.establishedYear || "1985";
-  const tagline = footerContent?.data?.tagline || "Handcrafted with passion";
   const country = footerContent?.data?.country || "Made in USA";
-  const trustlineText = footerContent?.data?.trustlineText || "Trusted by professional musicians worldwide";
-  
-  // Social media data
   const socialMedia = footerContent?.data?.socialMedia || {};
-  
-  // Helper function to generate social media URL
-  const getSocialMediaUrl = (platform: string, handle: string) => {
-    switch (platform) {
-      case 'instagram':
-        return `https://instagram.com/${handle}`;
-      case 'facebook':
-        return handle.startsWith('http') ? handle : `https://facebook.com/${handle}`;
-      case 'youtube':
-        return handle.startsWith('http') ? handle : `https://youtube.com/${handle}`;
-      case 'twitter':
-        return `https://twitter.com/${handle}`;
-      default:
-        return '#';
-    }
-  };
 
   return (
-    <footer className="bg-stone-900 dark:bg-stone-950 text-white relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('/images/wood-grain.svg')] opacity-5" />
-      
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <motion.div 
-          className="grid grid-cols-1 md:grid-cols-4 gap-8"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          {/* Brand Section */}
-          <motion.div 
-            className="md:col-span-2"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            <motion.h3 
-              className="font-cinzel text-2xl font-bold mb-4 text-amber-400"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
+    <footer className="bg-brand-cream-deep dark:bg-stone-950 text-brand-ink dark:text-brand-cream border-t border-brand-rule/50 dark:border-stone-800">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12 py-20 lg:py-24">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
+          <div className="md:col-span-5">
+            <Link
+              href="/"
+              className="font-cinzel text-base tracking-[0.16em] uppercase text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
             >
               {companyName}
-            </motion.h3>
-            <p className="text-stone-300 text-base leading-relaxed max-w-md mb-6">
+            </Link>
+            <p className="mt-6 text-brand-ink-soft dark:text-brand-cream/75 text-base leading-[1.7] max-w-md">
               {description}
             </p>
-            <motion.div 
-              className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <div className="flex space-x-1 text-amber-400">
-                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-              </div>
-              <span className="text-stone-400 text-sm leading-relaxed">{trustlineText}</span>
-            </motion.div>
-            
-            {/* Social Media Links */}
+
             {(socialMedia.instagram || socialMedia.facebook || socialMedia.youtube || socialMedia.twitter) && (
-              <motion.div 
-                className="mt-6"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-              >
-                <h4 className="font-semibold text-amber-400 mb-3 text-sm">Follow Us</h4>
-                <div className="flex space-x-4">
-                  {socialMedia.instagram && (
-                    <motion.a
-                      href={getSocialMediaUrl('instagram', socialMedia.instagram)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-400 hover:text-amber-400 transition-colors duration-200"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      aria-label="Follow us on Instagram"
-                    >
-                      <Instagram className="w-6 h-6" />
-                    </motion.a>
-                  )}
-                  {socialMedia.facebook && (
-                    <motion.a
-                      href={getSocialMediaUrl('facebook', socialMedia.facebook)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-400 hover:text-amber-400 transition-colors duration-200"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      aria-label="Follow us on Facebook"
-                    >
-                      <Facebook className="w-6 h-6" />
-                    </motion.a>
-                  )}
-                  {socialMedia.youtube && (
-                    <motion.a
-                      href={getSocialMediaUrl('youtube', socialMedia.youtube)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-400 hover:text-amber-400 transition-colors duration-200"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      aria-label="Follow us on YouTube"
-                    >
-                      <Youtube className="w-6 h-6" />
-                    </motion.a>
-                  )}
-                  {socialMedia.twitter && (
-                    <motion.a
-                      href={getSocialMediaUrl('twitter', socialMedia.twitter)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-stone-400 hover:text-amber-400 transition-colors duration-200"
-                      whileHover={{ scale: 1.1, y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                      transition={{ duration: 0.2 }}
-                      aria-label="Follow us on Twitter"
-                    >
-                      <Twitter className="w-6 h-6" />
-                    </motion.a>
-                  )}
-                </div>
-              </motion.div>
+              <div className="mt-8 flex items-center gap-5">
+                {socialMedia.instagram && (
+                  <a
+                    href={socialUrl("instagram", socialMedia.instagram)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                    aria-label="Instagram"
+                  >
+                    <Instagram className="w-5 h-5" />
+                  </a>
+                )}
+                {socialMedia.facebook && (
+                  <a
+                    href={socialUrl("facebook", socialMedia.facebook)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                    aria-label="Facebook"
+                  >
+                    <Facebook className="w-5 h-5" />
+                  </a>
+                )}
+                {socialMedia.youtube && (
+                  <a
+                    href={socialUrl("youtube", socialMedia.youtube)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                    aria-label="YouTube"
+                  >
+                    <Youtube className="w-5 h-5" />
+                  </a>
+                )}
+                {socialMedia.twitter && (
+                  <a
+                    href={socialUrl("twitter", socialMedia.twitter)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-brand-ink-soft dark:text-brand-cream/70 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                    aria-label="Twitter"
+                  >
+                    <Twitter className="w-5 h-5" />
+                  </a>
+                )}
+              </div>
             )}
-          </motion.div>
-          
-          {/* Quick Links */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <h4 className="font-cinzel font-semibold text-lg mb-6 text-amber-400">Explore</h4>
-            <ul className="space-y-3">
-              {quickLinks.map((link, index) => (
-                <motion.li 
-                  key={link.href}
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.3 + index * 0.05 }}
-                >
-                  <Link 
-                    href={link.href} 
-                    className="text-stone-300 hover:text-amber-400 transition-colors duration-200 text-sm block py-1"
+          </div>
+
+          <div className="md:col-span-3">
+            <p className="font-cinzel text-[10px] tracking-[0.24em] uppercase text-brand-forest dark:text-brand-forest-light mb-5">
+              Explore
+            </p>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-brand-ink-soft dark:text-brand-cream/75 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors text-sm"
                   >
                     {link.label}
                   </Link>
-                </motion.li>
+                </li>
               ))}
               {showAdminLink && (
-                <motion.li 
-                  initial={{ opacity: 0, x: 10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.3 + quickLinks.length * 0.05 }}
-                >
-                  <Link 
-                    href="/studio" 
-                    className="text-stone-400 hover:text-amber-400 transition-colors duration-200 text-xs block py-1 border-t border-stone-700 pt-3 mt-3"
+                <li className="pt-3 mt-3 border-t border-brand-rule/50 dark:border-stone-800">
+                  <Link
+                    href="/studio"
+                    className="text-brand-ink-soft/70 dark:text-brand-cream/60 hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors text-xs"
                   >
-                    ⚙️ Admin Studio
+                    Admin Studio
                   </Link>
-                </motion.li>
+                </li>
               )}
             </ul>
-          </motion.div>
-          
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <h4 className="font-cinzel font-semibold text-lg mb-6 text-amber-400">Connect</h4>
-            <div className="space-y-4 text-sm">
-              <motion.div 
-                className="text-stone-300"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="block font-medium text-white mb-1">Phone</span>
-                <a href={`tel:${phone.replace(/[^\d]/g, '')}`} className="hover:text-amber-400 transition-colors">
-                  {phone}
-                </a>
-              </motion.div>
-              
-              <motion.div 
-                className="text-stone-300"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="block font-medium text-white mb-1">Email</span>
-                <a href={`mailto:${email}`} className="hover:text-amber-400 transition-colors">
-                  {email}
-                </a>
-              </motion.div>
-              
-              <motion.div 
-                className="text-stone-300"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="block font-medium text-white mb-1">Workshop</span>
-                <span>{location}</span>
-                <span className="block text-xs text-stone-400 mt-1">
-                  {locationNote}
-                </span>
-              </motion.div>
-            </div>
-          </motion.div>
-        </motion.div>
-        
-        {/* Bottom Section */}
-        <motion.div 
-          className="mt-12 pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <motion.p 
-            className="text-stone-400 text-sm mb-4 md:mb-0"
-            whileHover={{ color: "#a8a29e" }}
-            transition={{ duration: 0.2 }}
-          >
+          </div>
+
+          <div className="md:col-span-4">
+            <p className="font-cinzel text-[10px] tracking-[0.24em] uppercase text-brand-forest dark:text-brand-forest-light mb-5">
+              Connect
+            </p>
+            <dl className="space-y-4 text-sm">
+              <div>
+                <dt className="text-brand-ink-soft/60 dark:text-brand-cream/50 text-[11px] uppercase tracking-wider mb-1">Phone</dt>
+                <dd>
+                  <a
+                    href={`tel:${phone.replace(/[^\d]/g, "")}`}
+                    className="text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors"
+                  >
+                    {phone}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-brand-ink-soft/60 dark:text-brand-cream/50 text-[11px] uppercase tracking-wider mb-1">Email</dt>
+                <dd>
+                  <a
+                    href={`mailto:${email}`}
+                    className="text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light transition-colors break-all"
+                  >
+                    {email}
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-brand-ink-soft/60 dark:text-brand-cream/50 text-[11px] uppercase tracking-wider mb-1">Workshop</dt>
+                <dd className="text-brand-ink dark:text-brand-cream">{location}</dd>
+                <dd className="text-brand-ink-soft/70 dark:text-brand-cream/60 text-xs mt-1">{locationNote}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <div className="mt-20 pt-8 border-t border-brand-rule/50 dark:border-stone-800 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <p className="text-brand-ink-soft/70 dark:text-brand-cream/60 text-xs">
             &copy; {new Date().getFullYear()} {companyName}. All rights reserved.
-          </motion.p>
-          
-          <motion.div 
-            className="flex items-center space-x-4 text-xs text-stone-500"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-          >
-            <span>{tagline}</span>
-            <span>•</span>
-            <span>Since {establishedYear}</span>
-            <span>•</span>
-            <span>{country}</span>
-          </motion.div>
-        </motion.div>
+          </p>
+          <p className="font-cinzel text-[10px] tracking-[0.24em] uppercase text-brand-ink-soft/70 dark:text-brand-cream/60">
+            Est. {establishedYear} · {country}
+          </p>
+        </div>
       </div>
     </footer>
   );

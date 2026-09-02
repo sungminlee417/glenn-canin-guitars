@@ -1,7 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { CheckCircle, Settings, Star } from 'lucide-react';
 import FadeIn from "@/components/animations/FadeIn";
 import StaggerChildren, { StaggerItem } from "@/components/animations/StaggerChildren";
 
@@ -41,265 +39,216 @@ interface OrderingContentProps {
 }
 
 export default function OrderingContent({ orderingContent }: OrderingContentProps) {
-
-  const title = orderingContent?.data?.pageTitle || orderingContent?.data?.title || "Custom Guitar Ordering";
-  const description = orderingContent?.data?.pageDescription || "Commission a custom classical guitar tailored to your musical vision and playing style.";
-  const optionsTitle = orderingContent?.data?.optionsTitle || "Guitar Options & Upgrades";
+  const title = orderingContent?.data?.pageTitle || orderingContent?.data?.title || "Commissions";
+  const description = orderingContent?.data?.pageDescription || "Every guitar begins as a conversation. Here is how one takes shape.";
+  const optionsTitle = orderingContent?.data?.optionsTitle || "Options & Upgrades";
   const basePrice = orderingContent?.data?.basePrice || "$14,000";
-  const baseDescription = orderingContent?.data?.baseDescription || "Includes balsa core doubletop with cedar/cedar or spruce/cedar skins, Indian rosewood back/sides, elevated fingerboard, 20th fret, optional soundport, Barnett tuners, arched TKL case.";
-  
-  // Default options
+  const baseDescription = orderingContent?.data?.baseDescription ||
+    "Includes balsa-core double top with cedar/cedar or spruce/cedar skins, Indian rosewood back and sides, elevated fingerboard, 20th fret, optional soundport, Barnett tuners, arched TKL case.";
+
   const defaultOptions: Option[] = [
-    { category: 'Scale Length', title: '650mm (Standard)', description: 'Traditional classical guitar scale length', price: 'Included', required: false },
-    { category: 'Scale Length', title: '640mm (Short Scale)', description: 'Shorter scale length for easier playing', price: 'Included', required: false },
-    { category: 'Scale Length', title: '665mm (Long Scale)', description: 'Extended scale for increased tension and projection', price: 'Included', required: false },
-    { category: 'Wood Upgrades', title: '40-year-old Madagascar Rosewood', description: 'Premium aged Madagascar rosewood for back and sides', price: '+$3,000', required: false },
-    { category: 'Wood Upgrades', title: 'Brazilian Rosewood', description: 'Rare Brazilian rosewood for back and sides', price: '+$5,000', required: false },
-    { category: 'Hardware', title: 'Alessi Tuners', description: 'Premium tuning machines for superior stability', price: '+$500', required: false },
-    { category: 'Case', title: 'Bam or Visesnut Case', description: 'Upgrade to premium hardshell case', price: '+$500', required: false },
+    { category: "Scale Length", title: "650mm (Standard)", description: "Traditional classical guitar scale length", price: "Included", required: false },
+    { category: "Scale Length", title: "640mm (Short Scale)", description: "Shorter scale length for easier playing", price: "Included", required: false },
+    { category: "Scale Length", title: "665mm (Long Scale)", description: "Extended scale for increased tension and projection", price: "Included", required: false },
+    { category: "Wood Upgrades", title: "40-year-old Madagascar Rosewood", description: "Premium aged Madagascar rosewood for back and sides", price: "+$3,000", required: false },
+    { category: "Wood Upgrades", title: "Brazilian Rosewood", description: "Rare Brazilian rosewood for back and sides", price: "+$5,000", required: false },
+    { category: "Hardware", title: "Alessi Tuners", description: "Premium tuning machines for superior stability", price: "+$500", required: false },
+    { category: "Case", title: "Bam or Visesnut Case", description: "Upgrade to premium hardshell case", price: "+$500", required: false },
   ];
-  
   const options = orderingContent?.data?.options || defaultOptions;
-  
-  // Group options by category
+
   const groupedOptions = options.reduce((groups, option) => {
-    const category = option.category;
-    if (!groups[category]) {
-      groups[category] = [];
-    }
-    groups[category].push(option);
+    (groups[option.category] ??= []).push(option);
     return groups;
   }, {} as Record<string, Option[]>);
-  
-  // Use CMS pricing items or defaults
-  const defaultPricingItems = [
-    { label: 'Waitlist', value: 'Contact for current wait time' },
-    { label: 'Deposit', value: '$500' },
-    { label: 'Balance', value: 'Due upon completion' },
+
+  const defaultPricingItems: PricingItem[] = [
+    { label: "Waitlist", value: "Contact for current wait time" },
+    { label: "Deposit", value: "$500" },
+    { label: "Balance", value: "Due upon completion" },
   ];
   const pricingItems = orderingContent?.data?.pricingItems || defaultPricingItems;
-  
-  const pricingNote = orderingContent?.data?.pricingNote || "Customers must call or email to get on the waitlist. Pricing varies based on wood selection and optional upgrades.";
-  
-  // Use CMS included features or defaults
+  const pricingNote = orderingContent?.data?.pricingNote ||
+    "Please call or email to be added to the waitlist. Final pricing varies with wood selection and optional upgrades.";
+
   const defaultIncludedFeatures = [
-    "Balsa core doubletop construction",
+    "Balsa-core double top construction",
     "Cedar or spruce soundboard options",
     "Indian rosewood back and sides (standard)",
-    "Elevated fingerboard with 20th fret access",
+    "Elevated fingerboard with 20th-fret access",
     "Optional soundport",
     "Barnett tuning machines (standard)",
-    "Arched TKL case included",
+    "Arched TKL case",
   ];
   const includedFeatures = orderingContent?.data?.includedFeatures || defaultIncludedFeatures;
   const includedFeaturesTitle = orderingContent?.data?.includedFeaturesTitle || "What's Included";
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-stone-50 to-white dark:from-stone-800 dark:to-stone-900 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-[url('/images/ordering-pattern.svg')] opacity-5" />
-      
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <FadeIn className="text-center mb-16">
-          <motion.h1
-            className="text-5xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-6"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
+    <div className="bg-brand-cream dark:bg-stone-950 pt-24 pb-24 lg:pt-32 lg:pb-32">
+      <div className="mx-auto max-w-7xl px-6 lg:px-12">
+        {/* Header */}
+        <FadeIn className="mb-20 lg:mb-28 max-w-3xl">
+          <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+            Commissions
+          </p>
+          <h1 className="font-cinzel text-4xl md:text-5xl lg:text-6xl font-normal text-brand-ink dark:text-brand-cream leading-[1.1] tracking-tight mb-8">
             {title}
-          </motion.h1>
-          <motion.p
-            className="text-xl text-stone-600 dark:text-stone-300 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          </h1>
+          <div className="h-px w-16 bg-brand-walnut/60 dark:bg-brand-cream/30 mb-8" />
+          <p className="text-lg text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light">
             {description}
-          </motion.p>
+          </p>
         </FadeIn>
 
-        {/* Base Price Section */}
-        <FadeIn className="mb-16">
-          <motion.div
-            className="bg-gradient-to-r from-amber-50 to-stone-50 dark:from-amber-900/20 dark:to-stone-700 rounded-lg p-8 border border-amber-200 dark:border-amber-600 text-center"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-4">Base Price</h2>
-            <div className="text-5xl font-bold text-amber-600 dark:text-amber-400 mb-4">{basePrice}</div>
-            <p className="text-stone-600 dark:text-stone-300 max-w-3xl mx-auto leading-relaxed">
+        {/* Base Price */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-24 lg:mb-32 items-baseline">
+          <FadeIn className="lg:col-span-4">
+            <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+              i. Base Price
+            </p>
+            <p className="font-cinzel text-5xl md:text-6xl font-normal text-brand-ink dark:text-brand-cream leading-none">
+              {basePrice}
+            </p>
+          </FadeIn>
+          <FadeIn className="lg:col-span-7 lg:col-start-6">
+            <p className="text-lg text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light">
               {baseDescription}
             </p>
-          </motion.div>
-        </FadeIn>
+          </FadeIn>
+        </div>
 
-        {/* Options Section */}
-        <FadeIn className="mb-16">
-          <motion.div
-            className="bg-white dark:bg-stone-800 rounded-lg shadow-sm p-8 border border-stone-200 dark:border-stone-600"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-8 text-center">{optionsTitle}</h2>
-            
-            <div className="space-y-8">
-              {Object.entries(groupedOptions).map(([category, categoryOptions]) => (
-                <motion.div
-                  key={category}
-                  className="border-b border-stone-200 dark:border-stone-600 pb-8 last:border-b-0"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h3 className="text-2xl font-cinzel font-semibold text-stone-900 dark:text-stone-100 mb-6 flex items-center">
-                    <Settings className="w-6 h-6 mr-3 text-amber-600 dark:text-amber-400" />
-                    {category}
-                  </h3>
-                  
-                  <StaggerChildren className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {categoryOptions.map((option, index) => (
-                      <StaggerItem key={index}>
-                        <motion.div
-                          className="p-4 rounded-lg border border-stone-200 dark:border-stone-600 hover:shadow-lg transition-all bg-stone-50 dark:bg-stone-700 relative"
-                          whileHover={{ y: -3, scale: 1.01 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          {option.required && (
-                            <Star className="absolute top-3 right-3 w-5 h-5 text-amber-500" fill="currentColor" />
-                          )}
-                          
-                          <div className="flex justify-between items-start mb-2">
-                            <h4 className="text-lg font-semibold text-stone-900 dark:text-stone-100">{option.title}</h4>
-                            <span className={`text-sm font-bold px-2 py-1 rounded-full ${
-                              option.price === 'Included' 
-                                ? 'bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-200'
-                                : 'bg-amber-100 dark:bg-amber-800 text-amber-800 dark:text-amber-200'
+        {/* What's Included */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-24 lg:mb-32">
+          <FadeIn className="lg:col-span-4">
+            <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+              ii.
+            </p>
+            <h2 className="font-cinzel text-3xl md:text-4xl font-normal text-brand-ink dark:text-brand-cream leading-tight tracking-tight">
+              {includedFeaturesTitle}
+            </h2>
+          </FadeIn>
+          <FadeIn className="lg:col-span-7 lg:col-start-6">
+            <ul className="space-y-4">
+              {includedFeatures.map((item, i) => (
+                <li key={i} className="flex gap-4 pb-4 border-b border-brand-rule/50 last:border-b-0">
+                  <span className="font-cinzel text-[10px] tracking-[0.24em] text-brand-forest dark:text-brand-forest-light pt-1 tabular-nums w-8 flex-shrink-0">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="text-brand-ink dark:text-brand-cream/90 leading-[1.7] font-light">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        </div>
+
+        {/* Options */}
+        <div className="mb-24 lg:mb-32">
+          <FadeIn className="mb-12 lg:mb-16">
+            <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+              iii.
+            </p>
+            <h2 className="font-cinzel text-3xl md:text-4xl font-normal text-brand-ink dark:text-brand-cream leading-tight tracking-tight">
+              {optionsTitle}
+            </h2>
+          </FadeIn>
+
+          <div className="space-y-16">
+            {Object.entries(groupedOptions).map(([category, categoryOptions]) => (
+              <FadeIn key={category}>
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+                  <div className="lg:col-span-3">
+                    <p className="font-cinzel text-[11px] tracking-[0.24em] uppercase text-brand-walnut dark:text-brand-walnut-light">
+                      {category}
+                    </p>
+                  </div>
+                  <div className="lg:col-span-9">
+                    <StaggerChildren className="space-y-4">
+                      {categoryOptions.map((option, i) => (
+                        <StaggerItem key={i}>
+                          <div className="flex justify-between items-baseline gap-6 py-4 border-b border-brand-rule/50">
+                            <div className="flex-1">
+                              <h3 className="font-cinzel text-lg text-brand-ink dark:text-brand-cream mb-1">
+                                {option.title}
+                              </h3>
+                              <p className="text-sm text-brand-ink-soft dark:text-brand-cream/70 leading-relaxed">
+                                {option.description}
+                              </p>
+                            </div>
+                            <span className={`font-cinzel text-sm tabular-nums whitespace-nowrap ${
+                              option.price === "Included"
+                                ? "text-brand-forest dark:text-brand-forest-light"
+                                : "text-brand-walnut dark:text-brand-walnut-light"
                             }`}>
                               {option.price}
                             </span>
                           </div>
-                          <p className="text-stone-600 dark:text-stone-300 text-sm leading-relaxed">{option.description}</p>
-                        </motion.div>
-                      </StaggerItem>
-                    ))}
-                  </StaggerChildren>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        </FadeIn>
+                        </StaggerItem>
+                      ))}
+                    </StaggerChildren>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
 
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <FadeIn>
-            <motion.div
-              className="bg-amber-50 dark:bg-amber-900/20 p-4 sm:p-8 rounded-lg border border-amber-200 dark:border-amber-600"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3 className="text-xl sm:text-2xl font-cinzel font-bold text-amber-700 dark:text-amber-400 mb-6">Pricing & Timeline</h3>
-              
-              <div className="space-y-4">
-                {pricingItems.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 bg-white dark:bg-stone-700 rounded-lg gap-2"
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <span className="font-medium text-stone-700 dark:text-stone-300 text-sm sm:text-base">{item.label}:</span>
-                    <span className="text-lg sm:text-xl font-bold text-amber-600 dark:text-amber-400">{item.value}</span>
-                  </motion.div>
-                ))}
-              </div>
-              
-              <motion.p
-                className="text-stone-600 dark:text-stone-300 text-sm mt-6 leading-relaxed"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px" }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-              >
-                {pricingNote}
-              </motion.p>
-            </motion.div>
+        {/* Pricing & Timeline */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 mb-24 lg:mb-32">
+          <FadeIn className="lg:col-span-4">
+            <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+              iv.
+            </p>
+            <h2 className="font-cinzel text-3xl md:text-4xl font-normal text-brand-ink dark:text-brand-cream leading-tight tracking-tight">
+              Pricing & Timeline
+            </h2>
           </FadeIn>
-
-          <FadeIn>
-            <motion.div
-              className="bg-stone-900 dark:bg-stone-800 text-white p-8 rounded-lg"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <h3 className="text-2xl font-cinzel font-bold mb-6">{includedFeaturesTitle}</h3>
-              
-              <ul className="space-y-3">
-                {includedFeatures.map((item, index) => (
-                  <motion.li
-                    key={index}
-                    className="flex items-center text-stone-200 dark:text-stone-300"
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true, margin: "0px" }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
-                    whileHover={{ x: 5 }}
-                  >
-                    <CheckCircle className="w-5 h-5 text-amber-400 dark:text-amber-300 mr-3 flex-shrink-0" />
-                    {item}
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          <FadeIn className="lg:col-span-7 lg:col-start-6">
+            <dl className="space-y-4 mb-8">
+              {pricingItems.map((item, i) => (
+                <div key={i} className="flex justify-between items-baseline gap-6 py-4 border-b border-brand-rule/50">
+                  <dt className="font-cinzel text-[11px] tracking-[0.24em] uppercase text-brand-forest dark:text-brand-forest-light">
+                    {item.label}
+                  </dt>
+                  <dd className="text-brand-ink dark:text-brand-cream font-cinzel text-lg">
+                    {item.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="text-sm text-brand-ink-soft dark:text-brand-cream/70 italic leading-relaxed">
+              {pricingNote}
+            </p>
           </FadeIn>
         </div>
 
-        <FadeIn className="mt-16">
-          <motion.div
-            className="text-center bg-gradient-to-r from-amber-50 to-stone-50 dark:from-amber-900/20 dark:to-stone-700 p-8 rounded-lg border border-amber-200 dark:border-amber-600"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.6 }}
-          >
-            <motion.h3
-              className="text-2xl font-cinzel font-bold text-stone-900 dark:text-stone-100 mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              Ready to Start Your Custom Guitar?
-            </motion.h3>
-            <motion.p
-              className="text-stone-600 dark:text-stone-300 mb-6 max-w-2xl mx-auto"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px" }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              Get in touch to begin the conversation about your dream classical guitar.
-            </motion.p>
-            <motion.a
-              href="/contact"
-              className="inline-block bg-amber-600 dark:bg-amber-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-amber-700 dark:hover:bg-amber-600 transition-colors"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact Glenn Today
-            </motion.a>
-          </motion.div>
+        {/* CTA */}
+        <FadeIn className="mt-24 pt-16 border-t border-brand-rule/50">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-5">
+              <p className="font-cinzel text-[11px] tracking-[0.28em] text-brand-forest dark:text-brand-forest-light uppercase mb-6">
+                Get In Touch
+              </p>
+              <h2 className="font-cinzel text-3xl md:text-4xl font-normal text-brand-ink dark:text-brand-cream leading-tight tracking-tight">
+                Ready to begin?
+              </h2>
+            </div>
+            <div className="lg:col-span-7 flex flex-col justify-between">
+              <p className="text-lg text-brand-ink-soft dark:text-brand-cream/85 leading-[1.7] font-light mb-8">
+                Get in touch to start the conversation about your commission.
+              </p>
+              <a
+                href="/contact"
+                className="group inline-flex items-center gap-3 border-b border-brand-ink dark:border-brand-cream pb-1 font-cinzel text-[11px] tracking-[0.28em] uppercase text-brand-ink dark:text-brand-cream hover:text-brand-forest dark:hover:text-brand-forest-light hover:border-brand-forest dark:hover:border-brand-forest-light transition-colors self-start"
+              >
+                Contact Glenn
+                <span className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+                  →
+                </span>
+              </a>
+            </div>
+          </div>
         </FadeIn>
       </div>
     </div>
