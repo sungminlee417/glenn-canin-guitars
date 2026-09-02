@@ -51,6 +51,7 @@ export default defineType({
     defineField({
       name: 'email',
       title: 'Email',
+      description: 'Shown on the contact page AND used as the delivery address for messages sent through the contact form.',
       type: 'string',
       validation: (Rule) => Rule.email(),
     }),

@@ -146,7 +146,7 @@ export default function FeaturedGuitars({ featuredGuitars, title, description, b
             viewport={{ once: true, margin: "0px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-{description}
+            {description || "A selection of recently completed instruments."}
           </motion.p>
         </FadeIn>
         

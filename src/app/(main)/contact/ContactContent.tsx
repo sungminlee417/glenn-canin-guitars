@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Send, CheckCircle, AlertCircle } from "lucide-react";
 import FadeIn from "@/components/animations/FadeIn";
 import LoadingSpinner from "@/components/ui/LoadingSpinner";
 
@@ -28,25 +28,42 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
     email: "",
     subject: "",
     message: "",
+    website: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrorMessage(null);
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    
-    // Reset form after success
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 3000);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error || `Request failed (${res.status})`);
+      }
+
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", subject: "", message: "", website: "" });
+      }, 4000);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unknown error";
+      setErrorMessage(
+        `Sorry, your message could not be sent (${message}). Please try again or email glenncanin@hotmail.com directly.`
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -145,7 +162,7 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            <motion.form 
+            <motion.form
               onSubmit={handleSubmit}
               className="bg-white dark:bg-stone-800 p-8 rounded-lg shadow-sm border border-stone-200 dark:border-stone-600"
               whileHover={{ scale: 1.01 }}
@@ -171,6 +188,22 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                 </motion.div>
               ) : (
                 <div className="space-y-6">
+                  {errorMessage && (
+                    <div className="flex items-start p-4 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 text-red-800 dark:text-red-200">
+                      <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm">{errorMessage}</p>
+                    </div>
+                  )}
+                  <input
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website}
+                    onChange={handleChange}
+                    className="absolute -left-[9999px] opacity-0 pointer-events-none h-0 w-0"
+                    aria-hidden="true"
+                  />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <motion.div
                       whileFocus={{ scale: 1.02 }}
@@ -227,10 +260,10 @@ export default function ContactContent({ contactContent }: ContactContentProps) 
                       className="w-full px-4 py-3 border border-stone-300 dark:border-stone-600 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white dark:bg-stone-700 text-stone-900 dark:text-stone-100 transition-all"
                     >
                       <option value="">Select a subject</option>
-                      <option value="custom-order">Custom Guitar Order</option>
-                      <option value="available-guitars">Available Guitars</option>
-                      <option value="workshop-visit">Workshop Visit</option>
-                      <option value="general">General Inquiry</option>
+                      <option value="Custom Guitar Order">Custom Guitar Order</option>
+                      <option value="Available Guitars">Available Guitars</option>
+                      <option value="Workshop Visit">Workshop Visit</option>
+                      <option value="General Inquiry">General Inquiry</option>
                     </select>
                   </motion.div>
                   
