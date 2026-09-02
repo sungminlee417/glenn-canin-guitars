@@ -4,16 +4,18 @@ import { client as sanityClient } from "@/lib/sanity";
 
 const MAX_FIELD_LENGTH = 5000;
 
-async function resolveRecipient(): Promise<string | null> {
+async function resolveContactInfo(): Promise<{ email: string | null; phone: string | null }> {
   try {
-    const email = await sanityClient.fetch<string | null>(
-      `*[_type == "contactPage" && _id == "contactPage"][0].email`
+    const result = await sanityClient.fetch<{ email?: string; phone?: string } | null>(
+      `*[_type == "contactPage" && _id == "contactPage"][0]{email, phone}`
     );
-    if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return email;
+    const email = result?.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(result.email)
+      ? result.email
+      : process.env.CONTACT_EMAIL_TO || null;
+    return { email, phone: result?.phone ?? null };
   } catch {
-    // fall through to env
+    return { email: process.env.CONTACT_EMAIL_TO || null, phone: null };
   }
-  return process.env.CONTACT_EMAIL_TO || null;
 }
 
 function sanitize(value: unknown): string {
@@ -32,7 +34,7 @@ function escapeHtml(value: string): string {
 export async function POST(req: NextRequest) {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.CONTACT_EMAIL_FROM;
-  const to = await resolveRecipient();
+  const { email: to, phone } = await resolveContactInfo();
 
   if (!apiKey || !from || !to) {
     return NextResponse.json(
@@ -72,7 +74,7 @@ export async function POST(req: NextRequest) {
     from,
     to,
     replyTo: email,
-    subject: `[Website] ${subject} — ${name}`,
+    subject: `New inquiry: ${subject} — ${name}`,
     text: `From: ${name} <${email}>\nSubject: ${subject}\n\n${message}`,
     html: `
       <div style="font-family:system-ui,sans-serif;line-height:1.5;color:#1c1917">
@@ -91,5 +93,64 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  await sendAutoReply({ resend, from, to: email, name, subject, message, phone });
+
   return NextResponse.json({ ok: true });
+}
+
+async function sendAutoReply(args: {
+  resend: Resend;
+  from: string;
+  to: string;
+  name: string;
+  subject: string;
+  message: string;
+  phone: string | null;
+}): Promise<void> {
+  const { resend, from, to, name, subject, message, phone } = args;
+  const firstName = name.split(/\s+/)[0] || name;
+  const phoneLine = phone
+    ? `If your inquiry is time-sensitive, you can also reach Glenn at ${phone}.`
+    : null;
+
+  try {
+    await resend.emails.send({
+      from,
+      to,
+      subject: `Thanks for reaching out — Glenn Canin Guitars`,
+      text: [
+        `Hi ${firstName},`,
+        ``,
+        `Thanks for your message about "${subject}." Glenn has received it and will get back to you personally within a few days.`,
+        phoneLine,
+        ``,
+        `— Glenn Canin Guitars`,
+        ``,
+        `─────────────────`,
+        `Your message:`,
+        message,
+      ].filter(Boolean).join("\n"),
+      html: `
+        <div style="font-family:system-ui,-apple-system,sans-serif;line-height:1.6;color:#1c1917;max-width:560px">
+          <div style="border-bottom:2px solid #d97706;padding-bottom:12px;margin-bottom:24px">
+            <p style="font-family:'Cinzel',Georgia,serif;font-size:20px;letter-spacing:0.04em;color:#78350f;margin:0">
+              GLENN CANIN GUITARS
+            </p>
+          </div>
+          <p>Hi ${escapeHtml(firstName)},</p>
+          <p>
+            Thanks for your message about <strong>&ldquo;${escapeHtml(subject)}&rdquo;</strong>.
+            Glenn has received it and will get back to you personally within a few days.
+          </p>
+          ${phoneLine ? `<p style="color:#57534e;font-size:14px">${escapeHtml(phoneLine)}</p>` : ""}
+          <p style="margin-top:32px">— Glenn Canin Guitars</p>
+          <hr style="border:none;border-top:1px solid #e7e5e4;margin:24px 0" />
+          <p style="color:#78716c;font-size:13px;margin-bottom:8px"><strong>Your message:</strong></p>
+          <p style="white-space:pre-wrap;color:#57534e;font-size:14px">${escapeHtml(message)}</p>
+        </div>
+      `,
+    });
+  } catch {
+    // Auto-reply is best-effort. Primary email already succeeded; don't fail the request.
+  }
 }
